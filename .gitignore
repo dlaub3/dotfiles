@@ -1,6 +1,5 @@
 *
 .config/*
-*.swp
 
 !.gitignore
 !.gitconfig
