@@ -1,3 +1,8 @@
 *
-*/
+
 !.gitignore
+!.tmux.conf
+!.tmux
+!.tmux/launch_scripts
+!.tmux/launch_scripts/*
+
