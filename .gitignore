@@ -1,8 +1,12 @@
 *
+.config/*
+*.swp
 
 !.gitignore
 !.tmux.conf
 !.tmux
 !.tmux/launch_scripts
 !.tmux/launch_scripts/*
-
+!.config
+!.config/nvim
+!.config/nvim/*
