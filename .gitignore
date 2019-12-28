@@ -12,5 +12,8 @@
 !.config
 !.config/nvim
 !.config/nvim/*
+!.config/fish
+!.config/fish/*
+!.config/fish/*/*
 !.iterm
 !.iterm/*
