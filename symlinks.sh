@@ -1,6 +1,8 @@
 #!/bin/bash
-ln -nfs .config/fish ~/.config/fish
-ln -nfs .config/nvim ~/.config/nvim
-ln -nfs .tmux  ~/.tmux
-ln -nfs .tmux.conf  ~/.tmux.conf
-ln -nfs .gitignore_global  ~/.gitignore_global
+ln -nfs ~/.dotfiles/config/fish ~/.config/fish
+ln -nfs ~/.dotfiles/config/nvim ~/.config/nvim
+ln -nfs ~/.dotfiles/tmux  ~/.tmux
+ln -nfs ~/.dotfiles/tmux.conf  ~/.tmux.conf
+ln -nfs ~/.dotfiles/gitignore_global  ~/.gitignore_global
+# ln -nfs ./gitconfig  ~/.gitconfig # This might overwrite important info for [user]
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
