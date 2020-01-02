@@ -1,0 +1,17 @@
+[user]
+	name = Daniel Laubacher
+	email = dlaubacher3@gmail.com
+[core]
+	editor = vim
+    excludesfile = !~/.gitignore_global
+[submodule]
+	recurse = true
+[alias]
+	logg = git log --graph --oneline --decorate --all
+	up = !git push --set-upstream origin `git symbolic-ref --short HEAD`
+	clean-branches = "!f() { git branch | grep -v $1 | xargs git branch -D; }; f"
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
