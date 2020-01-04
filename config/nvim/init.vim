@@ -1,4 +1,3 @@
-
 let plugpath = expand('<sfile>:p:h'). '/autoload/plug.vim'
 if !filereadable(plugpath)
   if executable('curl')
@@ -16,6 +15,7 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdtree'
@@ -100,6 +100,20 @@ autocmd FileType ruby setlocal foldmethod=syntax
 autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set t_Co=256 "set termguicolors
+set hidden " if hidden is not set, TextEdit might fail.
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+set cmdheight=2 " Better display for messages
+set updatetime=300 " You will have bad experience for diagnostic messages when it's default 4000.
+set shortmess+=c " don't give |ins-completion-menu| messages.
+set signcolumn=yes " always show signcolumns
+
+set background=dark
+if (has("termguicolors"))
+  set termguicolors
+endif
 " Tab mappings.
 map <leader>tt :tabnew<cr>
 map <leader>te :tabedit
@@ -120,11 +134,6 @@ map <leader>tm :tabmove
 "
 "
 "
-set background=dark
-if (has("termguicolors"))
-  set termguicolors
-endif
-
 let g:Guifont='FuraCode Nerd Font'
 
 "colorscheme solarized
@@ -201,29 +210,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
+let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
 
-set t_Co=256
-
-"set termguicolors
-" if hidden is not set, TextEdit might fail.
-set hidden
-
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
-
-" Better display for messages
-set cmdheight=2
-
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" always show signcolumns
-set signcolumn=yes
 
 
 " Wrap in try/catch to avoid errors on initial install before plugin is available
@@ -237,7 +225,7 @@ try
 "
 call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git'])
 
-" Use ripgrep in place of "grep"
+" Use ripgrep in place of grep
 call denite#custom#var('grep', 'command', ['rg'])
 
 " Custom options for ripgrep
@@ -376,3 +364,61 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+
+" fix syntax not working consistently
+autocmd BufEnter,InsertLeave * :filetype detect
+autocmd BufEnter,InsertLeave * :syntax sync fromstart
+
+" Rename tabs to show tab number.
+" (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
+if exists("+showtabline")
+    function! MyTabLine()
+        let s = ''
+        let wn = ''
+        let t = tabpagenr()
+        let i = 1
+        while i <= tabpagenr('$')
+            let buflist = tabpagebuflist(i)
+            let winnr = tabpagewinnr(i)
+            let s .= '%' . i . 'T'
+            let s .= (i == t ? '%1*' : '%2*')
+            let s .= ' '
+            let wn = tabpagewinnr(i,'$')
+
+            let s .= '%#TabNum#'
+            let s .= i
+            " let s .= '%*'
+            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+            let bufnr = buflist[winnr - 1]
+            let file = bufname(bufnr)
+            let buftype = getbufvar(bufnr, 'buftype')
+            if buftype == 'nofile'
+                if file =~ '\/.'
+                    let file = substitute(file, '.*\/\ze.', '', '')
+                endif
+            else
+                let file = fnamemodify(file, ':p:t')
+            endif
+            if file == ''
+                let file = '[No Name]'
+            endif
+            let s .= ' ' . file . ' '
+            let i = i + 1
+        endwhile
+        let s .= '%T%#TabLineFill#%='
+        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+        return s
+    endfunction
+    set stal=2
+    set tabline=%!MyTabLine()
+    set showtabline=1
+    highlight link TabNum Special
+endif
