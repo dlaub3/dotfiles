@@ -2,3 +2,4 @@
 *.swp
 *.ignore.*
 *vscode*
+*.code-workspace
