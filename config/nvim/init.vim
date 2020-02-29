@@ -63,6 +63,7 @@ call plug#end()
 "
 "
 syntax enable
+let g:python3_host_prog='/usr/bin/python3'
 set clipboard=unnamed
 set encoding=UTF-8
 set showcmd                       " Display incomplete commands.
