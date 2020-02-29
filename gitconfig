@@ -3,11 +3,11 @@
 	email = dlaubacher3@gmail.com
 [core]
 	editor = nvim
-    excludesfile = !~/.gitignore_global
+  excludesfile = !~/.gitignore_global
 [submodule]
 	recurse = true
 [alias]
-	logg = git log --graph --oneline --decorate --all
+	logg = !git log --graph --oneline --decorate --all
 	up = !git push --set-upstream origin `git symbolic-ref --short HEAD`
 	clean-branches = "!f() { git branch | grep -v $1 | xargs git branch -D; }; f"
 [filter "lfs"]
