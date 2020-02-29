@@ -2,7 +2,7 @@
 	name = Daniel Laubacher
 	email = dlaubacher3@gmail.com
 [core]
-	editor = vim
+	editor = nvim
     excludesfile = !~/.gitignore_global
 [submodule]
 	recurse = true
