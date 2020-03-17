@@ -2,3 +2,4 @@ config/nvim/autoload
 tmux/plugins
 config/fish/conf.d/local.fish
 tmux/launch_scripts/local.sh
+*.log
