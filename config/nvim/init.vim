@@ -61,9 +61,15 @@ call plug#end()
 "                             VIM Configuration
 "
 "
-"
+
+
+
 syntax enable
+set autoread
+au FocusGained,BufEnter * :checktime
 let g:python3_host_prog='/usr/bin/python3'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+autocmd Filetype gitcommit setlocal spell
 set clipboard=unnamed
 set encoding=UTF-8
 set showcmd                       " Display incomplete commands.
@@ -75,6 +81,7 @@ set wildmode=list:longest         " Complete files like a shell.
 set ignorecase                    " Case-insensitive searching.
 set smartcase                     " But case-sensitive if expression contains a capital letter.
 set number                        " Show line numbers.
+set relativenumber
 set ruler                         " Show cursor position.
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
@@ -89,6 +96,8 @@ set expandtab                    " Use spaces instead of tabs
 set laststatus=2                  " Show the status line all the time
 set tabstop=2                    " Global tab width.
 set shiftwidth=2                 " And again, related.
+" for html/yml files, 2 spaces
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
 " for html/yml files, 2 spaces
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 autocmd Filetype yml setlocal ts=2 sw=2 expandtab
@@ -196,12 +205,13 @@ set statusline+=%=
 set statusline+=\ %{LinterStatus()}
 
 "Nerd Tree
-map <C-t> :NERDTreeToggle<CR>
+noremap <C-t> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-let NERDTreeQuitOnOpen=1
+let NERDTreeQuitOnOpen=0
+let NERDTreeChDirMode=2
 
 "Snippets Config
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -210,6 +220,8 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+
+set shell=/usr/local/bin/fish
 
 let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
 
