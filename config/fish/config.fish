@@ -1,8 +1,3 @@
-
-
-set -x TERM screen-256color
-
-
 # alias
 alias ll="ls -alh"
 alias gcap="git commit -am \"make prettier 💋\""
