@@ -142,8 +142,14 @@ map <leader>tm :tabmove
 "                            Plug Settings
 "
 "
-"
-"
+
+nnoremap <F5> :UndotreeToggle<cr>
+if has("persistent_undo")
+    set undodir=$HOME"/.undodir"
+    set undofile
+endif
+
+
 let g:Guifont='FuraCode Nerd Font'
 
 "colorscheme solarized
