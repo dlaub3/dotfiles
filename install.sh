@@ -1,13 +1,15 @@
 #!/bin/bash
 ln -nfs ~/.dotfiles/ackrc  ~/.ackrc
-ln -nfs ~/.dotfiles/config/fish ~/.config/fish
-ln -nfs ~/.dotfiles/config/nvim ~/.config/nvim
-ln -nfs ~/.dotfiles/config/kitty ~/.config/kitty
+ln -nfs ~/.dotfiles/config/fish ~/.config/
+ln -nfs ~/.dotfiles/config/nvim ~/.config/
+ln -nfs ~/.dotfiles/config/kitty ~/.config/
+ln -nfs ~/.dotfiles/config/bat ~/.config/
 ln -nfs ~/.dotfiles/tmux  ~/.tmux
 ln -nfs ~/.dotfiles/tmux.conf  ~/.tmux.conf
 ln -nfs ~/.dotfiles/gitignore_global  ~/.gitignore_global
 mkdir ~/.vimsessions
 mkdir ~/.vimswp
-mkdir ~/.undodir
+mkdir ~/.vimundo
+mkdir ~/.vimback
 # ln -nfs ~/.dotfiles/gitconfig  ~/.gitconfig # This might overwrite important info for [user]
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
