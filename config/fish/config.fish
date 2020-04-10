@@ -13,7 +13,7 @@ function jsBeautifyAge --description "beautify <interval>"
 end
 
 function jsLintAge --description "lintAge <interval>"
-  npx tslint (git diff --name-only --relative "@{$argv[1]}") --fix
+  npx tslint (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$' ) --fix
 end
 
 function jsBeautify --description "beautify"
@@ -21,6 +21,13 @@ function jsBeautify --description "beautify"
 end
 
 function jsLint --description "lint"
-  npx tslint (git-changed) --fix -c ./.tslintrc.ignore.json
+  npx tslint (git-changed | grep '\.[t|j]sx\?$') --fix -c ./.tslintrc.ignore.json
 end
 
+function showFiles --description "search files and list filenames"
+  egrep -C 3 -rl $argv[1] . | fzf --preview 'bat --style=numbers --color=always {} | less -R' 
+end
+
+function showContents --description "search files and list contents"
+  egrep -C 3 -rl $argv[1] . | xargs egrep -C2 --color $argv[1]
+end
