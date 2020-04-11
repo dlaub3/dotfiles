@@ -1,3 +1,15 @@
+# ENV
+switch (uname)
+    case Linux
+            echo Hi Tux!
+    case Darwin
+        set -x PATH /usr/local/bin $PATH
+        set -x PATH /usr/local/opt/node@12/bin $PATH
+    case FreeBSD NetBSD DragonFly
+            echo Hi Beastie!
+    case '*'
+            echo Hi, stranger!
+end
 # alias
 alias ll="ls -alh"
 alias gcap="git commit -am \"make prettier 💋\""
@@ -8,7 +20,7 @@ alias tmux-default="~/.tmux/launch_scripts/default.sh"
 # JS Helpers
 alias git-changed="git diff --name-only --relative && git diff --staged --name-only --relative && git ls-files -o --exclude-standard"
 
-function jsBeautifyAge --description "beautify <interval>" 
+function jsBeautifyAge --description "beautify <interval>"
   npx prettier --write (git diff --name-only --relative "@{$argv[1]}")
 end
 
