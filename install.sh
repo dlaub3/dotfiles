@@ -7,6 +7,7 @@ ln -nfs ~/.dotfiles/config/bat ~/.config/
 ln -nfs ~/.dotfiles/tmux  ~/.tmux
 ln -nfs ~/.dotfiles/tmux.conf  ~/.tmux.conf
 ln -nfs ~/.dotfiles/gitignore_global  ~/.gitignore_global
+ln -nfs ~/.dotfiles/ripgrep  ~/.ripgrep
 mkdir ~/.vimsessions
 mkdir ~/.vimswp
 mkdir ~/.vimundo

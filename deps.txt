@@ -1,0 +1,11 @@
+ripgrep
+ack
+fzf
+fish
+nvim
+tmux
+git
+yarn
+node
+
+
