@@ -13,142 +13,63 @@ if !filereadable(plugpath)
   endif
 endif
 
+
+" visit https://vimawesome.com to find plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'easymotion/vim-easymotion'
-Plug 'scrooloose/nerdtree'
-Plug '/usr/local/opt/fzf'
-Plug 'mileszs/ack.vim'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'junegunn/fzf'
-Plug 'shougo/denite.nvim'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'altercation/vim-colors-solarized'
+" theme  --------------------------------------------------------------------------------
+Plug 'dracula/vim', { 'name': 'dracula' } " colorscheme
+Plug 'tyrannicaltoucan/vim-deep-space' " colorscheme
+Plug 'altercation/vim-colors-solarized' " colorscheme
+Plug 'drewtempelmeyer/palenight.vim' " colorscheme
+Plug 'cocopon/iceberg.vim' " colorscheme
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons' " icons for nerdtree
+" navigation  ----------------------------------------------------------------------------
+Plug 'easymotion/vim-easymotion' " move to characters in a window
+Plug 'scrooloose/nerdtree' " file navigation Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " advanced fuzzy finder
+Plug 'mileszs/ack.vim' " grep like word search
+Plug 'ctrlpvim/ctrlp.vim' " file search 
+Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
+" completion   ---------------------------------------------------------------------------
+"Plug 'shougo/deoplete.nvim'
+" git   ----------------------------------------------------------------------------------
+Plug 'tpope/vim-fugitive' " a git wrapper
+Plug 'tpope/vim-git' " support git filetypes
+Plug 'airblade/vim-gitgutter' " git changes denoted next to line numbers
+" yaml   ---------------------------------------------------------------------------------
 Plug 'avakhov/vim-yaml'
-Plug 'suan/vim-instant-markdown'
+" markdown  ------------------------------------------------------------------------------
+Plug 'suan/vim-instant-markdown' " open browser for markdown preview
 Plug 'plasticboy/vim-markdown'
-Plug 'mxw/vim-jsx'
-Plug 'ianks/vim-tsx'
-Plug 'othree/yajs.vim'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'gorodinskiy/vim-coloresque'
-Plug 'drewtempelmeyer/palenight.vim'
-Plug 'dracula/vim', { 'name': 'dracula' }
-Plug 'cocopon/iceberg.vim'
-Plug 'mattn/emmet-vim'
-Plug 'w0rp/ale'
-Plug 'godlygeek/tabular'
-Plug 'tpope/vim-surround'
+" JS/TS   --------------------------------------------------------------------------------
+"Plug 'leafgarland/typescript-vim' " TS Syntax
+"Plug 'othree/yajs.vim' " JS syntax
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+Plug 'maxmellon/vim-jsx-pretty'
+" editing --------------------------------------------------------------------------------
+" Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
+Plug 'godlygeek/tabular' " line up text
+Plug 'tpope/vim-surround' " sounds words,groups with almost anything
+Plug 'scrooloose/nerdcommenter' " easily apply/remove comments
+Plug 'mattn/emmet-vim' " code completion/generation
+Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
 Plug 'terryma/vim-multiple-cursors'
-Plug 'scrooloose/nerdcommenter'
-Plug 'shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
-Plug 'mbbill/undotree'
+"Plug 'w0rp/ale' " linting, Language Server Protocal, completion, fixing {{{
+"Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 call plug#end()
-"
-"
-"
-"
-"
-"                             VIM Configuration
-"
-"
 
-
-
-syntax enable
-set autoread
-au FocusGained,BufEnter * :checktime
-let g:python3_host_prog='/usr/bin/python3'
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-autocmd Filetype gitcommit setlocal spell
-set clipboard=unnamed
-set encoding=UTF-8
-set showcmd                       " Display incomplete commands.
-set showmode                      " Display the mode you're in.
-set backspace=indent,eol,start    " Intuitive backspacing.
-set hidden                        " Handle multiple buffers better.
-set wildmenu                      " Enhanced command line completion.
-set wildmode=list:longest         " Complete files like a shell.
-set ignorecase                    " Case-insensitive searching.
-set smartcase                     " But case-sensitive if expression contains a capital letter.
-set number                        " Show line numbers.
-set relativenumber
-set ruler                         " Show cursor position.
-set incsearch                     " Highlight matches as you type.
-set hlsearch                      " Highlight matches.
-set wrap                          " Turn on line wrapping.
-set scrolloff=3                   " Show 3 lines of context around the cursor.
-set title                         " Set the terminal's title
-set visualbell                    " No beeping.
-set nobackup                      " Don't make a backup before overwriting a file.
-set nowritebackup                 " And again.
-set directory=$HOME/.vim/tmp//,.  " Keep swap files in one location
-set expandtab                    " Use spaces instead of tabs
-set laststatus=2                  " Show the status line all the time
-set tabstop=2                    " Global tab width.
-set shiftwidth=2                 " And again, related.
-" for html/yml files, 2 spaces
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
-" for html/yml files, 2 spaces
-autocmd Filetype html setlocal ts=2 sw=2 expandtab
-autocmd Filetype yml setlocal ts=2 sw=2 expandtab
-" for js/coffee/php files, 4 spaces
-autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
-autocmd Filetype coffeescript setlocal ts=4 sw=4 sts=0 expandtab
-autocmd Filetype php setlocal ts=4 sw=4 sts=0 expandtab
-" Automatic fold settings for specific files. Uncomment to use.
-autocmd FileType ruby setlocal foldmethod=syntax
-autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
-" Useful status information at bottom of screen
-set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
-set t_Co=256 "set termguicolors
-set hidden " if hidden is not set, TextEdit might fail.
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
-set cmdheight=2 " Better display for messages
-set updatetime=300 " You will have bad experience for diagnostic messages when it's default 4000.
-set shortmess+=c " don't give |ins-completion-menu| messages.
-set signcolumn=yes " always show signcolumns
-
-set background=dark
-if (has("termguicolors"))
-  set termguicolors
-endif
-" Tab mappings.
-map <leader>tt :tabnew<cr>
-map <leader>te :tabedit
-map <leader>tc :tabclose<cr>
-map <leader>to :tabonly<cr>
-map <leader>tn :tabnext<cr>
-map <leader>tp :tabprevious<cr>
-map <leader>tf :tabfirst<cr>
-map <leader>tl :tablast<cr>
-map <leader>tm :tabmove
-
+" ============================================================================ "
 "
 "
+" ===                             PLUGINS SETTINGS                         === "
 "
 "
-"                            Plug Settings
-"
-"
-
-nnoremap <F5> :UndotreeToggle<cr>
-if has("persistent_undo")
-    set undodir=$HOME"/.undodir"
-    set undofile
-endif
-
+" ============================================================================ "
 
 let g:Guifont='FuraCode Nerd Font'
 
@@ -164,53 +85,15 @@ let g:Guifont='FuraCode Nerd Font'
 "let g:airline_theme='palenight'
 "let g:palenight_terminal_italics=1
 
-colorscheme dracula
-let g:airline_theme='dracula'
-let g:palenight_terminal_italics=1
-
 "colorscheme iceberg
 "let g:airline_theme='iceberg'
 "let g:iceberg_terminal_italics=1
 
-
+colorscheme dracula
+let g:airline_theme='dracula'
+let g:dracula_terminal_italics=1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-"ALE
-let b:ale_linters = {
-      \   'vue': ['eslint'],
-      \   'css': ['stylelint']
-      \}
-
-let b:ale_fixers = {
-      \    '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \    'vue': ['eslint'],
-      \    'scss': ['prettier'],
-      \    'css': ['prettier'],
-      \    'html': ['prettier']
-      \}
-
-let g:ale_linters_explicit = 1
-let g:ale_lint_on_enter = 1
-let g:ale_sign_error = '●'
-let g:ale_sign_warning = '.'
-let g:ale_fix_on_save = 1
-let g:ale_disable_lsp = 1
-
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? 'OK' : printf(
-        \   '%d⨉ %d⚠ ',
-        \   all_non_errors,
-        \   all_errors
-        \)
-endfunction
-
-set statusline+=%=
-set statusline+=\ %{LinterStatus()}
-
-"Nerd Tree
 noremap <C-t> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -219,19 +102,62 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 let NERDTreeQuitOnOpen=0
 let NERDTreeChDirMode=2
 
-"Snippets Config
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
-au BufNewFile,BufRead *.ts setlocal filetype=typescript
-au BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+nnoremap <F5> :UndotreeToggle<cr>
+if has("persistent_undo")
+    set undofile
+endif
 
-set shell=/usr/local/bin/fish
+" COC {{{  Language Server Protocal, completion,
 
 let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
 
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+"}}}
+
+function s:ExpandTab()
+  if pumvisible()
+    return "\<C-n>"
+  endif
+
+  let l:snippet = UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res > 0
+    return ""
+  endif
+
+  if s:IsEmmetInstalled()
+    if s:IsInsideEmmetExpansion()
+      call feedkeys("\<A-,>n")
+      return ""
+    endif
+
+    if emmet#isExpandable()
+      call feedkeys("\<A-,>,")
+      return ""
+    endif
+  endif
+
+  return "\<Tab>"
+endfunction
+
+" DENITE {{{
 
 " Wrap in try/catch to avoid errors on initial install before plugin is available
 try
@@ -274,8 +200,13 @@ call denite#custom#var('buffer', 'date_format', '')
 "   highlight_matched_range - matched range highlight
 let s:denite_options = {'default' : {
 \ 'split': 'floating',
+\ 'floating_preview': 1,
+\ 'preview_height': 15,
+\ 'preview_width': 70,
 \ 'start_filter': 1,
 \ 'auto_resize': 1,
+\ 'auto_preview': 1,
+\ 'vertical_preview': 0,
 \ 'source_names': 'short',
 \ 'prompt': 'λ ',
 \ 'statusline': 0,
@@ -283,8 +214,9 @@ let s:denite_options = {'default' : {
 \ 'highlight_matched_range': 'Visual',
 \ 'highlight_window_background': 'Visual',
 \ 'highlight_filter_background': 'DiffAdd',
-\ 'winrow': 1,
-\ 'vertical_preview': 1
+\ 'winrow': &lines / 2 - 5,
+\ 'winheight': 15,
+\ 'reversed': 1,
 \ }}
 
 " Loop through denite options and enable them
@@ -300,10 +232,6 @@ call s:profile(s:denite_options)
 catch
   echo 'Denite not installed. It should work after running :PlugInstall'
 endtry
-
-" ============================================================================ "
-" ===                             KEY MAPPINGS                             === "
-" ============================================================================ "
 
 " === Denite shorcuts === "
 "   ;         - Browser currently open buffers
@@ -372,31 +300,168 @@ function! s:denite_my_settings() abort
   nnoremap <silent><buffer><expr> <C-h>
   \ denite#do_map('do_action', 'split')
 endfunction
+" }}}
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" depolete and ale as an alternative to Coc
+"let g:deoplete#enable_at_startup = 1
+"let b:ale_linters = {
+      "\   'vue': ['eslint'],
+      "\   'css': ['stylelint']
+      "\}
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+"let b:ale_fixers = {
+      "\    '*': ['remove_trailing_lines', 'trim_whitespace'],
+      "\    'vue': ['eslint'],
+      "\    'scss': ['prettier'],
+      "\    'css': ['prettier'],
+      "\    'html': ['prettier']
+      "\}
+
+"let g:ale_linters_explicit = 1
+"let g:ale_lint_on_enter = 1
+"let g:ale_sign_error = '●'
+"let g:ale_sign_warning = '.'
+"let g:ale_fix_on_save = 1
+"let g:ale_disable_lsp = 1
+
+"function! LinterStatus() abort
+  "let l:counts = ale#statusline#Count(bufnr(''))
+  "let l:all_errors = l:counts.error + l:counts.style_error
+  "let l:all_non_errors = l:counts.total - l:all_errors
+  "return l:counts.total == 0 ? 'OK' : printf(
+        "\   '%d⨉ %d⚠ ',
+        "\   all_non_errors,
+        "\   all_errors
+        "\)
+"endfunction
+
+"set statusline+=%=
+"set statusline+=\ %{LinterStatus()}
+" }}}
 
 
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
 
-" fix syntax not working consistently
-autocmd BufEnter,InsertLeave * :filetype detect
-autocmd BufEnter,InsertLeave * :syntax sync fromstart
+" ============================================================================ "
+"
+"
+" ===                             VIM SETTINGS                             === "
+"
+"
+" ============================================================================ "
 
-" Rename tabs to show tab number.
+
+set shell=/usr/local/bin/fish
+
+let g:search_ignore_dirs = ['.git', 'node_modules']
+" THEME {{
+set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{fugitive#statusline()}%{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
+set t_Co=256 "set termguicolors
+set background=dark
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+"}}
+
+syntax enable
+set autoread
+set mouse=a " enable scroll with trackpad
+au FocusGained,BufEnter * :checktime " reload when file changes
+autocmd Filetype gitcommit setlocal spell
+set clipboard=unnamed " use system clipboard
+set clipboard=unnamedplus " use system clipboard
+set encoding=UTF-8
+set showcmd                       " Display incomplete commands.
+set showmode                      " Display the mode you're in.
+set backspace=indent,eol,start    " Intuitive backspacing.
+set hidden                        " Handle multiple buffers better.
+set wildmenu                      " Enhanced command line completion.
+set wildmode=list:longest         " Complete files like a shell.
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX bullshit
+set wildignore+=*.luac                           " Lua byte code
+set wildignore+=migrations                       " Django migrations
+set wildignore+=*.pyc                            " Python byte code
+set wildignore+=*.orig                           " Merge resolution files
+set ignorecase                    " Case-insensitive searching.
+set smartcase                     " But case-sensitive if expression contains a capital letter.
+set number                        " Show line numbers.
+set relativenumber
+set ruler                         " Show cursor position.
+set incsearch                     " Highlight matches as you type.
+set hlsearch                      " Highlight matches.
+set wrap                          " Turn on line wrapping.
+set scrolloff=3                   " Show 3 lines of context around the cursor.
+set title                         " Set the terminal's title
+set visualbell                    " No beeping.
+
+set backup
+set noswapfile
+"set nobackup
+"set nowritebackup
+set undodir=~/.vim/tmp/undo//
+set backupdir=~/.vim/tmp/backup//
+set directory=~/.vim/tmp/swap//
+
+set cmdheight=2 " Better display for messages
+set updatetime=300 " You will have bad experience for diagnostic messages when it's default 4000.
+set shortmess+=c " don't give |ins-completion-menu| messages.
+set signcolumn=yes " always show signcolumns
+set expandtab                     " Use spaces instead of tabs
+set laststatus=2                  " Show the status line all the time
+set tabstop=2                     " Global tab width.
+set shiftwidth=2                  " And again, related.
+
+" Make those folders automatically if they don't already exist.
+if !isdirectory(expand(&undodir))
+  call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+  call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+  call mkdir(expand(&directory), "p")
+endif
+
+
+" File Type Setting  {{{ 
+au BufNewFile,BufRead *.ts setlocal filetype=typescript
+au BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
+" for html/yml files, 2 spaces
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
+" for html/yml files, 2 spaces
+autocmd Filetype html setlocal ts=2 sw=2 expandtab
+autocmd Filetype yml setlocal ts=2 sw=2 expandtab
+" for js/coffee/php files, 4 spaces
+autocmd Filetype javascript setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype coffeescript setlocal ts=4 sw=4 sts=0 expandtab
+autocmd Filetype php setlocal ts=4 sw=4 sts=0 expandtab
+" Automatic fold settings for specific files. Uncomment to use.
+autocmd FileType ruby setlocal foldmethod=syntax
+autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+" }}}
+
+" Tab mappings.
+map <leader>tt :tabnew<cr>
+map <leader>te :tabedit
+map <leader>tc :tabclose<cr>
+map <leader>to :tabonly<cr>
+map <leader>tn :tabnext<cr>
+map <leader>tp :tabprevious<cr>
+map <leader>tf :tabfirst<cr>
+map <leader>tl :tablast<cr>
+map <leader>tm :tabmove
+"
+"
+"  Some Custom Functions
+"
+" Rename tabs to show tab numbero.
 " (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
 if exists("+showtabline")
     function! MyTabLine()
@@ -441,3 +506,25 @@ if exists("+showtabline")
     set showtabline=1
     highlight link TabNum Special
 endif
+
+" OS-specific settings ----------------------------------------------------- {{{
+
+if has("win32")
+  "Windows options here
+else
+  if has("unix")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+      " Mac options here
+      let g:python3_host_prog='/usr/bin/python3'
+      let g:python_host_prog = '/usr/local/bin/python2'
+    else
+      " linux options here
+      " configure python path
+      let g:python_host_prog = '/usr/bin/python2'
+      let g:python3_host_prog = '/usr/bin/python3'
+    endif
+  endif
+endif
+
+" }}}
