@@ -29,6 +29,7 @@ Plug 'ryanoasis/vim-devicons' " icons for nerdtree
 Plug 'easymotion/vim-easymotion' " move to characters in a window
 Plug 'scrooloose/nerdtree' " file navigation Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " advanced fuzzy finder
+Plug 'junegunn/fzf.vim' " https://github.com/junegunn/fzf.vim#installation
 Plug 'mileszs/ack.vim' " grep like word search
 Plug 'ctrlpvim/ctrlp.vim' " file search 
 Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
@@ -108,6 +109,11 @@ nnoremap <F5> :UndotreeToggle<cr>
 if has("persistent_undo")
     set undofile
 endif
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 
 " COC {{{  Language Server Protocal, completion,
 
@@ -527,4 +533,101 @@ else
   endif
 endif
 
+" }}}
+" PLUGIN: fzf.vim{{{
+
+let g:fzf_layout = { 'down': '~40%' }
+
+" Populate quickfix list with selected files
+function! s:build_quickfix_list(lines)
+  call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+  botright copen
+  cc
+endfunction
+
+" Ctrl-q allows to select multiple elements an open them in quick list
+let g:fzf_action = {
+  \ 'ctrl-q': function('s:build_quickfix_list'),
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Add namespace for fzf.vim exported commands
+let g:fzf_command_prefix = 'Fzf'
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" File path completion in Insert mode using fzf
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-buffer-line)
+
+" Use preview when FzfFiles runs in fullscreen
+command! -nargs=? -bang -complete=dir FzfFiles
+      \ call fzf#vim#files(<q-args>, <bang>0 ? fzf#vim#with_preview('up:60%') : {}, <bang>0)
+
+
+
+
+" Mappings
+nnoremap <silent> <leader>o :FzfFiles<CR>
+nnoremap <silent> <leader>O :FzfFiles!<CR>
+nnoremap <silent> <leader>l  :FzfBuffers<CR>
+nnoremap <silent> <leader>b :FzfBLines<CR>
+nnoremap <silent> <leader>`  :FzfMarks<CR>
+nnoremap <silent> <leader>p :FzfCommands<CR>
+nnoremap <silent> <leader>t :FzfFiletypes<CR>
+nnoremap <silent> <F1> :FzfHelptags<CR>
+inoremap <silent> <F1> <ESC>:FzfHelptags<CR>
+cnoremap <silent> <expr> <C-p> getcmdtype() == ":" ? "<C-u>:FzfHistory:\<CR>" : "\<ESC>:FzfHistory/\<CR>"
+cnoremap <silent> <C-_> <C-u>:FzfCommands<CR>
+
+" fzf.Tags uses existing 'tags' file or generates it otherwise
+nnoremap <silent> <leader>] :FzfTags<CR>
+xnoremap <silent> <leader>] "zy:FzfTags <C-r>z<CR>
+
+" fzf.BTags generate tags on-fly for current file
+nnoremap <silent> <leader>} :FzfBTags<CR>
+xnoremap <silent> <leader>} "zy:FzfBTags <C-r>z<CR>
+
+" Show list of change in fzf
+" Some code is borrowed from ctrlp.vim and tweaked to work with fzf
+command! FzfChanges call s:fzf_changes()
+nnoremap <silent> <leader>; :FzfChanges<CR>
+
+function! s:fzf_changelist()
+  redir => result
+  silent! changes
+  redir END
+
+  return map(split(result, "\n")[1:], 'tr(v:val, "	", " ")')
+endf
+
+function! s:fzf_changeaccept(line)
+  let info = matchlist(a:line, '\s\+\(\d\+\)\s\+\(\d\+\)\s\+\(\d\+\).\+$')
+  call cursor(get(info, 2), get(info, 3))
+  silent! norm! zvzz
+endfunction
+
+function! s:fzf_changes()
+  return fzf#run(fzf#wrap({
+        \ 'source':  reverse(s:fzf_changelist()),
+        \ 'sink': function('s:fzf_changeaccept'),
+        \ 'options': '+m +s --nth=3..'
+        \ }))
+endfunction
+
+" Enable per-command history.
+" CTRL-N and CTRL-P will be automatically bound to next-history and
+" previous-history instead of down and up. If you don't like the change,
+" explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+" }}}
+
+" PLUGIN: vim-smooth-scroll {{{
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 20, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 20, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
 " }}}

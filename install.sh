@@ -9,8 +9,5 @@ ln -nfs ~/.dotfiles/tmux.conf  ~/.tmux.conf
 ln -nfs ~/.dotfiles/gitignore_global  ~/.gitignore_global
 ln -nfs ~/.dotfiles/ripgrep  ~/.ripgrep
 mkdir ~/.vimsessions
-mkdir ~/.vimswp
-mkdir ~/.vimundo
-mkdir ~/.vimback
 # ln -nfs ~/.dotfiles/gitconfig  ~/.gitconfig # This might overwrite important info for [user]
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
