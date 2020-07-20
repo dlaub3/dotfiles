@@ -48,9 +48,10 @@ Plug 'plasticboy/vim-markdown'
 "Plug 'othree/yajs.vim' " JS syntax
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
-Plug 'maxmellon/vim-jsx-pretty'
+Plug 'ianks/vim-tsx'
+"Plug 'maxmellon/vim-jsx-pretty'
 " editing --------------------------------------------------------------------------------
-" Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
+Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'godlygeek/tabular' " line up text
 Plug 'tpope/vim-surround' " sounds words,groups with almost anything
 Plug 'scrooloose/nerdcommenter' " easily apply/remove comments
@@ -58,9 +59,10 @@ Plug 'mattn/emmet-vim' " code completion/generation
 Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
 Plug 'terryma/vim-multiple-cursors'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 "Plug 'w0rp/ale' " linting, Language Server Protocal, completion, fixing {{{
 "Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
-Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+ Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 call plug#end()
 
 " ============================================================================ "
@@ -70,6 +72,15 @@ call plug#end()
 "
 "
 " ============================================================================ "
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<C-e>"
+let g:UltiSnipsListSnippets="<C-l>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+let g:UltiSnipsEditSplit="vertical"
+
 
 let g:Guifont='FuraCode Nerd Font'
 
@@ -94,12 +105,21 @@ let g:airline_theme='dracula'
 let g:dracula_terminal_italics=1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-noremap <C-t> :NERDTreeToggle<CR>
+function NERDTreeToggleRelative() 
+  if len(expand("%"))
+    NERDTreeToggle %
+  else
+    NERDTreeToggle
+  endif
+endfunction
+
+
+noremap <C-t> :call NERDTreeToggleRelative()<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-let NERDTreeQuitOnOpen=0
+let NERDTreeQuitOnOpen=1
 let NERDTreeChDirMode=2
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
@@ -110,8 +130,8 @@ if has("persistent_undo")
 endif
 
 " COC {{{  Language Server Protocal, completion,
-
-let g:coc_global_extensions = ['coc-tslint-plugin', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
+let g:coc_enable_locationlist = 1
+let g:coc_global_extensions = ['coc-lists','coc-tslint-plugin', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -368,6 +388,8 @@ syntax enable
 set autoread
 set mouse=a " enable scroll with trackpad
 au FocusGained,BufEnter * :checktime " reload when file changes
+au BufEnter * :syntax sync minlines=100 fromstart
+set redrawtime=1000
 autocmd Filetype gitcommit setlocal spell
 set clipboard=unnamed " use system clipboard
 set clipboard=unnamedplus " use system clipboard
