@@ -23,10 +23,19 @@ function jsBeautify --description "beautify"
   npx prettier@1.19.1 --write (git-changed)
 end
 
+function styleLintAge --description "lint"
+  set files_list (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$')
+  if test "$files_list"
+    npx stylelint@12.0.0 $files_list --config ./stylelint.config.js
+  else
+    echo "no files"
+  end
+end
+
 function styleLint --description "lint"
   set files_list (git-changed | grep '\.[t|j]sx\?$')
   if test "$files_list"
-    npx stylelint@12.0.0 $files_list --config ./.stylelint.config.js
+    npx stylelint@12.0.0 $files_list --config ./stylelint.config.js
   else
     echo "no files"
   end
