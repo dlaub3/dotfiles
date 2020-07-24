@@ -72,6 +72,34 @@ call plug#end()
 "
 "
 " ============================================================================ "
+"
+
+noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
+noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
+
+fu! HlSearch()
+    let s:pos = match(getline('.'), @/, col('.') - 1) + 1
+    if s:pos != col('.')
+        call StopHL()
+    endif
+endfu
+
+fu! StopHL()
+    if !v:hlsearch || mode() isnot 'n'
+        return
+    else
+        sil call feedkeys("\<Plug>(StopHL)", 'm')
+    endif
+endfu
+
+augroup SearchHighlight
+au!
+    au CursorMoved * call HlSearch()
+    au InsertEnter * call StopHL()
+augroup end
+         
+" let mapleader = " "
+inoremap jk <ESC>
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<C-e>"
@@ -81,6 +109,13 @@ let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 let g:UltiSnipsEditSplit="vertical"
 
+" move lines up and down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 let g:Guifont='FuraCode Nerd Font'
 
@@ -258,8 +293,8 @@ endtry
 "   <leader>t - Browse list of files in current directory
 "   <leader>g - Search current directory for occurences of given term and close window if no results
 "   <leader>j - Search current directory for occurences of word under cursor
-nmap ; :Denite buffer<CR>
-nmap <leader>t :DeniteProjectDir file/rec<CR>
+nmap <leader>b :Denite buffer<CR>
+nmap <leader>p :DeniteProjectDir file/rec<CR>
 nnoremap <leader>g :<C-u>Denite grep:. -no-empty<CR>
 nnoremap <leader>j :<C-u>DeniteCursorWord grep:.<CR>
 
@@ -383,6 +418,7 @@ if (has("termguicolors"))
 endif
 
 "}}
+"
 
 syntax enable
 set autoread
@@ -455,6 +491,9 @@ endif
 " File Type Setting  {{{ 
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
+au BufNewFile,BufRead .tsx UltiSnipsAddFiletypes *.ignore.tsx
+au BufNewFile,BufRead .ts UltiSnipsAddFiletypes *.ignore.ts
+
 " for html/yml files, 2 spaces
 autocmd Filetype html setlocal ts=2 sw=2 expandtab
 " for html/yml files, 2 spaces
