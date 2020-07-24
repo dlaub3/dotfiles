@@ -1,3 +1,15 @@
+# ENV
+switch (uname)
+    case Linux
+            echo Hi Tux!
+    case Darwin
+        set -x PATH /usr/local/bin $PATH
+        set -x PATH /usr/local/opt/node@12/bin $PATH
+    case FreeBSD NetBSD DragonFly
+            echo Hi Beastie!
+    case '*'
+            echo Hi, stranger!
+end
 # alias
 alias ls="exa --long --header"
 alias ll="ls -alh"
@@ -13,7 +25,6 @@ alias jsonPretty="pbpaste | jq | pbcopy && pbpaste | jq"
 
 function jsImport --description "copy the import path to the clipboard"
    rg " $argv[1]" -l | rg "$argv[1]" | pbcopy
-end
 
 function jsBeautifyAge --description "beautify <interval>" 
   npx prettier@1.19.1 --write (git diff --name-only --relative "@{$argv[1]}")
