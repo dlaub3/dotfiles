@@ -25,6 +25,7 @@ alias jsonPretty="pbpaste | jq | pbcopy && pbpaste | jq"
 
 function jsImport --description "copy the import path to the clipboard"
    rg " $argv[1]" -l | rg "$argv[1]" | pbcopy
+end
 
 function jsBeautifyAge --description "beautify <interval>" 
   npx prettier@1.19.1 --write (git diff --name-only --relative "@{$argv[1]}")
