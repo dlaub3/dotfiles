@@ -100,23 +100,6 @@ au!
 augroup end
          
 " let mapleader = " "
-inoremap jk <ESC>
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<C-e>"
-let g:UltiSnipsListSnippets="<C-l>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
-let g:UltiSnipsSnippetDirectories=["UltiSnips"]
-let g:UltiSnipsEditSplit="vertical"
-
-" move lines up and down
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
 
 let g:Guifont='FuraCode Nerd Font'
 
@@ -141,6 +124,25 @@ let g:airline_theme='dracula'
 let g:dracula_terminal_italics=1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
+
+inoremap jk <ESC>
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<C-e>"
+let g:UltiSnipsListSnippets="<C-l>"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+let g:UltiSnipsEditSplit="vertical"
+
+" move lines up and down
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
 function NERDTreeToggleRelative() 
   if len(expand("%"))
     NERDTreeToggle %
@@ -164,11 +166,6 @@ nnoremap <F5> :UndotreeToggle<cr>
 if has("persistent_undo")
     set undofile
 endif
-
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
 
 " COC {{{  Language Server Protocal, completion,
 let g:coc_enable_locationlist = 1
@@ -606,7 +603,7 @@ function! s:build_quickfix_list(lines)
   cc
 endfunction
 
-" Ctrl-q allows to select multiple elements an open them in quick list
+"Ctrl-q allows to select multiple elements an open them in quick list
 let g:fzf_action = {
   \ 'ctrl-q': function('s:build_quickfix_list'),
   \ 'ctrl-t': 'tab split',
@@ -634,11 +631,11 @@ command! -nargs=? -bang -complete=dir FzfFiles
 " Mappings
 nnoremap <silent> <leader>o :FzfFiles<CR>
 nnoremap <silent> <leader>O :FzfFiles!<CR>
-nnoremap <silent> <leader>l  :FzfBuffers<CR>
-nnoremap <silent> <leader>b :FzfBLines<CR>
+"nnoremap <silent> <leader>l  :FzfBuffers<CR>
+"nnoremap <silent> <leader>b :FzfBLines<CR>
 nnoremap <silent> <leader>`  :FzfMarks<CR>
-nnoremap <silent> <leader>p :FzfCommands<CR>
-nnoremap <silent> <leader>t :FzfFiletypes<CR>
+"nnoremap <silent> <leader>p :FzfCommands<CR>
+"nnoremap <silent> <leader>t :FzfFiletypes<CR>
 nnoremap <silent> <F1> :FzfHelptags<CR>
 inoremap <silent> <F1> <ESC>:FzfHelptags<CR>
 cnoremap <silent> <expr> <C-p> getcmdtype() == ":" ? "<C-u>:FzfHistory:\<CR>" : "\<ESC>:FzfHistory/\<CR>"
