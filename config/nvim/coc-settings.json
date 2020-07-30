@@ -17,8 +17,8 @@
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
-  "tsserver.npm": "usr/local/bin/npm",
+  "tsserver.npm": "/usr/local/bin/npm",
   "tsserver.log": "normal",
   "tsserver.maxTsServerMemory": 4096,
-  "tsserver.tsdk": "~/.config/yarn/global/node_modules/typescript/lib"
+  "tsserver.tsdk": "/Users/daniel/.config/yarn/global/node_modules/typescript/lib"
 }

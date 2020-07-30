@@ -39,6 +39,7 @@ Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic.
 Plug 'tpope/vim-fugitive' " a git wrapper
 Plug 'tpope/vim-git' " support git filetypes
 Plug 'airblade/vim-gitgutter' " git changes denoted next to line numbers
+Plug 'junegunn/gv.vim'
 " yaml   ---------------------------------------------------------------------------------
 Plug 'avakhov/vim-yaml'
 " markdown  ------------------------------------------------------------------------------
@@ -61,6 +62,8 @@ Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
 Plug 'terryma/vim-multiple-cursors'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'sjl/gundo.vim'
+Plug 'terryma/vim-smooth-scroll'
 "Plug 'w0rp/ale' " linting, Language Server Protocal, completion, fixing {{{
 "Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
  Plug 'neoclide/coc.nvim', {'branch': 'release'} 
@@ -423,10 +426,12 @@ endif
 "}}
 "
 
+" match git conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+set shada+=%
 syntax enable
-set autoread
 set mouse=a " enable scroll with trackpad
-au FocusGained,BufEnter * :checktime " reload when file changes
 au BufEnter * :syntax sync minlines=100 fromstart
 set redrawtime=1000
 autocmd Filetype gitcommit setlocal spell
@@ -466,6 +471,24 @@ set backup
 set noswapfile
 "set nobackup
 "set nowritebackup
+" autoread and autowrite
+set autoread
+autocmd FocusGained,CursorHold,BufEnter ?* if getcmdwintype() == '' | checktime | endif
+augroup save
+  au!
+  au FocusLost * wall
+augroup END
+set nohidden
+set nobackup
+set noswapfile
+set nowritebackup
+set autoread
+set autowrite
+set autowriteall
+
+" persistent-undo
+set undodir=~/.vim/undo
+set undofile
 set undodir=~/.vim/tmp/undo//
 set backupdir=~/.vim/tmp/backup//
 set directory=~/.vim/tmp/swap//
