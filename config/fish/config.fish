@@ -88,4 +88,5 @@ function showContents --description "search files and list contents"
   egrep -C 3 -rl $argv[1] . | xargs egrep -C2 --color $argv[1]
 end
 
+fnm env --multi | source
 starship init fish | source
