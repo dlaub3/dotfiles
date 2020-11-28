@@ -439,7 +439,6 @@ endfunction
 " ============================================================================ "
 
 
-set shell=/usr/local/bin/fish
 
 let g:search_ignore_dirs = ['.git', 'node_modules']
 " THEME {{
@@ -630,11 +629,13 @@ else
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
       " Mac options here
+      set shell=/usr/local/bin/fish
       let g:python3_host_prog='/usr/bin/python3'
       let g:python_host_prog = '/usr/local/bin/python2'
     else
       " linux options here
       " configure python path
+      set shell=/usr/bin/fish
       let g:python_host_prog = '/usr/bin/python2'
       let g:python3_host_prog = '/usr/bin/python3'
     endif

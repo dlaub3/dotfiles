@@ -1,15 +1,4 @@
 # ENV
-switch (uname)
-    case Linux
-            echo Hi Tux!
-    case Darwin
-        set -x PATH /usr/local/bin $PATH
-        set -x PATH /usr/local/opt/node@12/bin $PATH
-    case FreeBSD NetBSD DragonFly
-            echo Hi Beastie!
-    case '*'
-            echo Hi, stranger!
-end
 # alias
 alias ls="exa --long --header"
 alias ll="ls -alh"
@@ -88,5 +77,16 @@ function showContents --description "search files and list contents"
   egrep -C 3 -rl $argv[1] . | xargs egrep -C2 --color $argv[1]
 end
 
-fnm env --multi | source
-starship init fish | source
+switch (uname)
+    case Linux
+            echo Hi Tux!
+    case Darwin
+        set -x PATH /usr/local/bin $PATH
+        set -x PATH /usr/local/opt/node@12/bin $PATH
+        fnm env --multi | source
+        starship init fish | source
+    case FreeBSD NetBSD DragonFly
+            echo Hi Beastie!
+    case '*'
+            echo Hi, stranger!
+end
