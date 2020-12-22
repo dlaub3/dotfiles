@@ -1,6 +1,9 @@
 {
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
+  "coc.preferences.previewAutoClose": true,
+  "typescript.suggest.autoImports": true,
+  "eslint.autoFixOnSave": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "json",
     "javascript",
@@ -14,6 +17,7 @@
     "typescriptreact",
     "javascriptreact"
   ],
+  //"eslint.nodePath": "./node_modules",
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
@@ -21,4 +25,5 @@
   "tsserver.log": "normal",
   "tsserver.maxTsServerMemory": 4096,
   "tsserver.tsdk": "/Users/daniel/.config/yarn/global/node_modules/typescript/lib"
+  //"coc.preferences.rootPatterns": ["package.json"]
 }
