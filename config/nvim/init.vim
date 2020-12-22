@@ -49,8 +49,9 @@ Plug 'plasticboy/vim-markdown'
 " JS/TS   --------------------------------------------------------------------------------
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
+Plug 'ianks/vim-tsx'
 "Plug 'yuezk/vim-js'
-Plug 'maxmellon/vim-jsx-pretty'
+"Plug 'maxmellon/vim-jsx-pretty'
 " editing --------------------------------------------------------------------------------
 Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'godlygeek/tabular' " line up text
@@ -456,7 +457,6 @@ endfunction
 " ============================================================================ "
 
 
-set shell=/usr/local/bin/fish
 
 let g:search_ignore_dirs = ['.git', 'node_modules']
 " THEME {{
@@ -682,12 +682,14 @@ else
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
       " Mac options here
+      set shell=/usr/local/bin/fish
       let g:python3_host_prog='/usr/local/opt/python@3.8/bin/python3'
       let g:python_host_prog = '/usr/local/bin/python2'
     else
       " linux options here
       " configure python path
-      let g:python_host_prog = '/usr/bin/python'
+      set shell=/usr/bin/fish
+      let g:python_host_prog = '/usr/bin/python2'
       let g:python3_host_prog = '/usr/bin/python3'
     endif
   endif

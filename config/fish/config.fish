@@ -116,4 +116,3 @@ function j_test --description "run jest tests for the current directory, or prov
 end
 
 fnm env | source
-#starship init fish | source
