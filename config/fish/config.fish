@@ -1,16 +1,19 @@
 # ENV
+fish_vi_key_bindings
+# fish_default_key_bindings
 switch (uname)
     case Linux
-            echo Hi Tux!
+        set -x PATH /usr/bin/vendor_perl $PATH
     case Darwin
         set -x PATH /usr/local/bin $PATH
         set -x PATH /usr/local/opt/node@12/bin $PATH
         set -x PATH /usr/local/opt/python@3.8/bin $PATH
     case FreeBSD NetBSD DragonFly
-            echo Hi Beastie!
+        echo Hi Beastie!
     case '*'
-            echo Hi, stranger!
+        echo Hi, stranger!
 end
+
 # alias
 alias ls="exa --long --header"
 alias ll="ls -alh"
@@ -115,4 +118,12 @@ function j_test --description "run jest tests for the current directory, or prov
   end
 end
 
-fnm env | source
+switch (uname)
+    case Linux
+    case Darwin
+        fnm env | source
+    case FreeBSD NetBSD DragonFly
+        echo Hi Beastie!
+    case '*'
+        echo Hi, stranger!
+end
