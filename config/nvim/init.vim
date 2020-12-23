@@ -44,7 +44,7 @@ Plug 'junegunn/gv.vim'
 " yaml   ---------------------------------------------------------------------------------
 Plug 'avakhov/vim-yaml'
 " markdown  ------------------------------------------------------------------------------
-Plug 'suan/vim-instant-markdown' " open browser for markdown preview
+Plug 'suan/vim-instant-markdown', { 'for': 'markdown'} " open browser for markdown preview
 Plug 'plasticboy/vim-markdown'
 " JS/TS   --------------------------------------------------------------------------------
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
