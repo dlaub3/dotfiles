@@ -90,8 +90,8 @@ function showContents --description "search files and list contents"
 end
 
 function lorem --description "get lorem text" 
-  curl -s http://metaphorpsum.com/sentences/$argv[1] | pbcopy
-  pbpaste | bat
+  ~/.dotfiles/lorem.pl $argv[1] | pbcopy
+  pbpaste
 end
 
 function j_test --description "run jest tests for the current directory, or provide a path"
