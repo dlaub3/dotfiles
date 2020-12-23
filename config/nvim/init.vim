@@ -20,6 +20,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'dracula/vim', { 'name': 'dracula' } " colorscheme
 Plug 'tyrannicaltoucan/vim-deep-space' " colorscheme
 Plug 'altercation/vim-colors-solarized' " colorscheme
+Plug 'mdx-js/mdx'
 Plug 'drewtempelmeyer/palenight.vim' " colorscheme
 Plug 'cocopon/iceberg.vim' " colorscheme
 Plug 'vim-airline/vim-airline'
@@ -46,11 +47,10 @@ Plug 'avakhov/vim-yaml'
 Plug 'suan/vim-instant-markdown', { 'for': 'markdown'} " open browser for markdown preview
 Plug 'plasticboy/vim-markdown'
 " JS/TS   --------------------------------------------------------------------------------
-"Plug 'leafgarland/typescript-vim' " TS Syntax
-"Plug 'othree/yajs.vim' " JS syntax
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'ianks/vim-tsx'
+"Plug 'yuezk/vim-js'
 "Plug 'maxmellon/vim-jsx-pretty'
 " editing --------------------------------------------------------------------------------
 Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
@@ -67,6 +67,7 @@ Plug 'terryma/vim-smooth-scroll'
 "Plug 'w0rp/ale' " linting, Language Server Protocal, completion, fixing {{{
 "Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
  Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+ Plug 'neoclide/jsonc.vim'
 call plug#end()
 
 " ============================================================================ "
@@ -77,12 +78,21 @@ call plug#end()
 "
 " ============================================================================ "
 
+" Source the vimrc file after saving it
+"if has("autocmd")
+  "autocmd bufwritepost init.vim source $MYVIMRC
+"endif
+
+nmap <leader>v :tabedit $MYVIMRC<CR>
+nmap <leader>. :tabedit <bar> NERDTreeToggle ~/.dotfiles <CR>
+
 " Add some emoji
 ab :construction: 🚧
 ab :kiss: 💋
 ab :check: ✅
 ab :facepalm: 🤦
 ab :poop: 💩
+
 
 " 
 set listchars=tab:▸\ ,eol:¬
@@ -103,6 +113,10 @@ set formatlistpat+=]                        " End character class
 set formatlistpat+=\\s\\+                   " One or more spaces
 set formatlistpat+=\\\|                     " or
 set formatlistpat+=^\\s*[-–+o*•]\\s\\+      " Bullet points
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " Improved highlighting / unhighliting 
 noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
@@ -156,12 +170,15 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 
 
 inoremap jk <ESC>
+inoremap kj <ESC>
+"vnoremap kj <Esc>
+"vnoremap jk <Esc>
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<C-e>"
-let g:UltiSnipsListSnippets="<C-l>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+let g:UltiSnipsListSnippets="<C-n>"
+let g:UltiSnipsJumpForwardTrigger="<C-l>"
+let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 let g:UltiSnipsEditSplit="vertical"
 
@@ -181,6 +198,7 @@ function NERDTreeToggleRelative()
   endif
 endfunction
 
+"let g:vim_jsx_pretty_highlight_close_tag = 1
 
 noremap <C-t> :call NERDTreeToggleRelative()<CR>
 autocmd StdinReadPre * let s:std_in=1
@@ -188,7 +206,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 let NERDTreeQuitOnOpen=1
-let NERDTreeChDirMode=2
+let NERDTreeChDirMode=0
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
@@ -199,7 +217,7 @@ endif
 
 " COC {{{  Language Server Protocal, completion,
 let g:coc_enable_locationlist = 1
-let g:coc_global_extensions = ['coc-lists','coc-tslint-plugin', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-yank', 'coc-prettier']
+let g:coc_global_extensions = ['coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -455,7 +473,7 @@ endif
 " match git conflict markers
 match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-set shada+=%
+set shada+=%10,n~/.shada
 syntax enable
 set mouse=a " enable scroll with trackpad
 au BufEnter * :syntax sync minlines=100 fromstart
@@ -528,6 +546,7 @@ set laststatus=2                  " Show the status line all the time
 set tabstop=2                     " Global tab width.
 set shiftwidth=2                  " And again, related.
 
+set re=0
 " Make those folders automatically if they don't already exist.
 if !isdirectory(expand(&undodir))
   call mkdir(expand(&undodir), "p")
@@ -622,6 +641,40 @@ endif
 
 " OS-specific settings ----------------------------------------------------- {{{
 
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin"
+    " Mac options here
+    " Terminal isn't sending the D key 
+    "map <D-S-]> gt
+    "map <D-S-[> gT
+    "map <D-1> 1gt
+    "map <D-2> 2gt
+    "map <D-3> 3gt
+    "map <D-4> 4gt
+    "map <D-5> 5gt
+    "map <D-6> 6gt
+    "map <D-7> 7gt
+    "map <D-8> 8gt
+    "map <D-9> 9gt
+    "map <D-0> :tablast<CR>
+  else
+    " windows/linux options here
+    map <C-S-]> gt
+    map <C-S-[> gT
+    map <C-1> 1gt
+    map <C-2> 2gt
+    map <C-3> 3gt
+    map <C-4> 4gt
+    map <C-5> 5gt
+    map <C-6> 6gt
+    map <C-7> 7gt
+    map <C-8> 8gt
+    map <C-9> 9gt
+    map <C-0> :tablast<CR>
+  endif
+endif
+
 if has("win32")
   "Windows options here
 else
@@ -630,7 +683,7 @@ else
     if s:uname == "Darwin\n"
       " Mac options here
       set shell=/usr/local/bin/fish
-      let g:python3_host_prog='/usr/bin/python3'
+      let g:python3_host_prog='/usr/local/opt/python@3.8/bin/python3'
       let g:python_host_prog = '/usr/local/bin/python2'
     else
       " linux options here
@@ -733,7 +786,7 @@ endfunction
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 " }}}
-
+"
 " PLUGIN: vim-smooth-scroll {{{
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 20, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>

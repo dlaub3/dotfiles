@@ -1,4 +1,16 @@
 # ENV
+switch (uname)
+    case Linux
+            echo Hi Tux!
+    case Darwin
+        set -x PATH /usr/local/bin $PATH
+        set -x PATH /usr/local/opt/node@12/bin $PATH
+        set -x PATH /usr/local/opt/python@3.8/bin $PATH
+    case FreeBSD NetBSD DragonFly
+            echo Hi Beastie!
+    case '*'
+            echo Hi, stranger!
+end
 # alias
 alias ls="exa --long --header"
 alias ll="ls -alh"
@@ -77,16 +89,30 @@ function showContents --description "search files and list contents"
   egrep -C 3 -rl $argv[1] . | xargs egrep -C2 --color $argv[1]
 end
 
-switch (uname)
-    case Linux
-            echo Hi Tux!
-    case Darwin
-        set -x PATH /usr/local/bin $PATH
-        set -x PATH /usr/local/opt/node@12/bin $PATH
-        fnm env --multi | source
-        starship init fish | source
-    case FreeBSD NetBSD DragonFly
-            echo Hi Beastie!
-    case '*'
-            echo Hi, stranger!
+function lorem --description "get lorem text" 
+  curl -s http://metaphorpsum.com/sentences/$argv[1] | pbcopy
+  pbpaste | bat
 end
+
+function j_test --description "run jest tests for the current directory, or provide a path"
+  set dir (pwd | sed -E 's/^.+src/src/')
+  if not set -q argv[1]
+    yarn jest $dir 
+  else if test $argv[1] = '--coverage'
+    yarn jest $dir \
+    --coverage \
+    --collectCoverageFrom=\"$dir/\*\*/\*.{ts,tsx}\" \
+    --coveragePathIgnorePatterns=\"__tests__/\"
+  else if not set -q argv[2]
+    yarn jest $argv[1] 
+  else if test $argv[2] = '--coverage'
+    yarn jest $argv[1] \
+    --coverage \
+    --collectCoverageFrom=\"$argv[1]\*\*/\*.{ts,tsx}\" \
+    --coveragePathIgnorePatterns=\"__tests__/\"
+   else
+     echo "💩 - garbage in garbage out"
+  end
+end
+
+fnm env | source
