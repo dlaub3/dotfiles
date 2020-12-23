@@ -9,9 +9,9 @@ switch (uname)
         set -x PATH /usr/local/opt/node@12/bin $PATH
         set -x PATH /usr/local/opt/python@3.8/bin $PATH
     case FreeBSD NetBSD DragonFly
-        echo Hi Beastie!
+          echo Hi Beastie!
     case '*'
-        echo Hi, stranger!
+            echo Hi, stranger!
 end
 
 # alias
