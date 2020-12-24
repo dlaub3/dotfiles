@@ -8,13 +8,16 @@ function fish_mode_prompt
       echo '🔮 [i] '
     case replace_one
       set_color --bold green
-      echo '👽 [r] '
+      echo '🤖 [r] '
+    case replace
+      set_color --bold green
+      echo '👽 [R] '
     case visual
       set_color --bold brmagenta
       echo '😈 [v] '
     case '*'
       set_color --bold red
-      echo '⁉️ '
+      echo '⁉️ [$fish_bind_mode] ' 
   end
   set_color normal
 end
