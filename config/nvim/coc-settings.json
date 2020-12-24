@@ -24,6 +24,6 @@
   "tsserver.npm": "/usr/local/bin/npm",
   "tsserver.log": "normal",
   "tsserver.maxTsServerMemory": 4096,
-  "tsserver.tsdk": "/Users/daniel/.config/yarn/global/node_modules/typescript/lib"
+  /*"tsserver.tsdk": "/Users/daniel/.config/yarn/global/node_modules/typescript/lib"*/
   //"coc.preferences.rootPatterns": ["package.json"]
 }

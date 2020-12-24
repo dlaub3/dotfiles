@@ -49,9 +49,9 @@ Plug 'plasticboy/vim-markdown'
 " JS/TS   --------------------------------------------------------------------------------
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
-Plug 'ianks/vim-tsx'
+"Plug 'ianks/vim-tsx'
 "Plug 'yuezk/vim-js'
-"Plug 'maxmellon/vim-jsx-pretty'
+Plug 'maxmellon/vim-jsx-pretty'
 " editing --------------------------------------------------------------------------------
 Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'godlygeek/tabular' " line up text
