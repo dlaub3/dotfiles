@@ -3,7 +3,7 @@
 web:*.{html,css,js,jsx,ts,tsx}*
 
 # Using glob patterns to include/exclude files or folders
---glob=!git/*
+--glob=!{.git,.cache,node_modules,dist,yarn.lock,yarn-error.log}
 
 --smart-case
 

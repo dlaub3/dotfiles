@@ -4,6 +4,8 @@ fish_vi_key_bindings
 switch (uname)
     case Linux
         set -x PATH /usr/bin/vendor_perl $PATH
+        alias pbcopy='xclip -selection clipboard'
+        alias pbpaste='xclip -selection clipboard -o'
     case Darwin
         set -x PATH /usr/local/bin $PATH
         set -x PATH /usr/local/opt/node@12/bin $PATH
@@ -13,6 +15,11 @@ switch (uname)
     case '*'
             echo Hi, stranger!
 end
+
+set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
+set -x FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{.git,node_modules,dist}"'
+set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
+alias fzf_preview='fzf --preview "bat --style=numbers --color=always {} | less -R"'
 
 # alias
 alias ls="exa --long --header"

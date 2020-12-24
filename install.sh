@@ -7,7 +7,7 @@ ln -nfs ~/.dotfiles/config/bat ~/.config/
 ln -nfs ~/.dotfiles/tmux  ~/.tmux
 ln -nfs ~/.dotfiles/tmux.conf  ~/.tmux.conf
 ln -nfs ~/.dotfiles/gitignore_global  ~/.gitignore_global
-ln -nfs ~/.dotfiles/ripgrep  ~/.ripgrep
+ln -nfs ~/.dotfiles/ripgreprc  ~/.ripgreprc
 mkdir ~/.vimsessions
 # ln -nfs ~/.dotfiles/gitconfig  ~/.gitconfig # This might overwrite important info for [user]
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
