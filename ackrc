@@ -1,2 +1,7 @@
 --ignore-dir=node_modules
+--ignore-dir=dist
+--ignore-dir=.cache
 --ignore-dir=.git
+
+--ignore-file=ext:lock
+--ignore-file=ext:log

@@ -5,16 +5,16 @@ function fish_mode_prompt
       echo '👾 [n] '
     case insert
       set_color --bold green
-      echo '👾 [i] '
+      echo '🔮 [i] '
     case replace_one
       set_color --bold green
-      echo '👾 [r] '
+      echo '👽 [r] '
     case visual
       set_color --bold brmagenta
-      echo '👾 [v] '
+      echo '😈 [v] '
     case '*'
       set_color --bold red
-      echo '? '
+      echo '⁉️ '
   end
   set_color normal
 end
