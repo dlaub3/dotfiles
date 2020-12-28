@@ -4,7 +4,7 @@ ln -nfs ~/.dotfiles/config/fish ~/.config/
 ln -nfs ~/.dotfiles/config/nvim ~/.config/
 ln -nfs ~/.dotfiles/config/kitty ~/.config/
 ln -nfs ~/.dotfiles/config/bat ~/.config/
-ln -nfs ~/.dotfiles/tmux  ~/.tmux
+ln -nfs ~/.dotfiles/tmux/* ~/.tmux
 ln -nfs ~/.dotfiles/tmux.conf  ~/.tmux.conf
 ln -nfs ~/.dotfiles/gitignore_global  ~/.gitignore_global
 ln -nfs ~/.dotfiles/ripgreprc  ~/.ripgreprc
