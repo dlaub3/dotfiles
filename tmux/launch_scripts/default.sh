@@ -4,7 +4,6 @@ SESSION=$USER
 
 # Create a new, detached session
 tmux new-session -d -s $SESSION
-tmux send-keys 'cd ~/Documents/dev' C-m
 
 # Create a second window
 tmux new-window -t $SESSION:1 -n 'default'

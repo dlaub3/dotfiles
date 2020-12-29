@@ -128,7 +128,6 @@ end
 switch (uname)
     case Linux
     case Darwin
-        fnm env | source
     case FreeBSD NetBSD DragonFly
         echo Hi Beastie!
     case '*'
