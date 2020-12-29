@@ -4,6 +4,7 @@
   "coc.preferences.previewAutoClose": true,
   "typescript.suggest.autoImports": true,
   "eslint.autoFixOnSave": true,
+  "prettier.requireConfig": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "json",
     "javascript",
@@ -17,13 +18,10 @@
     "typescriptreact",
     "javascriptreact"
   ],
-  //"eslint.nodePath": "./node_modules",
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",
   "tsserver.npm": "/usr/local/bin/npm",
   "tsserver.log": "normal",
-  "tsserver.maxTsServerMemory": 4096,
-  /*"tsserver.tsdk": "/Users/daniel/.config/yarn/global/node_modules/typescript/lib"*/
-  //"coc.preferences.rootPatterns": ["package.json"]
+  "tsserver.maxTsServerMemory": 4096
 }
