@@ -7,13 +7,10 @@ switch (uname)
         alias pbcopy='xclip -selection clipboard'
         alias pbpaste='xclip -selection clipboard -o'
     case Darwin
-        set -x PATH /usr/local/bin $PATH
-        set -x PATH /usr/local/opt/node@12/bin $PATH
-        set -x PATH /usr/local/opt/python@3.8/bin $PATH
     case FreeBSD NetBSD DragonFly
-          echo Hi Beastie!
+        echo Hi Beastie!
     case '*'
-            echo Hi, stranger!
+        echo Hi, stranger!
 end
 
 set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
@@ -21,6 +18,7 @@ set -x FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{.git,node_mod
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 alias fzf_preview='fzf --preview "bat --style=numbers --color=always {} | less -R"'
 
+alias nvimdiff='nvim -p (git diff --name-only --relative && git diff --staged --name-only --relative && git ls-files -o --exclude-standard)'
 # alias
 alias ls="exa --long --header"
 alias ll="ls -alh"
