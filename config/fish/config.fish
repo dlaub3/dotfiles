@@ -1,4 +1,5 @@
 # ENV
+set -x SHELL (which fish)
 fish_vi_key_bindings
 # fish_default_key_bindings
 switch (uname)
@@ -32,19 +33,15 @@ alias git-changed="git diff --name-only --relative && git diff --staged --name-o
 
 alias jsonPretty="pbpaste | jq | pbcopy && pbpaste | jq"
 
-function jsImport --description "copy the import path to the clipboard"
-   rg " $argv[1]" -l | rg "$argv[1]" | pbcopy
-end
-
-function jsBeautifyAge --description "beautify <interval>" 
+function myPrettierAge --description "beautify <interval>" 
   npx prettier@1.19.1 --write (git diff --name-only --relative "@{$argv[1]}")
 end
 
-function jsBeautify --description "beautify"
+function myPrettier --description "beautify"
   npx prettier@1.19.1 --write (git-changed)
 end
 
-function styleLintAge --description "lint"
+function myStylelintAge --description "lint"
   set files_list (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$')
   if test "$files_list"
     npx stylelint@12.0.0 $files_list --config ./stylelint.config.js
@@ -53,7 +50,7 @@ function styleLintAge --description "lint"
   end
 end
 
-function styleLint --description "lint"
+function myStyleLint --description "lint"
   set files_list (git-changed | grep '\.[t|j]sx\?$')
   if test "$files_list"
     npx stylelint@12.0.0 $files_list --config ./stylelint.config.js
@@ -62,28 +59,19 @@ function styleLint --description "lint"
   end
 end
 
-function tsLint --description "lint"
+function myEslint --description "lint"
   set files_list (git-changed | grep '\.[t|j]sx\?$')
   if test "$files_list"
-    npx tslint $files_list --fix -c ./.tslintrc.ignore.json
+    npx eslint $files_list $argv[1]
   else
     echo "no files"
   end
 end
 
-function tsLintNoSort --description "lint"
-  set files_list (git-changed | grep '\.[t|j]sx\?$')
-  if test "$files_list"
-    npx tslint $files_list --fix
-  else
-    echo "no files"
-  end
-end
-
-function tsLintAge --description "lintAge <interval>"
+function myEslintAge --description "lintAge <interval>"
   set files_list (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$')
   if test "$files_list"
-    npx tslint $files_list --fix
+    npx eslint $files_list $argv[2]
   else
     echo 'no files'
   end
@@ -97,6 +85,11 @@ function showContents --description "search files and list contents"
   egrep -C 3 -rl $argv[1] . | xargs egrep -C2 --color $argv[1]
 end
 
+
+function jsImport --description "copy the import path to the clipboard"
+   rg " $argv[1]" -l | rg "$argv[1]" | pbcopy
+end
+
 function lorem --description "get lorem text" 
   ~/.dotfiles/lorem.pl $argv[1] | pbcopy
   pbpaste
@@ -105,16 +98,16 @@ end
 function j_test --description "run jest tests for the current directory, or provide a path"
   set dir (pwd | sed -E 's/^.+src/src/')
   if not set -q argv[1]
-    yarn jest $dir 
+    npx jest $dir 
   else if test $argv[1] = '--coverage'
-    yarn jest $dir \
+    npx jest $dir \
     --coverage \
     --collectCoverageFrom=\"$dir/\*\*/\*.{ts,tsx}\" \
     --coveragePathIgnorePatterns=\"__tests__/\"
   else if not set -q argv[2]
-    yarn jest $argv[1] 
+    npx jest $argv[1] 
   else if test $argv[2] = '--coverage'
-    yarn jest $argv[1] \
+    npx jest $argv[1] \
     --coverage \
     --collectCoverageFrom=\"$argv[1]\*\*/\*.{ts,tsx}\" \
     --coveragePathIgnorePatterns=\"__tests__/\"
