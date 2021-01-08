@@ -1,3 +1,12 @@
+global !p
+def complete(t, opts):
+	if t:
+		opts = [ m[len(t):] for m in opts if m.startswith(t) ]
+	if(len(opts) == 1):
+		return opts[0]
+	return "(" + "|".join(opts) + ")"
+endglobal
+
 snippet comment-m "insert a comment with name and date" b
 /*
 * $1
@@ -33,3 +42,20 @@ snippet tslint-dnl "tslint:disable-next-line:"
 /* tslint:disable-next-line:${VISUAL}${0:no-unsafe-any} */
 endsnippet
 
+snippet t_desc
+describe('$1', () => {
+  it('${2:should}', () => {
+    const actual = {}
+    const expected = {}
+    expect(actual).toEqual(expected)
+  })
+})
+endsnippet
+
+snippet t_it
+it('should $1', () => {
+  const actual = ${2:{}}
+  const expected = ${0:{}}
+  expect(actual).toEqual(expected)
+})
+endsnippet
