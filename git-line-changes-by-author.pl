@@ -23,7 +23,7 @@ printf(
   'Files',
   'Insertions',
   'Deletions',
-  'Additions?' 
+  'Additions' 
 );
 
 foreach my $author (@authors) {
