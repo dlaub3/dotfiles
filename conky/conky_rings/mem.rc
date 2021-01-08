@@ -1,0 +1,74 @@
+conky.config = {
+-- Conky settings
+	background = false,
+	update_interval = 1,
+
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+
+	override_utf8_locale = true,
+
+	double_buffer = true,
+	no_buffers = true,
+
+	text_buffer_size = 2048,
+--imlib_cache_size 0
+
+	temperature_unit = 'celsius',
+
+-- Window specifications
+	own_window_class = 'Conky',
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_transparent = true,
+	own_window_hints = 'undecorated,sticky,skip_taskbar,skip_pager,below',
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+
+	border_inner_margin = 0,
+	border_outer_margin = 0,
+
+	minimum_width = 420, minimum_height = 400,
+	maximum_width = 420,
+
+	alignment = 'bottom_right',
+	gap_x = -20,
+	gap_y = 50,
+
+-- Graphics settings
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = false,
+
+	default_color = 'gray',
+	default_shade_color = 'red',
+	default_outline_color = 'green',
+
+-- Text settings
+	use_xft = true,
+	override_utf8_locale = true,
+	font = 'Play:normal:size=12',
+	xftalpha = 0.9,
+	uppercase = false,
+
+	default_color = '#E1E4E7',
+	color0 = '#5294E2',
+	color1 = '#E1E4E7',
+
+-- Lua Load
+	lua_load = '~/.conky/conky_rings/mem.lua',
+	lua_draw_hook_pre = 'ring_stats',
+
+};
+
+conky.text = [[
+# Memory
+${font Michroma:size=12}${color0}${goto 10}${voffset 55}MEMORY
+${goto 10}${voffset 0}${font Play:normal:size=12}${color1}${top_mem name 1}${alignr 140}${top_mem mem 1}%
+${goto 10}${font Play:normal:size=12}${color1}${top_mem name 2}${alignr 140}${top_mem mem 2}%
+${goto 10}${font Play:normal:size=12}${color1}${top_mem name 3}${alignr 140}${top_mem mem 3}%
+
+${font Play:normal:size=12}${voffset 15}${goto 10}${color1}SWAP${alignr 55}${color1}${swap} / ${color1}${swapmax}
+${font Play:normal:size=12}${voffset 5}${goto 10}${color1}RAM ${alignr 55}${color1}${mem} / ${color1}${memmax}
+]]

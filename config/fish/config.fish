@@ -1,10 +1,8 @@
 # ENV
-set -x SHELL (which fish)
 fish_vi_key_bindings
 # fish_default_key_bindings
 switch (uname)
     case Linux
-        set -x PATH /usr/bin/vendor_perl $PATH
         alias pbcopy='xclip -selection clipboard'
         alias pbpaste='xclip -selection clipboard -o'
     case Darwin

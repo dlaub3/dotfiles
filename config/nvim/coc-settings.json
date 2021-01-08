@@ -18,5 +18,15 @@
   "diagnostic.infoSign": "•",
   "tsserver.npm": "/usr/local/bin/npm",
   "tsserver.log": "normal",
-  "tsserver.maxTsServerMemory": 4096
+  "tsserver.maxTsServerMemory": 4096,
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true
+      }
+    }
+  }
 }

@@ -66,8 +66,10 @@ Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-smooth-scroll'
 "Plug 'w0rp/ale' " linting, Language Server Protocal, completion, fixing {{{
 "Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
- Plug 'neoclide/coc.nvim', {'branch': 'release'} 
- Plug 'neoclide/jsonc.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'neoclide/jsonc.vim'
+" Golang
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " ============================================================================ "
@@ -793,3 +795,5 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 20, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 20, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
 " }}}
+filetype plugin indent on
+autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')

@@ -1,0 +1,82 @@
+conky.config = {
+-- Conky settings
+	background = false,
+	update_interval = 1,
+
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+
+	override_utf8_locale = true,
+
+	double_buffer = true,
+	no_buffers = true,
+
+	text_buffer_size = 2048,
+--imlib_cache_size 0
+
+	temperature_unit = 'celsius',
+
+-- Window specifications
+	own_window_class = 'Conky',
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_transparent = true,
+	own_window_hints = 'undecorated,sticky,skip_taskbar,skip_pager,below',
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+
+	border_inner_margin = 0,
+	border_outer_margin = 0,
+
+	minimum_width = 420, minimum_height = 600,
+	maximum_width = 420,
+
+	alignment = 'top_right',
+	gap_x = -20,
+	gap_y = 50,
+
+-- Graphics settings
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = false,
+
+	default_color = 'gray',
+	default_shade_color = 'red',
+	default_outline_color = 'green',
+
+-- Text settings
+	use_xft = true,
+	override_utf8_locale = true,
+	font = 'Play:normal:size=12',
+	xftalpha = 0.9,
+	uppercase = false,
+
+	default_color = '#E1E4E7',
+	color0 = '#5294E2',
+	color1 = '#E1E4E7',
+
+-- Lua Load
+	lua_load = '~/.conky/conky_rings/cpu.lua',
+	lua_draw_hook_pre = 'ring_stats',
+};
+
+conky.text = [[
+# CPU
+${font Play:normal:size=12}${voffset 206}${color1}${goto 20}${freq_g cpu0} Ghz${alignr 250}${acpitemp} °C
+${font Play:normal:size=12}${voffset 29}${goto 20}${color1}CPU 1 ${alignr 250}${color1}${cpu cpu1}%
+${font Play:normal:size=12}${voffset 3}${goto 20}${color1}CPU 2${alignr 250}${color1}${cpu cpu2}%
+${font Play:normal:size=12}${voffset 3}${goto 20}${color1}CPU 3${alignr 250}${color1}${cpu cpu3}%
+${font Play:normal:size=12}${voffset 3}${goto 20}${color1}CPU 4${alignr 250}${color1}${cpu cpu4}%
+${font Play:normal:size=12}${voffset 3}${goto 20}${color1}CPU 5${alignr 250}${color1}${cpu cpu5}%
+${font Play:normal:size=12}${voffset 3}${goto 20}${color1}CPU 6${alignr 250}${color1}${cpu cpu6}%
+# Process
+${font Michroma:size=12}${color0}${goto 80}${voffset 3}CPU 
+${goto 20}${voffset 10}${font Play:normal:size=12}${color1}${top name 1}${alignr 55}${top cpu 1}%
+${goto 20}${font Play:normal:size=12}${color1}${top name 2}${alignr 55}${top cpu 2}%
+${goto 20}${font Play:normal:size=12}${color1}${top name 3}${alignr 55}${top cpu 3}%
+${goto 20}${font Play:normal:size=12}${color1}${top name 4}${alignr 55}${top cpu 4}%
+${goto 20}${font Play:normal:size=12}${color1}${top name 5}${alignr 55}${top cpu 5}%
+${goto 20}${font Play:normal:size=12}${color1}${top name 6}${alignr 55}${top cpu 6}%
+
+]]
