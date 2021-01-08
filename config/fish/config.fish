@@ -34,11 +34,21 @@ alias git-changed="git diff --name-only --relative && git diff --staged --name-o
 alias jsonPretty="pbpaste | jq | pbcopy && pbpaste | jq"
 
 function myPrettierAge --description "beautify <interval>" 
-  npx prettier@1.19.1 --write (git diff --name-only --relative "@{$argv[1]}")
+  set files_list (git diff --name-only --relative "@{$argv[1]}")
+  if test "$files_list"
+    npx prettier@1.19.1 --write files_list 
+  else
+    echo "no files"
+  end
 end
 
 function myPrettier --description "beautify"
-  npx prettier@1.19.1 --write (git-changed)
+  set files_list (git-changed)
+  if test "$files_list"
+    npx prettier@1.19.1 --write files_list 
+  else
+    echo "no files"
+  end
 end
 
 function myStylelintAge --description "lint"
