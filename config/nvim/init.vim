@@ -171,6 +171,8 @@ let g:dracula_terminal_italics=1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
 
+noremap  <C-p> <C-^>
+inoremap  <C-p> <C-^>
 inoremap jk <ESC>
 inoremap kj <ESC>
 "vnoremap kj <Esc>

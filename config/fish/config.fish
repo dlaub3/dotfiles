@@ -1,4 +1,3 @@
-# ENV
 fish_vi_key_bindings
 # fish_default_key_bindings
 switch (uname)
@@ -26,30 +25,55 @@ alias gcap="git commit -am \"make prettier 💋\""
 #tmux default
 alias tmux-default="~/.tmux/launch_scripts/default.sh"
 
-# JS Helpers
-alias git-changed="git diff --name-only --relative && git diff --staged --name-only --relative && git ls-files -o --exclude-standard"
-
 alias jsonPretty="pbpaste | jq | pbcopy && pbpaste | jq"
 
-function myPrettierAge --description "beautify <interval>" 
-  set files_list (git diff --name-only --relative "@{$argv[1]}")
+# JS Helpers
+alias git-changed="git diff HEAD origin/dev --name-only --relative --diff-filter=ACM && git diff --staged --name-only --relative --diff-filter=ACM && git ls-files -o --exclude-standard"
+
+function myPrettier --description "run prettier"
+  set npm_bin (npm bin)
+  set files_list (git-changed | grep '\.[t|j]sx\?$')
   if test "$files_list"
-    npx prettier@1.19.1 --write files_list 
+    $npm_bin/prettier $argv[1..-1] $files_list # --write
   else
     echo "no files"
   end
 end
 
-function myPrettier --description "beautify"
-  set files_list (git-changed)
+
+function myStylelintJs --description "run stylelint"
+  set npm_bin (npm bin)
+  set -x STYLELINT_TYPE js
+  set files_list (git-changed | grep '\.[t|j]sx\?$')
   if test "$files_list"
-    npx prettier@1.19.1 --write files_list 
+    $npm_bin/stylelint $argv[1..-1] $files_list # --fix
   else
     echo "no files"
   end
 end
+
+function myEslint --description "run eslint"
+  set npm_bin (npm bin)
+  set files_list (git-changed | grep '\.[t|j]sx\?$')
+  if test "$files_list"
+    $npm_bin/eslint $argv[1..-1] $files_list  # --fix
+  else
+    echo "no files"
+  end
+end
+
+function myPrettierAge --description "beautify <interval>" 
+  set files_list (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$')
+  if test "$files_list"
+    npx prettier@1.19.1 --write $files_list 
+  else
+    echo "no files"
+  end
+end
+
 
 function myStylelintAge --description "lint"
+  set -x STYLELINT_TYPE js
   set files_list (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$')
   if test "$files_list"
     npx stylelint@12.0.0 $files_list --config ./stylelint.config.js
@@ -58,28 +82,12 @@ function myStylelintAge --description "lint"
   end
 end
 
-function myStyleLint --description "lint"
-  set files_list (git-changed | grep '\.[t|j]sx\?$')
-  if test "$files_list"
-    npx stylelint@12.0.0 $files_list --config ./stylelint.config.js
-  else
-    echo "no files"
-  end
-end
-
-function myEslint --description "lint"
-  set files_list (git-changed | grep '\.[t|j]sx\?$')
-  if test "$files_list"
-    npx eslint $files_list $argv[1]
-  else
-    echo "no files"
-  end
-end
 
 function myEslintAge --description "lintAge <interval>"
   set files_list (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$')
   if test "$files_list"
-    npx eslint $files_list $argv[2]
+    npx eslint $files_list $argv[2..-1]
+
   else
     echo 'no files'
   end
@@ -94,7 +102,7 @@ function showContents --description "search files and list contents"
 end
 
 
-function jsImport --description "copy the import path to the clipboard"
+function myJsImport --description "copy the import path to the clipboard"
    rg " $argv[1]" -l | rg "$argv[1]" | pbcopy
 end
 
