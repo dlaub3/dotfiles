@@ -1,8 +1,10 @@
 extends typescript.ignore
+extends javascript
+extends javascriptreact
 
 snippet tap "tap"
-const tap = (name: string) => <T extends unknown>(x: T) {
-	console.log(`%c __TAP__${name}`, 'background: cornflowerblue; color: white;',  x)	
+const tap = (name: string) => <T extends unknown>(x: T) => {
+	console.log(\`%c __TAP__${name}\`, 'background: cornflowerblue; color: white;',  x)	
 
 	return x
 }
