@@ -20,6 +20,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'dracula/vim', { 'name': 'dracula' } " colorscheme
 Plug 'tyrannicaltoucan/vim-deep-space' " colorscheme
 Plug 'altercation/vim-colors-solarized' " colorscheme
+Plug 'tbastos/vim-lua'
+Plug 'xolox/vim-lua-ftplugin'
+Plug 'xolox/vim-misc'
 Plug 'mdx-js/mdx'
 Plug 'drewtempelmeyer/palenight.vim' " colorscheme
 Plug 'cocopon/iceberg.vim' " colorscheme
@@ -44,7 +47,9 @@ Plug 'junegunn/gv.vim'
 " yaml   ---------------------------------------------------------------------------------
 Plug 'avakhov/vim-yaml'
 " markdown  ------------------------------------------------------------------------------
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown'} " open browser for markdown preview
+Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
+" must be before vim-markdown
+Plug 'tpope/vim-surround' " sounds words,groups with almost anything
 Plug 'plasticboy/vim-markdown'
 " JS/TS   --------------------------------------------------------------------------------
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -55,7 +60,6 @@ Plug 'maxmellon/vim-jsx-pretty'
 " editing --------------------------------------------------------------------------------
 Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
 Plug 'godlygeek/tabular' " line up text
-Plug 'tpope/vim-surround' " sounds words,groups with almost anything
 Plug 'scrooloose/nerdcommenter' " easily apply/remove comments
 Plug 'mattn/emmet-vim' " code completion/generation
 Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
@@ -79,7 +83,7 @@ call plug#end()
 "
 "
 " ============================================================================ "
-
+let g:go_def_mapping_enabled = 0
 " Source the vimrc file after saving it
 "if has("autocmd")
   "autocmd bufwritepost init.vim source $MYVIMRC
@@ -264,6 +268,23 @@ function s:ExpandTab()
 
   return "\<Tab>"
 endfunction
+
+"markdown
+filetype plugin on
+"Uncomment to override defaults:
+let g:instant_markdown_autostart = 0
+let g:instant_markdown_browser = "firefox --new-window"
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 0
+let g:instant_markdown_open_to_the_world = 0
+let g:instant_markdown_allow_unsafe_content = 1
+let g:instant_markdown_allow_external_content = 1
+let g:instant_markdown_mathjax = 1
+let g:instant_markdown_mermaid = 1
+let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+let g:instant_markdown_autoscroll = 1
+let g:instant_markdown_port = 8888
+let g:instant_markdown_python = 0
 
 " DENITE {{{
 
