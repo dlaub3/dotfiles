@@ -21,7 +21,8 @@ alias nvimdiff='nvim -p (git diff --name-only --relative && git diff --staged --
 # alias
 alias ls="exa --long --header"
 alias ll="ls -alh"
-alias gcap="git commit -am \"make prettier 💋\""
+alias gcp="git commit -m \"make prettier 💋\""
+alias goto="cd (fgo)"
 
 #tmux default
 alias tmux-default="~/.tmux/launch_scripts/default.sh"
@@ -30,6 +31,28 @@ alias tmux-default="~/.tmux/launch_scripts/default.sh"
 alias git-changed="git diff --name-only --relative && git diff --staged --name-only --relative && git ls-files -o --exclude-standard"
 
 alias jsonPretty="pbpaste | jq | pbcopy && pbpaste | jq"
+
+function freePort --description "kill the process on a specified port"
+  if test -n $argv[1] 
+
+    set PID (lsof -t -i:$argv[1])
+
+    if test $status -ne 0
+      echo "Port $argv[1] is already free."
+      return # nothing more to do
+    end
+
+    kill -9 $PID # this isn't nice
+  
+    if test $status -ne 0
+      echo "Failed to kill PID: $PID"
+    else
+      echo "Killed PID: $PID"
+    end
+  else
+    echo "You didn't specify a port."
+  end
+end
 
 function myPrettierAge --description "beautify <interval>" 
   set files_list (git diff --name-only --relative "@{$argv[1]}")
@@ -132,3 +155,6 @@ switch (uname)
     case '*'
         echo Hi, stranger!
 end
+
+alias_scripts
+

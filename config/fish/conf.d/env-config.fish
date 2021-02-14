@@ -14,7 +14,10 @@ set -xg NPM_CONFIG_PREFIX ~/.npm-global
 
 switch (uname)
     case Linux
+        alias dev 'cd /storage/dev'
+        set -gx GOPATH /storage/dev/go
         set -xg GOROOT /usr/lib/go
+        set -xg PATH $GOPATH/bin $PATH
         set -xg PATH $HOME/.local/bin $PATH
         set -xg PATH $HOME/.gem/ruby/2.7.0/bin $PATH
         set -xg PATH /usr/bin/vendor_perl $PATH
