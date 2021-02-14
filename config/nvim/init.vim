@@ -174,7 +174,8 @@ let g:airline_theme='dracula'
 let g:dracula_terminal_italics=1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-
+noremap  <A-p> <C-^>
+inoremap  <A-p> <C-^>
 inoremap jk <ESC>
 inoremap kj <ESC>
 "vnoremap kj <Esc>
@@ -222,6 +223,7 @@ if has("persistent_undo")
 endif
 
 " COC {{{  Language Server Protocal, completion,
+map <C-Space> <Plug>(coc-codeaction)
 let g:coc_enable_locationlist = 1
 let g:coc_global_extensions = ['coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
 

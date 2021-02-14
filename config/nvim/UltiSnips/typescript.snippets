@@ -1,12 +1,12 @@
 extends typescript.ignore
+extends javascript
+extends javascriptreact
 
-snippet ReactFC "create a React function component"
-type ${1:Name}Props = {
-	${2}
-}
+snippet tap "tap"
+const tap = (name: string) => <T extends unknown>(x: T) => {
+	console.log(\`%c __TAP__${name}\`, 'background: cornflowerblue; color: white;',  x)	
 
-const $1 = (props: $1Props) {
-	${VISUAL}$0
+	return x
 }
 endsnippet
 

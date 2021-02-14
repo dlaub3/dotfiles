@@ -1,1 +1,23 @@
 extends typescript
+
+snippet ReactFC "create a React function component"
+type ${1:Name}Props = {
+	${2}
+}
+
+const $1 = (props: $1Props) => {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet Flex "flex component"
+const Flex = styled.div<{
+  direction?: 'row' | 'column'
+  wrap?: 'nowrap' | 'wrap'
+}>(({ direction = 'row', wrap = 'wrap' }) => css\`
+    flex: 1;
+    display: flex;
+    flex-flow: ${direction} ${wrap};
+  \`,
+)
+endsnippet
