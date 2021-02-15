@@ -2,6 +2,7 @@
 # 
 # https://revelry.co/resources/development/terminal-workflow-fzf/
 #
+# Search and destroy the PID of a process
 # 
 nuke() {
   local pid
