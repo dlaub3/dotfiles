@@ -1,4 +1,5 @@
-set -x SHELL (which fish)
+set -xg SHELL (which fish)
+set -xg EDITOR (which nvim)
 
 set -xg PATH $PATH /usr/bin /usr/local/bin $HOME/.local/bin $HOME/Documents/dev/ci/scripts $HOME/Documents/dev/ci/portal/deploy /usr/local/opt/helm@2/bin 
 ## go

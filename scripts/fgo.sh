@@ -2,7 +2,7 @@
 # use fzf to get the dirname used for chaning directories
 
 fgo() {
-  local FILE=$(fzf)
+  local FILE=$(fzf --query="${1}")
    
   if [[ "${?}" -eq 0 ]] 
   then
@@ -14,4 +14,4 @@ fgo() {
   return "${?}"
 }
 
-fgo
+fgo "${1}"

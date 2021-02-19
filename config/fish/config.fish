@@ -21,7 +21,10 @@ alias nvimdiff='nvim -p (git diff --name-only --relative && git diff --staged --
 alias ls="exa --long --header"
 alias ll="ls -alh"
 alias gcp="git commit -m \"make prettier 💋\""
-alias goto="cd (fgo)"
+
+function goto --description "A better cd"
+  cd (fgo $argv)
+end
 
 #tmux default
 alias tmux-default="~/.tmux/launch_scripts/default.sh"
