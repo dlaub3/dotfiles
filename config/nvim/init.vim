@@ -713,7 +713,7 @@ else
     else
       " linux options here
       " configure python path
-      set shell=/usr/bin/fish
+      set shell=/usr/local/bin/fish
       let g:python_host_prog = '/usr/bin/python2'
       let g:python3_host_prog = '/usr/bin/python3'
     endif
