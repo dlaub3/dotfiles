@@ -90,7 +90,7 @@ let g:go_def_mapping_enabled = 0
 "endif
 
 nmap <leader>v :tabedit $MYVIMRC<CR>
-nmap <leader>. :tabedit <bar> NERDTreeToggle ~/.dotfiles <CR>
+nmap <leader>. :tabedit ~/.dotfiles<CR>
 
 " Add some emoji
 ab :construction: 🚧
@@ -208,10 +208,10 @@ endfunction
 "let g:vim_jsx_pretty_highlight_close_tag = 1
 
 noremap <C-t> :call NERDTreeToggleRelative()<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 let NERDTreeQuitOnOpen=1
 let NERDTreeChDirMode=0
 
@@ -235,6 +235,26 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! SesW(...)
+  if a:0
+    execute "mks! ~/.vimsessions/" . a:1 . ".vim"
+  else
+    execute "mks! ~/.vimsessions/default.vim"
+  endif
+endfunction
+
+command! -nargs=* SesW call SesW(<f-args>)
+
+function! SesR(...)
+  if a:0
+    execute "so ~/.vimsessions/" . a:1 . ".vim"
+  else
+    execute "so ~/.vimsessions/default.vim"
+  endif
+endfunction
+
+command! -nargs=* SesR call SesR(<f-args>)
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -707,9 +727,10 @@ else
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
       " Mac options here
-      set shell=/usr/local/bin/fish
-      let g:python3_host_prog='/usr/local/opt/python@3.8/bin/python3'
-      let g:python_host_prog = '/usr/local/bin/python2'
+      set shell=/bin/bash
+      let g:python3_host_prog='/usr/local/bin/python3'
+      let g:python_host_prog='/usr/local/bin/python2'
+      let g:ruby_host_prog='/usr/bin/ruby'
     else
       " linux options here
       " configure python path
