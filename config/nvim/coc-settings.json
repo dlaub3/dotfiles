@@ -10,7 +10,10 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "css",
+    "scss",
+    "html"
   ],
   "eslint.format.enable": true,
   "diagnostic.errorSign": "•",
