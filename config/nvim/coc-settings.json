@@ -3,6 +3,7 @@
   "suggest.maxCompleteItemCount": 20,
   "coc.preferences.previewAutoClose": true,
   "typescript.suggest.autoImports": true,
+  "eslint.format.enable": true,
   "eslint.autoFixOnSave": true,
   "prettier.requireConfig": true,
   "coc.preferences.formatOnSaveFiletypes": [
@@ -15,7 +16,6 @@
     "scss",
     "html"
   ],
-  "eslint.format.enable": true,
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "•",

@@ -1,4 +1,3 @@
-fish_vi_key_bindings
 # fish_default_key_bindings
 switch (uname)
     case Linux
@@ -23,6 +22,7 @@ alias ll="ls -alh"
 alias gcp="git commit -m \"make prettier 💋\""
 
 function goto --description "A better cd"
+fish_vi_key_bindings
   cd (fgo $argv)
 end
 
@@ -52,6 +52,8 @@ function freePort --description "kill the process on a specified port"
     echo "You didn't specify a port."
   end
 end
+
+alias scripts="jq < package.json '.scripts' | tr -d '{}' | fzf | awk -F': ' '{ print \$1}' | tr  -d '\"' | sed 's/^://g' | xargs yarn"
 
 # JS Helpers
 alias git-changed="git diff HEAD origin/dev --name-only --relative --diff-filter=ACM && git diff --staged --name-only --relative --diff-filter=ACM && git ls-files -o --exclude-standard"
