@@ -11,7 +11,10 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact"
+    "typescriptreact",
+    "css",
+    "scss",
+    "html"
   ],
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
