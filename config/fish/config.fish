@@ -21,10 +21,11 @@ alias ll="ls -alh"
 alias gcp="git commit -m \"make prettier 💋\""
 
 function goto --description "A better cd"
-# fish_default_key_bindings
-fish_vi_key_bindings
   cd (fgo $argv)
 end
+
+# fish_default_key_bindings
+fish_vi_key_bindings
 
 #tmux default
 alias tmux-default="~/.tmux/launch_scripts/default.sh"
