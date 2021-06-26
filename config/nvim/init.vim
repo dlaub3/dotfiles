@@ -223,6 +223,13 @@ if has("persistent_undo")
 endif
 
 " COC {{{  Language Server Protocal, completion,
+
+" Run jest for current file
+command! -nargs=0 JestCurrent :call  CocAction('runCommand', 'jest.fileTest', ['%'])
+
+" Run jest for current test
+nnoremap <leader>jt :call CocAction('runCommand', 'jest.singleTest')<CR>
+
 map <C-Space> <Plug>(coc-codeaction)
 let g:coc_enable_locationlist = 1
 let g:coc_global_extensions = ['coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']

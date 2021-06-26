@@ -1,7 +1,7 @@
 set -xg SHELL (which fish)
 set -xg EDITOR (which nvim)
 
-set -xg PATH $HOME/.local/bin /usr/local/bin $HOME/Documents/dev/ci/scripts $HOME/Documents/dev/ci/portal/deploy /usr/local/opt/helm@2/bin $PATH 
+set -xg PATH $HOME/.local/bin /usr/local/bin 
 ## go
 set -xg GOPATH $HOME/go
 set -xg PATH $PATH (go env GOPATH)/bin 
@@ -30,5 +30,7 @@ switch (uname)
         echo Hi, stranger!
 end
 
-
+# fnm set this last
+set PATH $HOME/.fnm $PATH
+fnm env | source
 

@@ -1,4 +1,3 @@
-# fish_default_key_bindings
 switch (uname)
     case Linux
         alias pbcopy='xclip -selection clipboard'
@@ -22,6 +21,7 @@ alias ll="ls -alh"
 alias gcp="git commit -m \"make prettier 💋\""
 
 function goto --description "A better cd"
+# fish_default_key_bindings
 fish_vi_key_bindings
   cd (fgo $argv)
 end
@@ -53,10 +53,10 @@ function freePort --description "kill the process on a specified port"
   end
 end
 
-alias scripts="jq < package.json '.scripts' | tr -d '{}' | fzf | awk -F': ' '{ print \$1}' | tr  -d '\"' | sed 's/^://g' | xargs yarn"
+alias scripts="jq < package.json '.scripts' | tr -d '{}' | fzf | awk -F': ' '{ print \$1}' | tr  -d '\"' | sed 's/^://g' | xargs yarn "
 
 # JS Helpers
-alias git-changed="git diff HEAD origin/dev --name-only --relative --diff-filter=ACM && git diff --staged --name-only --relative --diff-filter=ACM && git ls-files -o --exclude-standard"
+alias git-changed="git diff --name-only --relative --diff-filter=ACM && git diff --staged --name-only --relative --diff-filter=ACM && git ls-files -o --exclude-standard"
 
 function myPrettier --description "run prettier"
   set npm_bin (npm bin)
@@ -130,8 +130,9 @@ function showContents --description "search files and list contents"
 end
 
 
-function myJsImport --description "copy the import path to the clipboard"
-   rg " $argv[1]" -l | rg "$argv[1]" | pbcopy
+function copyImport --description "copy the import path to the clipboard"
+   rg --no-filename "$argv[1]" | rg "^import" |  sort | uniq | fzf | pbcopy
+   echo (pbpaste)
 end
 
 function lorem --description "get lorem text" 
