@@ -31,6 +31,6 @@ switch (uname)
 end
 
 # fnm set this last
-set PATH $HOME/.fnm $PATH
-fnm env | source
+set -xg PATH $HOME/.fnm $PATH
+fnm env --shell=fish | source
 
