@@ -98,6 +98,7 @@ ab :kiss: 💋
 ab :check: ✅
 ab :facepalm: 🤦
 ab :poop: 💩
+ab :link: 🔗
 
 
 " 
@@ -530,7 +531,9 @@ syntax enable
 set mouse=a " enable scroll with trackpad
 au BufEnter * :syntax sync minlines=100 fromstart
 set redrawtime=1000
-autocmd Filetype gitcommit setlocal spell
+autocmd Filetype gitcommit,markdown,text setlocal spell
+autocmd Filetype markdown,text setlocal wrap 
+autocmd Filetype markdown,text setlocal textwidth=80 
 set clipboard=unnamed " use system clipboard
 set clipboard=unnamedplus " use system clipboard
 set encoding=UTF-8
