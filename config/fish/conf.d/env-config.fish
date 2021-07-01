@@ -1,7 +1,7 @@
 set -xg SHELL (which fish)
 set -xg EDITOR (which nvim)
 
-set -xg PATH $HOME/.local/bin /usr/local/bin /usr/bin /bin
+set -xg PATH $HOME/.local/bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin
 
 ## go
 set -xg GOPATH $HOME/go
