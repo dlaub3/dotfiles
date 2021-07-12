@@ -16,7 +16,8 @@ alias fzf_preview='fzf --preview "bat --style=numbers --color=always {} | less -
 
 alias nvimdiff='nvim -p (git diff --name-only --relative && git diff --staged --name-only --relative && git ls-files -o --exclude-standard)'
 # alias
-alias ls="exa --long --header"
+alias dotfiles="cd ~/.dotfiles"
+alias els="exa --long --header"
 alias ll="ls -alh"
 alias gcp="git commit -m \"make prettier 💋\""
 
