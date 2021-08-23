@@ -55,7 +55,7 @@ function freePort --description "kill the process on a specified port"
   end
 end
 
-alias scripts="jq < package.json '.scripts' | tr -d '{}' | fzf | awk -F': ' '{ print \$1}' | tr  -d '\"' | sed 's/^://g' | xargs yarn "
+alias scripts="jq < package.json '.scripts' | tr -d '{}' | fzf | awk -F': ' '{ print \$1}' | tr  -d '\"' | sed 's/^://g' | xargs yarn"
 
 # JS Helpers
 alias git-changed="git diff --name-only --relative --diff-filter=ACM && git diff --staged --name-only --relative --diff-filter=ACM && git ls-files -o --exclude-standard"

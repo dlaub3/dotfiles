@@ -744,7 +744,7 @@ else
     else
       " linux options here
       " configure python path
-      set shell=/usr/bin/fish
+      set shell=/usr/bin/bash
       let g:python_host_prog = '/usr/bin/python2'
       let g:python3_host_prog = '/usr/bin/python3'
     endif
@@ -851,3 +851,85 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
 " }}}
 filetype plugin indent on
 autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+
+set sessionoptions+=localoptions
+
+function SesWG()
+    let result=system("git rev-parse --abbrev-ref HEAD")
+    if v:shell_error == 0
+      let branch = substitute(substitute(result, '\n', '', 'g'), '/', '_', 'g')
+      execute "mks! ~/.vimsessions/" . branch . ".vim"
+    else 
+      echo result
+    endif
+endfunction
+
+command! -nargs=0 SesWG call SesWG()
+
+function SesRG()
+    let result=system("git rev-parse --abbrev-ref HEAD")
+    if v:shell_error == 0
+      let branch = substitute(substitute(result, '\n', '', 'g'), '/', '_', 'g')
+      execute "so ~/.vimsessions/" . branch . ".vim"
+    else 
+      echo result
+    endif
+endfunction
+
+command! -nargs=0 SesRG call SesRG()
+
+function SaveSession()
+    let session_dir = $HOME . "/.vimsessions/"
+    let session_file = "dir" . substitute(getcwd(), '/', '_', 'g')
+
+    if v:this_session
+      execute "mks! " . v:this_session 
+      echo "saved " . v:this_session
+      return 0
+    endif
+
+    let branch_name = "_git_" . substitute(substitute(system("git branch --show-current"), '\n', '', 'g'), '/', '_', 'g')
+
+    if v:shell_error == 0
+      let session_name = session_file . branch_name . ".vim" 
+      execute "mks! " . session_dir . session_name 
+      echo "saved " . session_name
+      return 0
+    endif
+
+    execute "mks! " . session_dir . session_file . ".vim"
+endfunction
+
+command! -nargs=0 SaveSession call SaveSession()
+
+function LoadSession()
+  if argc() == ""
+    let session_dir = $HOME . "/.vimsessions/"
+    let session_file = "dir" . substitute(getcwd(), '/', '_', 'g')
+
+    let branch_name = "_git_" . substitute(substitute(system("git branch --show-current"), '\n', '', 'g'), '/', '_', 'g')
+
+    if v:shell_error == 0
+      let session_name = session_file . branch_name . ".vim" 
+      execute "so " . session_dir . session_name 
+      echo "Loaded: " . session_name
+      return 0
+    endif
+
+    let session_file = "dir" . substitute(getcwd(), '/', '_', 'g')
+    let session_name = session_file . ".vim"
+    let session_path = session_dir . session_name
+    if filereadable(session_path)
+      execute "so " . session_path
+      echo "Loaded: " . session_name
+      return 0
+    endif
+
+    echo "No saved sessions to load."
+  endif
+endfunction
+
+command! -nargs=0 LoadSession call LoadSession()
+
+au VimEnter * :call LoadSession()
+au VimLeave * :call SaveSession()
