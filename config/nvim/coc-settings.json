@@ -1,7 +1,6 @@
 {
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
-  "coc.preferences.previewAutoClose": true,
   "typescript.suggest.autoImports": true,
   "eslint.format.enable": true,
   "eslint.autoFixOnSave": true,
