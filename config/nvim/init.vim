@@ -911,9 +911,12 @@ function LoadSession()
 
     if v:shell_error == 0
       let session_name = session_file . branch_name . ".vim" 
-      execute "so " . session_dir . session_name 
-      echo "Loaded: " . session_name
-      return 0
+      let session_path = session_dir . session_name
+      if filereadable(session_path)
+        execute "so " . session_path
+        echo "Loaded: " . session_name
+        return 0
+      endif
     endif
 
     let session_file = "dir" . substitute(getcwd(), '/', '_', 'g')
