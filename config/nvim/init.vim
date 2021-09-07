@@ -17,6 +17,7 @@ endif
 " visit https://vimawesome.com to find plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " theme  --------------------------------------------------------------------------------
+Plug 'pantharshit00/vim-prisma'
 Plug 'dracula/vim', { 'name': 'dracula' } " colorscheme
 Plug 'tyrannicaltoucan/vim-deep-space' " colorscheme
 Plug 'altercation/vim-colors-solarized' " colorscheme
@@ -48,9 +49,10 @@ Plug 'junegunn/gv.vim'
 Plug 'avakhov/vim-yaml'
 " markdown  ------------------------------------------------------------------------------
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
+Plug 'plasticboy/vim-markdown'
+Plug 'junegunn/goyo.vim'
 " must be before vim-markdown
 Plug 'tpope/vim-surround' " sounds words,groups with almost anything
-Plug 'plasticboy/vim-markdown'
 " JS/TS   --------------------------------------------------------------------------------
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
@@ -99,6 +101,7 @@ ab :check: ✅
 ab :facepalm: 🤦
 ab :poop: 💩
 ab :link: 🔗
+ab :fire: 🔥
 
 
 " 
@@ -301,7 +304,7 @@ endfunction
 
 "markdown
 filetype plugin on
-"Uncomment to override defaults:
+" Configuration for vim-instant-markdown
 let g:instant_markdown_autostart = 0
 let g:instant_markdown_browser = "firefox --new-window"
 let g:instant_markdown_slow = 0
@@ -315,6 +318,35 @@ let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
 let g:instant_markdown_autoscroll = 1
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 0
+" Configuration for vim-markdown
+let g:vim_markdown_conceal = 2
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_math = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_edit_url_in = 'tab'
+let g:vim_markdown_follow_anchor = 1
+if has("autocmd")
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
+  autocmd FileType markdown set cursorline
+	""
+	" Markdown Configuration
+	""
+	" Spellcheck in British English
+	autocmd FileType markdown setlocal spell spelllang=en_us
+	" Automatically open Goyo
+	autocmd FileType markdown Goyo
+	" Hide plaintext formatting and use color instead
+	autocmd FileType markdown set conceallevel=3
+	" Disable cursor line and column highlight
+	autocmd FileType markdown set nocursorline
+	autocmd FileType markdown set nocursorcolumn
+endif
+nnoremap <C-g> :Goyo<CR>
+
+
 
 " DENITE {{{
 

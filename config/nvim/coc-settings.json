@@ -13,7 +13,8 @@
     "typescriptreact",
     "css",
     "scss",
-    "html"
+    "html",
+    "prisma"
   ],
   "diagnostic.errorSign": "•",
   "diagnostic.warningSign": "•",
