@@ -48,6 +48,7 @@ Plug 'junegunn/gv.vim'
 " yaml   ---------------------------------------------------------------------------------
 Plug 'avakhov/vim-yaml'
 " markdown  ------------------------------------------------------------------------------
+Plug 'SidOfc/mkdx'
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
 Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/goyo.vim'
@@ -329,24 +330,30 @@ let g:vim_markdown_autowrite = 1
 let g:vim_markdown_edit_url_in = 'tab'
 let g:vim_markdown_follow_anchor = 1
 if has("autocmd")
-  autocmd BufNewFile,BufRead *.md set filetype=markdown
-  autocmd FileType markdown set cursorline
-	""
 	" Markdown Configuration
-	""
-	" Spellcheck in British English
+  autocmd Filetype gitcommit,markdown,text setlocal spell
 	autocmd FileType markdown setlocal spell spelllang=en_us
+
+  autocmd Filetype markdown,text setlocal wrap 
+  autocmd Filetype markdown,text setlocal textwidth=80 
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
 	" Automatically open Goyo
 	autocmd FileType markdown Goyo
 	" Hide plaintext formatting and use color instead
 	autocmd FileType markdown set conceallevel=3
 	" Disable cursor line and column highlight
-	autocmd FileType markdown set nocursorline
 	autocmd FileType markdown set nocursorcolumn
+  autocmd FileType markdown set autoindent
 endif
 nnoremap <C-g> :Goyo<CR>
 
-
+let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
+                        \ 'enter': { 'shift': 1 },
+                        \ 'links': { 'external': { 'enable': 1 } },
+                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
+                        \ 'fold': { 'enable': 1 } }
+let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
+                                       " plugin which unfortunately interferes with mkdx list indentation.
 
 " DENITE {{{
 
@@ -563,9 +570,6 @@ syntax enable
 set mouse=a " enable scroll with trackpad
 au BufEnter * :syntax sync minlines=100 fromstart
 set redrawtime=1000
-autocmd Filetype gitcommit,markdown,text setlocal spell
-autocmd Filetype markdown,text setlocal wrap 
-autocmd Filetype markdown,text setlocal textwidth=80 
 set clipboard=unnamed " use system clipboard
 set clipboard=unnamedplus " use system clipboard
 set encoding=UTF-8
@@ -632,6 +636,7 @@ set expandtab                     " Use spaces instead of tabs
 set laststatus=2                  " Show the status line all the time
 set tabstop=2                     " Global tab width.
 set shiftwidth=2                  " And again, related.
+set cursorline
 
 set re=0
 " Make those folders automatically if they don't already exist.
@@ -747,8 +752,8 @@ if has("unix")
     "map <D-0> :tablast<CR>
   else
     " windows/linux options here
-    map <C-S-]> gt
-    map <C-S-[> gT
+    map <C-]> gt
+    map <C-[> gT
     map <C-1> 1gt
     map <C-2> 2gt
     map <C-3> 3gt
@@ -968,3 +973,35 @@ command! -nargs=0 LoadSession call LoadSession()
 
 au VimEnter * :call LoadSession()
 au VimLeave * :call SaveSession()
+
+
+function! Redir(cmd, rng, start, end)
+	for win in range(1, winnr('$'))
+		if getwinvar(win, 'scratch')
+			execute win . 'windo close'
+		endif
+	endfor
+	if a:cmd =~ '^!'
+		let cmd = a:cmd =~' %'
+			\ ? matchstr(substitute(a:cmd, ' %', ' ' . expand('%:p'), ''), '^!\zs.*')
+			\ : matchstr(a:cmd, '^!\zs.*')
+		if a:rng == 0
+			let output = systemlist(cmd)
+		else
+			let joined_lines = join(getline(a:start, a:end), '\n')
+			let cleaned_lines = substitute(shellescape(joined_lines), "'\\\\''", "\\\\'", 'g')
+			let output = systemlist(cmd . " <<< $" . cleaned_lines)
+		endif
+	else
+		redir => output
+		execute a:cmd
+		redir END
+		let output = split(output, "\n")
+	endif
+	vnew
+	let w:scratch = 1
+	setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+	call setline(1, output)
+endfunction
+
+command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)
