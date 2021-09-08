@@ -24,6 +24,10 @@ snippet todo "insert a TODO comment"
 /* TODO ${VISUAL}${0} `git config user.name`  `!v strftime("%a %d %b %Y")` **/
 endsnippet
 
+snippet sig "add signature with date"
+`git config user.name`  `!v strftime("%a %d %b %Y")`
+endsnippet
+
 snippet log "log to the console"
 console.log('%c ${1:variableName}', "color: $2`!p snip.rv=complete(t[2], ['royalblue', 'blueviolet', 'chartreuse', 'fuchsia'])`; font-size: 14px; font-weight: bold;", $1)
 endsnippet
