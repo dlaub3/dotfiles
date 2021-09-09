@@ -752,8 +752,9 @@ if has("unix")
     "map <D-0> :tablast<CR>
   else
     " windows/linux options here
-    map <C-]> gt
-    map <C-[> gT
+    " map <C-[> gT https://vim.fandom.com/wiki/Avoid_the_escape_key
+    map <Tab> gt 
+    map <S-Tab> gT
     map <C-1> 1gt
     map <C-2> 2gt
     map <C-3> 3gt
@@ -766,6 +767,10 @@ if has("unix")
     map <C-0> :tablast<CR>
   endif
 endif
+
+"inoremap <ESC> <ESC>
+"vnoremap <ESC> <ESC>
+"noremap <ESC> <ESC>
 
 if has("win32")
   "Windows options here
@@ -1005,3 +1010,5 @@ function! Redir(cmd, rng, start, end)
 endfunction
 
 command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)
+
+
