@@ -1012,8 +1012,8 @@ endfunction
 
 command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)
 
-# https://github.com/leafgarland/typescript-vim/blob/9f247d7693cd12171239c56c355ba863f559f424/compiler/typescript.vim
-# https://vim.fandom.com/wiki/Errorformats
+" https://github.com/leafgarland/typescript-vim/blob/9f247d7693cd12171239c56c355ba863f559f424/compiler/typescript.vim
+" https://vim.fandom.com/wiki/Errorformats
 autocmd FileType typescript,typescriptreact setlocal makeprg:npx tsc -b
 autocmd FileType typescript,typescriptreact set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 map <leader>tc :make<CR>
