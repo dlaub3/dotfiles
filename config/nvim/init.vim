@@ -104,6 +104,8 @@ ab :poop: 💩
 ab :link: 🔗
 ab :fire: 🔥
 
+" https://github.com/mrowa44/emojify
+map <leader>em :%!emojify<CR>
 
 " 
 set listchars=tab:▸\ ,eol:¬
@@ -211,7 +213,6 @@ function NERDTreeToggleRelative()
 endfunction
 
 "let g:vim_jsx_pretty_highlight_close_tag = 1
-
 noremap <C-t> :call NERDTreeToggleRelative()<CR>
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -1010,5 +1011,18 @@ function! Redir(cmd, rng, start, end)
 endfunction
 
 command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)
+
+# https://github.com/leafgarland/typescript-vim/blob/9f247d7693cd12171239c56c355ba863f559f424/compiler/typescript.vim
+# https://vim.fandom.com/wiki/Errorformats
+autocmd FileType typescript,typescriptreact setlocal makeprg:npx tsc -b
+autocmd FileType typescript,typescriptreact set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+map <leader>tc :make<CR>
+
+
+
+
+
+
+
 
 

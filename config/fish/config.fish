@@ -14,6 +14,7 @@ set -x FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{.git,node_mod
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
 alias fzf_preview='fzf --preview "bat --style=numbers --color=always {} | less -R"'
 
+alias toPlainText=pbpaste | pbcopy
 alias nvimdiff='nvim -p (git diff --name-only --relative && git diff --staged --name-only --relative && git ls-files -o --exclude-standard)'
 # alias
 alias dotfiles="cd ~/.dotfiles"
