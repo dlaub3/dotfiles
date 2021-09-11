@@ -1018,11 +1018,5 @@ autocmd FileType typescript,typescriptreact setlocal makeprg:npx tsc -b
 autocmd FileType typescript,typescriptreact set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 map <leader>tc :make<CR>
 
-
-
-
-
-
-
-
+let g:highlightedyank_highlight_duration = 1000
 
