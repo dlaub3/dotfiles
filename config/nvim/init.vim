@@ -77,8 +77,23 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/jsonc.vim'
 " Golang
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" TODO: 
+Plug 'junegunn/vim-emoji'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'folke/todo-comments.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
 call plug#end()
 
+lua << EOF
+  require("todo-comments").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
 " ============================================================================ "
 "
 "
@@ -103,7 +118,7 @@ ab :facepalm: 🤦
 ab :poop: 💩
 ab :link: 🔗
 ab :fire: 🔥
-
+set completefunc=emoji#complete
 " https://github.com/mrowa44/emojify
 map <leader>em :%!emojify<CR>
 
@@ -1014,9 +1029,62 @@ command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>
 
 " https://github.com/leafgarland/typescript-vim/blob/9f247d7693cd12171239c56c355ba863f559f424/compiler/typescript.vim
 " https://vim.fandom.com/wiki/Errorformats
-autocmd FileType typescript,typescriptreact setlocal makeprg:npx tsc -b
-autocmd FileType typescript,typescriptreact set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
-map <leader>tc :make<CR>
+ "autocmd FileType typescript,typescriptreact setlocal makeprg:(npm bin)/tsc
+ "
+ "autocmd FileType typescript,typescriptreact set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+ "if exists("b:did_ftplugin")
+  "finish
+"endif
+"let b:did_ftplugin = 1
+
+"let s:cpo_save = &cpo
+"set cpo-=C
+
+"compiler typescript
+"setlocal commentstring=//\ %s
+
+"" Set 'formatoptions' to break comment lines but not other lines,
+"" " and insert the comment leader when hitting <CR> or using "o".
+"setlocal formatoptions-=t formatoptions+=croql
+
+"setlocal suffixesadd+=.ts,.tsx
+
+"let b:undo_ftplugin = "setl fo< ofu< com< cms<"
+
+"let &cpo = s:cpo_save
+"unlet s:cpo_save"map <leader>tc :make<CR>
+"if exists("current_compiler")
+  "finish
+"endif
+"let current_compiler = "typescript"
+
+"if !exists("g:typescript_compiler_binary")
+  "let g:typescript_compiler_binary = "tsc"
+"endif
+
+"if !exists("g:typescript_compiler_options")
+  "let g:typescript_compiler_options = ""
+"endif
+
+"if exists(":CompilerSet") != 2
+  "command! -nargs=* CompilerSet setlocal <args>
+"endif
+
+"let s:cpo_save = &cpo
+"set cpo-=C
+
+"execute 'CompilerSet makeprg='
+      "\ . escape(g:typescript_compiler_binary, ' ')
+      "\ . '\ '
+      "\ . escape(g:typescript_compiler_options, ' ')
+      "\ . '\ $*\ %'
+
+"CompilerSet errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+
+"let &cpo = s:cpo_save
+"unlet s:cpo_save
+
+"autocmd QuickFixCmdPost [^l]* nested cwindow
+"autocmd QuickFixCmdPost    l* nested lwindow
 
 let g:highlightedyank_highlight_duration = 1000
-
