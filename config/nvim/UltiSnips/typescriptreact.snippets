@@ -16,15 +16,13 @@ endsnippet
 
 snippet Flex "flex component"
 const Flex = styled.div<{
-	$direction?: 'row' | 'column'
-	$wrap?: 'nowrap' | 'wrap'
-	css?: CSSProp
+  $direction?: 'row' | 'column'
+  $wrap?: 'nowrap' | 'wrap'
 }>(
-	({ $direction = 'row', $wrap = 'wrap', css: overrides }) => css`
+  ({ $direction = 'row', $wrap = 'wrap' }) => css\`
     flex: 1;
     display: flex;
     flex-flow: ${$direction} ${$wrap};
-    ${overrides ?? ''}
-  `,
+  \`,
 )
 endsnippet
