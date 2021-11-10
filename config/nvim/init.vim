@@ -122,6 +122,8 @@ set completefunc=emoji#complete
 " https://github.com/mrowa44/emojify
 map <leader>em :%!emojify<CR>
 
+noremap <silent><leader>t :silent !tmux neww bash ~/.dotfiles/tmux/launch_scripts/sessions.sh<CR>
+
 " 
 set listchars=tab:▸\ ,eol:¬
 
