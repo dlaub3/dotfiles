@@ -362,6 +362,9 @@ if has("autocmd")
 	autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
 endif
+let g:goyo_width = "80%" " (default: 80)
+let g:goyo_height = "90%" " (default: 85%)
+let g:goyo_linenr = 1 " (default: 0)
 nnoremap <C-g> :Goyo<CR>
 
 let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
