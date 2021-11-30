@@ -173,10 +173,28 @@ au!
     au CursorMoved * call HlSearch()
     au InsertEnter * call StopHL()
 augroup end
-         
-" let mapleader = " "
 
+" Use a line cursor within insert mode and a block cursor everywhere else.
+"
+" Reference chart of values:
+"   Ps = 0  -> blinking block.
+"   Ps = 1  -> blinking block (default).
+"   Ps = 2  -> steady block.
+"   Ps = 3  -> blinking underline.
+"   Ps = 4  -> steady underline.
+"   Ps = 5  -> blinking bar (xterm).
+"   Ps = 6  -> steady bar (xterm).
+let &t_SI = "\e[5 q"
+let &t_EI = "\e[1 q"
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
+set guicursor+=a:-blinkwait175-blinkoff150-blinkon175
+highlight Cursor guifg=white guibg=black
+highlight iCursor guifg=white guibg=steelblue
 let g:Guifont='FuraCode Nerd Font'
+
 
 "colorscheme solarized
 "let g:airline_theme=solarized
