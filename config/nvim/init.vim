@@ -38,6 +38,7 @@ Plug 'junegunn/fzf.vim' " https://github.com/junegunn/fzf.vim#installation
 Plug 'mileszs/ack.vim' " grep like word search
 Plug 'ctrlpvim/ctrlp.vim' " file search 
 Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 " completion   ---------------------------------------------------------------------------
 "Plug 'shougo/deoplete.nvim'
 " git   ----------------------------------------------------------------------------------
@@ -372,6 +373,8 @@ let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
                         \ 'links': { 'external': { 'enable': 1 } },
                         \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
                         \ 'fold': { 'enable': 1 } }
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
 let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
                                        " plugin which unfortunately interferes with mkdx list indentation.
 
