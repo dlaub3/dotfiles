@@ -348,20 +348,19 @@ let g:vim_markdown_autowrite = 1
 let g:vim_markdown_edit_url_in = 'tab'
 let g:vim_markdown_follow_anchor = 1
 if has("autocmd")
+	" Automatically open Goyo
+	autocmd FileType markdown Goyo
 	" Markdown Configuration
   autocmd Filetype gitcommit,markdown,text setlocal spell
 	autocmd FileType markdown setlocal spell spelllang=en_us
-
   autocmd Filetype markdown,text setlocal wrap 
   autocmd Filetype markdown,text setlocal textwidth=80 
   autocmd BufNewFile,BufRead *.md set filetype=markdown
-	" Automatically open Goyo
-	autocmd FileType markdown Goyo
 	" Hide plaintext formatting and use color instead
-	autocmd FileType markdown set conceallevel=3
+	autocmd FileType markdown setlocal conceallevel=3
 	" Disable cursor line and column highlight
-	autocmd FileType markdown set nocursorcolumn
-  autocmd FileType markdown set autoindent
+	autocmd FileType markdown setlocal nocursorcolumn
+  autocmd FileType markdown setlocal autoindent
 endif
 nnoremap <C-g> :Goyo<CR>
 
@@ -910,7 +909,7 @@ noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 20, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 20, 4)<CR>
 " }}}
 filetype plugin indent on
-autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 set sessionoptions+=localoptions
 
