@@ -251,22 +251,24 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
-function NERDTreeToggleRelative() 
-  if len(expand("%"))
-    NERDTreeToggle %
-  else
-    NERDTreeToggle
-  endif
-endfunction
+let NERDTreeShowHidden=1
+let NERDTreeMinimalUI=1
 
-"let g:vim_jsx_pretty_highlight_close_tag = 1
-noremap <C-t> :call NERDTreeToggleRelative()<CR>
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-let NERDTreeQuitOnOpen=1
-let NERDTreeChDirMode=0
+let g:NERDTreeDirArrowExpandable = '▹'
+let g:NERDTreeDirArrowCollapsible = '▿'
+
+nnoremap <expr> <leader>n g:NERDTree.IsOpen() ? ':NERDTreeClose<CR>' : @% == '' ? ':NERDTree<CR>' : ':NERDTreeFind<CR>'
+nmap <leader>N :NERDTreeFind<CR>
+
+" If more than one window and previous buffer was NERDTree, go back to it.
+autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
+
+" avoid crashes when calling vim-plug functions while the cursor is on the NERDTree window
+let g:plug_window = 'noautocmd vertical topleft new'
+
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:DevIconsEnableFolderExtensionPatternMatching = 1
 
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
@@ -622,7 +624,6 @@ syntax enable
 set mouse=a " enable scroll with trackpad
 au BufEnter * :syntax sync minlines=100 fromstart
 set redrawtime=1000
-set clipboard=unnamed " use system clipboard
 set clipboard=unnamedplus " use system clipboard
 set encoding=UTF-8
 set showcmd                       " Display incomplete commands.
