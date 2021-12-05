@@ -40,7 +40,7 @@ Plug 'ctrlpvim/ctrlp.vim' " file search
 Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 " completion   ---------------------------------------------------------------------------
 "Plug 'shougo/deoplete.nvim'
@@ -828,14 +828,13 @@ else
     endif
   endif
 endif
-
 " }}}
 
 " Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>ff :Telescope find_files<cr>
+nnoremap <leader>fg :Telescope live_grep<cr>
+nnoremap <leader>fb :Telescope buffers<cr>
+nnoremap <leader>fh :Telescope help_tags<cr>
 
 " PLUGIN: fzf.vim{{{
 
