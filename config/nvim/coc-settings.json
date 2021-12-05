@@ -1,10 +1,8 @@
 {
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
-  "typescript.suggest.autoImports": true,
-  "eslint.format.enable": true,
-  "eslint.autoFixOnSave": true,
-  "prettier.requireConfig": true,
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.formatOnSaveFiletypes": [
     "json",
     "javascript",
@@ -16,12 +14,20 @@
     "html",
     "prisma"
   ],
-  "diagnostic.errorSign": "•",
-  "diagnostic.warningSign": "•",
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.virtualText": true,
+  "diagnostic.enableMessage": "jump",
+  "diagnostic.errorSign": "✖",
+  "diagnostic.warningSign": "⚠",
   "diagnostic.infoSign": "•",
+  "diagnostic.hintSign": "•",
   "tsserver.npm": "/usr/local/bin/npm",
   "tsserver.log": "normal",
   "tsserver.maxTsServerMemory": 4096,
+  "typescript.suggest.autoImports": true,
+  "eslint.format.enable": true,
+  "eslint.autoFixOnSave": true,
+  "prettier.requireConfig": true,
   "languageserver": {
     "golang": {
       "command": "gopls",

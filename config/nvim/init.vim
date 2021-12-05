@@ -38,6 +38,9 @@ Plug 'junegunn/fzf.vim' " https://github.com/junegunn/fzf.vim#installation
 Plug 'mileszs/ack.vim' " grep like word search
 Plug 'ctrlpvim/ctrlp.vim' " file search 
 Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 " completion   ---------------------------------------------------------------------------
 "Plug 'shougo/deoplete.nvim'
@@ -81,9 +84,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " TODO: 
 Plug 'junegunn/vim-emoji'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
-Plug 'nvim-telescope/telescope.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
 call plug#end()
@@ -105,9 +106,19 @@ EOF
 let g:go_def_mapping_enabled = 0
 " Source the vimrc file after saving it
 "if has("autocmd")
-  "autocmd bufwritepost init.vim source $MYVIMRC
+"autocmd bufwritepost init.vim source $MYVIMRC
 "endif
 
+" Center the current search keyword
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap J mzJ`z
+
+" Reselect visual selection after indenting
+vnoremap < <gv
+vnoremap > >gv
+
+nmap <leader>vr :source $MYVIMRC<CR>
 nmap <leader>v :tabedit $MYVIMRC<CR>
 nmap <leader>. :tabedit ~/.dotfiles<CR>
 
@@ -621,9 +632,11 @@ set ruler                         " Show cursor position.
 set incsearch                     " Highlight matches as you type.
 set hlsearch                      " Highlight matches.
 set wrap                          " Turn on line wrapping.
-set scrolloff=3                   " Show 3 lines of context around the cursor.
+set scrolloff=5                   " Show 3 lines of context around the cursor.
+set sidescrolloff=5                   " Show 3 lines of context around the cursor.
 set title                         " Set the terminal's title
 set visualbell                    " No beeping.
+set list
 
 set backup
 set noswapfile
@@ -817,6 +830,13 @@ else
 endif
 
 " }}}
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
 " PLUGIN: fzf.vim{{{
 
 let g:fzf_layout = { 'down': '~40%' }
