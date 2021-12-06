@@ -13,7 +13,6 @@ if !filereadable(plugpath)
   endif
 endif
 
-
 " visit https://vimawesome.com to find plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " theme  --------------------------------------------------------------------------------
@@ -76,13 +75,13 @@ Plug 'honza/vim-snippets'
 Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-smooth-scroll'
 "Plug 'w0rp/ale' " linting, Language Server Protocal, completion, fixing {{{
-"Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
+Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
 Plug 'neoclide/coc.nvim', {'branch': 'release'} 
 Plug 'neoclide/jsonc.vim'
 " Golang
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
-" TODO: 
+" https://github.com/fatih/vim-go-tutorial#quick-setup
+" https://pmihaylov.com/vim-for-go-development/
+Plug 'fatih/vim-go' "{ 'do': ':GoUpdateBinaries' }
 Plug 'junegunn/vim-emoji'
 Plug 'folke/todo-comments.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
@@ -102,8 +101,21 @@ EOF
 " ===                             PLUGINS SETTINGS                         === "
 "
 "
-" ============================================================================ "
+" =========================================================================== "
+"
 let g:go_def_mapping_enabled = 0
+let g:go_def_split = 1
+let g:go_doc_balloon = 1
+let g:go_doc_keywordprg_enabled = 0
+let g:go_fmt_autosave = 1
+let g:go_get_update = 0
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
+"
 " Source the vimrc file after saving it
 "if has("autocmd")
 "autocmd bufwritepost init.vim source $MYVIMRC
@@ -287,7 +299,7 @@ nnoremap <leader>jt :call CocAction('runCommand', 'jest.singleTest')<CR>
 
 map <C-Space> <Plug>(coc-codeaction)
 let g:coc_enable_locationlist = 1
-let g:coc_global_extensions = ['coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
+let g:coc_global_extensions = ['coc-go', 'coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -295,34 +307,16 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! SesW(...)
-  if a:0
-    execute "mks! ~/.vimsessions/" . a:1 . ".vim"
-  else
-    execute "mks! ~/.vimsessions/default.vim"
-  endif
-endfunction
-
-command! -nargs=* SesW call SesW(<f-args>)
-
-function! SesR(...)
-  if a:0
-    execute "so ~/.vimsessions/" . a:1 . ".vim"
-  else
-    execute "so ~/.vimsessions/default.vim"
-  endif
-endfunction
-
-command! -nargs=* SesR call SesR(<f-args>)
+" Use K to show documentation in preview window.
+nnoremap<silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
 
@@ -352,6 +346,26 @@ function s:ExpandTab()
 
   return "\<Tab>"
 endfunction
+
+function! SesW(...)
+  if a:0
+    execute "mks! ~/.vimsessions/" . a:1 . ".vim"
+  else
+    execute "mks! ~/.vimsessions/default.vim"
+  endif
+endfunction
+
+command! -nargs=* SesW call SesW(<f-args>)
+
+function! SesR(...)
+  if a:0
+    execute "so ~/.vimsessions/" . a:1 . ".vim"
+  else
+    execute "so ~/.vimsessions/default.vim"
+  endif
+endfunction
+
+command! -nargs=* SesR call SesR(<f-args>)
 
 "markdown
 filetype plugin on
