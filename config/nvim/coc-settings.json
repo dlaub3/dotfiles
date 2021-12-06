@@ -1,8 +1,7 @@
 {
-  "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
-  "coc.preferences.formatOnType": true,
+  "coc.preferences.enableFloatHighlight": true,
   "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.formatOnType": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "json",
     "javascript",
@@ -12,30 +11,36 @@
     "css",
     "scss",
     "html",
-    "prisma"
+    "prisma",
+    "go"
   ],
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
   "diagnostic.checkCurrentLine": true,
-  "diagnostic.virtualText": true,
   "diagnostic.enableMessage": "jump",
   "diagnostic.errorSign": "✖",
-  "diagnostic.warningSign": "⚠",
-  "diagnostic.infoSign": "•",
   "diagnostic.hintSign": "•",
-  "tsserver.npm": "/usr/local/bin/npm",
+  "diagnostic.infoSign": "•",
+  "diagnostic.virtualText": true,
+  "diagnostic.warningSign": "⚠",
+  "eslint.autoFixOnSave": true,
+  "eslint.format.enable": true,
+  "prettier.requireConfig": true,
   "tsserver.log": "normal",
   "tsserver.maxTsServerMemory": 4096,
+  "tsserver.npm": "/usr/local/bin/npm",
   "typescript.suggest.autoImports": true,
-  "eslint.format.enable": true,
-  "eslint.autoFixOnSave": true,
-  "prettier.requireConfig": true,
   "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true
-      }
-    }
+    //"golang": {
+      //"command": "gopls",
+      //"rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      //"filetypes": ["go"],
+      //"initializationOptions": {
+        //"usePlaceholders": true
+      //}
+    //}
+  },
+  "go.goplsOptions": {
+    "staticcheck": true
   }
 }
