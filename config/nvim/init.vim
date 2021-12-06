@@ -997,6 +997,7 @@ endfunction
 command! -nargs=0 SesRG call SesRG()
 
 function SaveSession()
+    execute 'tabdo NERDTreeClose'
     let session_dir = $HOME . "/.vimsessions/"
     let session_file = "dir" . substitute(getcwd(), '/', '_', 'g')
 
