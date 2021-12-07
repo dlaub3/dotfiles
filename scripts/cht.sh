@@ -8,7 +8,8 @@ SELECTED=$(fzf <<< $MIX)
 read -p "Query:" QUERY
 
 if  rg -qs $SELECTED <<< $LANGUAGES; then
- tmux split-window -p 22 -h bash -c "curl cht.sh/$SELECTED/$(tr " " "+" <<< $QUERY) | bat --pager="less -R" --language="$SELECTED""
+ #tmux split-window -p 22 -h bash -c "http cht.sh/$SELECTED/$(tr " " "+" <<< $QUERY) | bat --pager="less -R" --language="$SELECTED""
+  http cht.sh/$SELECTED/$(tr " " "+" <<< $QUERY)
 else
-  curl cht.sh/$SELECTED/$(tr " " "+" <<< $QUERY)
+  http cht.sh/$SELECTED/$(tr " " "+" <<< $QUERY) 
 fi

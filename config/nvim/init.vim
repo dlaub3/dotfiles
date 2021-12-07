@@ -394,25 +394,26 @@ let g:vim_markdown_strikethrough = 1
 let g:vim_markdown_autowrite = 1
 let g:vim_markdown_edit_url_in = 'tab'
 let g:vim_markdown_follow_anchor = 1
+
+let g:goyo_width = "80%" " (default: 80)
+let g:goyo_height = "90%" " (default: 85%)
+let g:goyo_linenr = 1 " (default: 0)
+nnoremap <C-g> :Goyo<CR>
 if has("autocmd")
 	" Automatically open Goyo
+  autocmd BufNewFile,BufRead *.md set filetype=markdown
 	autocmd FileType markdown Goyo
 	" Markdown Configuration
   autocmd Filetype gitcommit,markdown,text setlocal spell
 	autocmd FileType markdown setlocal spell spelllang=en_us
   autocmd Filetype markdown,text setlocal wrap 
   autocmd Filetype markdown,text setlocal textwidth=80 
-  autocmd BufNewFile,BufRead *.md set filetype=markdown
 	" Hide plaintext formatting and use color instead
 	autocmd FileType markdown setlocal conceallevel=3
 	" Disable cursor line and column highlight
 	autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
 endif
-let g:goyo_width = "80%" " (default: 80)
-let g:goyo_height = "90%" " (default: 85%)
-let g:goyo_linenr = 1 " (default: 0)
-nnoremap <C-g> :Goyo<CR>
 
 let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
                         \ 'enter': { 'shift': 1 },

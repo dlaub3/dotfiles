@@ -1,21 +1,24 @@
 # dotfiles
-nvim, tmux, fish, etc
-
-## Requirements
-
-### NVIM
-- neovim
-- python3-neovim
-- check env wit :checkhealth
-
-### TMUX
-- tmux
+- nvim
+- kitty
 - fish
+- bat
+- ripgrep
+- fzf
+- fd
+- httpie
+- jq
+- ack
+- conky
+- git
+ 
+### nvim
+- check env with :checkhealth
 
-### Fish
-- fish
+### fish
 - remove omf (so the dracula theme will load)
 
-### Misc
+### fonts
 - Fira Code Ligatures
-- FurCode Glyphs
+- FuraCode Glyphs
+- JetBrains Mono
