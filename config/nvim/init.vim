@@ -93,6 +93,13 @@ lua << EOF
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
+    colors = {
+      error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
+      warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
+      info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
+      hint = { "LspDiagnosticsDefaultHint", "#10B981" },
+      default = { "Identifier", "#7C3AED" },
+    },
   }
 EOF
 " ============================================================================ "
@@ -385,7 +392,7 @@ let g:instant_markdown_autoscroll = 1
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 0
 " Configuration for vim-markdown
-let g:vim_markdown_conceal = 2
+"let g:vim_markdown_conceal = 2
 let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_math = 1
 let g:vim_markdown_toml_frontmatter = 1
@@ -402,14 +409,14 @@ nnoremap <C-g> :Goyo<CR>
 if has("autocmd")
 	" Automatically open Goyo
   autocmd BufNewFile,BufRead *.md set filetype=markdown
-	autocmd FileType markdown Goyo
+	"autocmd FileType markdown Goyo
 	" Markdown Configuration
   autocmd Filetype gitcommit,markdown,text setlocal spell
 	autocmd FileType markdown setlocal spell spelllang=en_us
   autocmd Filetype markdown,text setlocal wrap 
   autocmd Filetype markdown,text setlocal textwidth=80 
 	" Hide plaintext formatting and use color instead
-	autocmd FileType markdown setlocal conceallevel=3
+  autocmd FileType markdown setlocal conceallevel=3
 	" Disable cursor line and column highlight
 	autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
