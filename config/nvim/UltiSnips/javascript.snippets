@@ -24,6 +24,10 @@ snippet todo "insert a TODO comment"
 /* TODO: ${VISUAL}${0} `git config user.name`  `!v strftime("%a %d %b %Y")` **/
 endsnippet
 
+snippet fixme "insert a FIXME comment"
+/* FIXME: ${VISUAL}${0} `git rev-parse --abbrev-ref HEAD` **/
+endsnippet
+
 snippet sig "add signature with date"
 `git config user.name`  `!v strftime("%a %d %b %Y")`
 endsnippet
