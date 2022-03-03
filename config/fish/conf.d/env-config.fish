@@ -2,7 +2,7 @@ set -xg SHELL (which fish)
 set -xg EDITOR (which nvim)
 
 set -xg PATH $HOME/.local/bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin
-
+        
 ## go
 set -xg GOPATH $HOME/go
 set -xg PATH $PATH (go env GOPATH)/bin 
@@ -24,6 +24,7 @@ switch (uname)
         set -xg PATH $HOME/.local/bin $PATH
         set -xg PATH $HOME/.gem/ruby/2.7.0/bin $PATH
         set -xg PATH /usr/bin/vendor_perl $PATH
+        set -xg PATH $HOME/.amplify/bin $PATH
     case Darwin
     case FreeBSD NetBSD DragonFly
         echo Hi Beastie!

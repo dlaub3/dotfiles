@@ -12,7 +12,8 @@
     "scss",
     "html",
     "prisma",
-    "go"
+    "go",
+    "graphql"
   ],
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,

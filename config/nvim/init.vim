@@ -16,6 +16,8 @@ endif
 " visit https://vimawesome.com to find plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " theme  --------------------------------------------------------------------------------
+Plug 'jparise/vim-graphql'
+Plug 'simrat39/symbols-outline.nvim'
 Plug 'pantharshit00/vim-prisma'
 Plug 'dracula/vim', { 'name': 'dracula' } " colorscheme
 Plug 'tyrannicaltoucan/vim-deep-space' " colorscheme
@@ -307,7 +309,7 @@ nnoremap <leader>jt :call CocAction('runCommand', 'jest.singleTest')<CR>
 
 map <C-Space> <Plug>(coc-codeaction)
 let g:coc_enable_locationlist = 1
-let g:coc_global_extensions = ['coc-go', 'coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
+let g:coc_global_extensions = ['coc-go', 'coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-graphql']
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
