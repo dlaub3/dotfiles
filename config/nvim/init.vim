@@ -309,7 +309,7 @@ nnoremap <leader>jt :call CocAction('runCommand', 'jest.singleTest')<CR>
 
 map <C-Space> <Plug>(coc-codeaction)
 let g:coc_enable_locationlist = 1
-let g:coc_global_extensions = ['coc-go', 'coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-graphql']
+let g:coc_global_extensions = ['coc-go', 'coc-lists', 'coc-tsserver', 'coc-eslint', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier']
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
