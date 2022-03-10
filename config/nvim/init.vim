@@ -814,23 +814,21 @@ endif
 
 " OS-specific settings ----------------------------------------------------- {{{
 
-if has("unix")
-  let s:uname = system("uname")
-  if s:uname == "Darwin"
+if has("mac")
     " Mac options here
     " Terminal isn't sending the D key 
-    "map <D-S-]> gt
-    "map <D-S-[> gT
-    "map <D-1> 1gt
-    "map <D-2> 2gt
-    "map <D-3> 3gt
-    "map <D-4> 4gt
-    "map <D-5> 5gt
-    "map <D-6> 6gt
-    "map <D-7> 7gt
-    "map <D-8> 8gt
-    "map <D-9> 9gt
-    "map <D-0> :tablast<CR>
+    map <D-S-]> gt
+    map <D-S-[> gT
+    map <D-1> 1gt
+    map <D-2> 2gt
+    map <D-3> 3gt
+    map <D-4> 4gt
+    map <D-5> 5gt
+    map <D-6> 6gt
+    map <D-7> 7gt
+    map <D-8> 8gt
+    map <D-9> 9gt
+    map <D-0> :tablast<CR>
   else
     " windows/linux options here
     " map <C-[> gT https://vim.fandom.com/wiki/Avoid_the_escape_key
@@ -846,7 +844,6 @@ if has("unix")
     map <C-8> 8gt
     map <C-9> 9gt
     map <C-0> :tablast<CR>
-  endif
 endif
 
 "inoremap <ESC> <ESC>
@@ -855,23 +852,22 @@ endif
 
 if has("win32")
   "Windows options here
-else
-  if has("unix")
-    let s:uname = system("uname")
-    if s:uname == "Darwin\n"
+elseif has("win32unix")
+    "Cygwin
+elseif has("mac")
       " Mac options here
-      set shell=/bin/bash
+      set shell=/usr/local/bin/bash
       let g:python3_host_prog='/usr/local/bin/python3'
       let g:python_host_prog='/usr/local/bin/python2'
       let g:ruby_host_prog='/usr/bin/ruby'
-    else
+elseif has("bsd")
+    "BSD-based, ie freeBSD"
+elseif has("linux")
       " linux options here
       " configure python path
       set shell=/usr/bin/bash
       let g:python_host_prog = '/usr/bin/python2'
       let g:python3_host_prog = '/usr/bin/python3'
-    endif
-  endif
 endif
 " }}}
 
