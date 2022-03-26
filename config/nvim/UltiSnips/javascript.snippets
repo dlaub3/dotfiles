@@ -17,8 +17,13 @@ snippet comment-m "insert a comment with name and date" b
 endsnippet
 
 snippet comment-i "insert an inline comment"
-/* ${VISUAL}${0} `git config user.name`  `!v strftime("%a %d %b %Y")` **/
+/* ${VISUAL}${0} `git config user.name | git config user.name | sed -E 's/^([A-Z]).+ (.+)/\1. \2/'`  `!v strftime("%m.%d.%y")` **/
 endsnippet
+
+snippet comment-is "insert a simple inline comment"
+/* ${VISUAL}${0} **/
+endsnippet
+
 
 snippet todo "insert a TODO comment"
 /* TODO: ${VISUAL}${0} `git config user.name`  `!v strftime("%a %d %b %Y")` **/
@@ -66,4 +71,9 @@ it('should $1', () => {
   const expected = ${0:{}}
   expect(actual).toEqual(expected)
 })
+endsnippet
+
+
+snippet shrugi
+¯\_(ツ)_/¯
 endsnippet
