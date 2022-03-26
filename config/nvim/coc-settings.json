@@ -12,8 +12,8 @@
     "scss",
     "html",
     "prisma",
-    "go",
-    "graphql"
+    "go"
+    //"graphql"
   ],
   "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
@@ -39,7 +39,7 @@
       //"command": "graphql-lsp",
       //"args": ["server", "-m", "stream"],
       //"filetypes": ["typescript", "typescriptreact", "graphql"]
-    //},
+    //}
     //"golang": {
       //"command": "gopls",
       //"rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],

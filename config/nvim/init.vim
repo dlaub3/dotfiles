@@ -16,6 +16,14 @@ endif
 " visit https://vimawesome.com to find plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " theme  --------------------------------------------------------------------------------
+Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
+Plug 'ellisonleao/glow.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'lewis6991/spellsitter.nvim'
+Plug 'akinsho/bufferline.nvim'
+Plug 'sindrets/diffview.nvim'
+Plug 'rcarriga/nvim-notify'
+Plug 'nvim-telescope/telescope-symbols.nvim'
 Plug 'jparise/vim-graphql'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'pantharshit00/vim-prisma'
@@ -70,7 +78,7 @@ Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets,
 Plug 'godlygeek/tabular' " line up text
 Plug 'scrooloose/nerdcommenter' " easily apply/remove comments
 Plug 'mattn/emmet-vim' " code completion/generation
-Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
+"Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
 Plug 'terryma/vim-multiple-cursors'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -90,8 +98,10 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
 call plug#end()
 
+
+set termguicolors
 lua << EOF
-  require("todo-comments").setup {
+  require("todo-comments").setup({
     -- your configuration comes here
     -- or leave it empty to use the default settings
     -- refer to the configuration section below
@@ -102,8 +112,187 @@ lua << EOF
       hint = { "LspDiagnosticsDefaultHint", "#10B981" },
       default = { "Identifier", "#7C3AED" },
     },
+  })
+
+require('spellsitter').setup()
+require'colorizer'.setup()
+
+require('bufferline').setup({
+  options = {
+    mode = "tabs",
+    },
+  offsets = {
+    {
+      filetype = "NERDTree",
+      text = "File Explorer",
+      highlight = "Directory",
+      text_align = "left"
+    }
   }
+})
+
+local cb = require'diffview.config'.diffview_callback
+require'diffview'.setup({
+  diff_binaries = false,    -- Show diffs for binaries
+  enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+  use_icons = true,         -- Requires nvim-web-devicons
+  icons = {                 -- Only applies when use_icons is true.
+    folder_closed = "",
+    folder_open = "",
+  },
+  signs = {
+    fold_closed = "",
+    fold_open = "",
+  },
+  file_panel = {
+    position = "left",                  -- One of 'left', 'right', 'top', 'bottom'
+    width = 35,                         -- Only applies when position is 'left' or 'right'
+    height = 10,                        -- Only applies when position is 'top' or 'bottom'
+    listing_style = "tree",             -- One of 'list' or 'tree'
+    tree_options = {                    -- Only applies when listing_style is 'tree'
+      flatten_dirs = true,              -- Flatten dirs that only contain one single dir
+      folder_statuses = "only_folded",  -- One of 'never', 'only_folded' or 'always'.
+    },
+  },
+  file_history_panel = {
+    position = "bottom",
+    width = 35,
+    height = 16,
+    log_options = {
+      max_count = 256,      -- Limit the number of commits
+      follow = false,       -- Follow renames (only for single file)
+      all = false,          -- Include all refs under 'refs/' including HEAD
+      merges = false,       -- List only merge commits
+      no_merges = false,    -- List no merge commits
+      reverse = false,      -- List commits in reverse order
+    },
+  },
+  default_args = {    -- Default args prepended to the arg-list for the listed commands
+    DiffviewOpen = {},
+    DiffviewFileHistory = {},
+  },
+  hooks = {},         -- See ':h diffview-config-hooks'
+  key_bindings = {
+    disable_defaults = false,                   -- Disable the default key bindings
+    -- The `view` bindings are active in the diff buffers, only when the current
+    -- tabpage is a Diffview.
+    view = {
+      ["<tab>"]      = cb("select_next_entry"),  -- Open the diff for the next file
+      ["<s-tab>"]    = cb("select_prev_entry"),  -- Open the diff for the previous file
+      ["gf"]         = cb("goto_file"),          -- Open the file in a new split in previous tabpage
+      ["<C-w><C-f>"] = cb("goto_file_split"),    -- Open the file in a new split
+      ["<C-w>gf"]    = cb("goto_file_tab"),      -- Open the file in a new tabpage
+      ["<leader>e"]  = cb("focus_files"),        -- Bring focus to the files panel
+      ["<leader>b"]  = cb("toggle_files"),       -- Toggle the files panel.
+    },
+    file_panel = {
+      ["j"]             = cb("next_entry"),           -- Bring the cursor to the next file entry
+      ["<down>"]        = cb("next_entry"),
+      ["k"]             = cb("prev_entry"),           -- Bring the cursor to the previous file entry.
+      ["<up>"]          = cb("prev_entry"),
+      ["<cr>"]          = cb("select_entry"),         -- Open the diff for the selected entry.
+      ["o"]             = cb("select_entry"),
+      ["<2-LeftMouse>"] = cb("select_entry"),
+      ["-"]             = cb("toggle_stage_entry"),   -- Stage / unstage the selected entry.
+      ["S"]             = cb("stage_all"),            -- Stage all entries.
+      ["U"]             = cb("unstage_all"),          -- Unstage all entries.
+      ["X"]             = cb("restore_entry"),        -- Restore entry to the state on the left side.
+      ["R"]             = cb("refresh_files"),        -- Update stats and entries in the file list.
+      ["<tab>"]         = cb("select_next_entry"),
+      ["<s-tab>"]       = cb("select_prev_entry"),
+      ["gf"]            = cb("goto_file"),
+      ["<C-w><C-f>"]    = cb("goto_file_split"),
+      ["<C-w>gf"]       = cb("goto_file_tab"),
+      ["i"]             = cb("listing_style"),        -- Toggle between 'list' and 'tree' views
+      ["f"]             = cb("toggle_flatten_dirs"),  -- Flatten empty subdirectories in tree listing style.
+      ["<leader>e"]     = cb("focus_files"),
+      ["<leader>b"]     = cb("toggle_files"),
+    },
+    file_history_panel = {
+      ["g!"]            = cb("options"),            -- Open the option panel
+      ["<C-A-d>"]       = cb("open_in_diffview"),   -- Open the entry under the cursor in a diffview
+      ["y"]             = cb("copy_hash"),          -- Copy the commit hash of the entry under the cursor
+      ["zR"]            = cb("open_all_folds"),
+      ["zM"]            = cb("close_all_folds"),
+      ["j"]             = cb("next_entry"),
+      ["<down>"]        = cb("next_entry"),
+      ["k"]             = cb("prev_entry"),
+      ["<up>"]          = cb("prev_entry"),
+      ["<cr>"]          = cb("select_entry"),
+      ["o"]             = cb("select_entry"),
+      ["<2-LeftMouse>"] = cb("select_entry"),
+      ["<tab>"]         = cb("select_next_entry"),
+      ["<s-tab>"]       = cb("select_prev_entry"),
+      ["gf"]            = cb("goto_file"),
+      ["<C-w><C-f>"]    = cb("goto_file_split"),
+      ["<C-w>gf"]       = cb("goto_file_tab"),
+      ["<leader>e"]     = cb("focus_files"),
+      ["<leader>b"]     = cb("toggle_files"),
+    },
+    option_panel = {
+      ["<tab>"] = cb("select"),
+      ["q"]     = cb("close"),
+    },
+  },
+})
+
+require'sniprun'.setup({
+  selected_interpreters = {},     --# use those instead of the default for the current filetype
+  repl_enable = {},               --# enable REPL-like behavior for the given interpreters
+  repl_disable = {},              --# disable REPL-like behavior for the given interpreters
+
+  interpreter_options = {         --# intepreter-specific options, see docs / :SnipInfo <name>
+    GFM_original = {
+      use_on_filetypes = {"markdown.pandoc"}    --# the 'use_on_filetypes' configuration key is
+                                                --# available for every interpreter
+    }
+  },      
+
+  --# you can combo different display modes as desired
+  display = {
+    "Classic",                    --# display results in the command-line  area
+   -- "VirtualTextOk",              --# display ok results as virtual text (multiline is shortened)
+    -- "VirtualTextErr",          --# display error results as virtual text
+    -- "TempFloatingWindow",      --# display results in a floating window
+     "LongTempFloatingWindow",  --# same as above, but only long results. To use with VirtualText__
+    -- "Terminal",                --# display results in a vertical split
+    -- "TerminalWithCode",        --# display results and code history in a vertical split
+    -- "NvimNotify",              --# display with the nvim-notify plugin
+    -- "Api"                      --# return output to a programming interface
+  },
+
+  display_options = {
+    terminal_width = 45,       --# change the terminal display option width
+    notification_timeout = 5   --# timeout for nvim_notify output
+  },
+
+  --# You can use the same keys to customize whether a sniprun producing
+  --# no output should display nothing or '(no output)'
+  show_no_output = {
+    "Classic",
+    "TempFloatingWindow",      --# implies LongTempFloatingWindow, which has no effect on its own
+  },
+
+  --# customize highlight groups (setting this overrides colorscheme)
+  snipruncolors = {
+    SniprunVirtualTextOk   =  {bg="#66eeff",fg="#000000",ctermbg="Cyan",cterfg="Black"},
+    SniprunFloatingWinOk   =  {fg="#66eeff",ctermfg="Cyan"},
+    SniprunVirtualTextErr  =  {bg="#881515",fg="#000000",ctermbg="DarkRed",cterfg="Black"},
+    SniprunFloatingWinErr  =  {fg="#881515",ctermfg="DarkRed"},
+  },
+
+  --# miscellaneous compatibility/adjustement settings
+  inline_messages = 0,             --# inline_message (0/1) is a one-line way to display messages
+                   --# to workaround sniprun not being able to display anything
+  borders = 'single',               --# display borders around floating windows
+                                   --# possible values are 'none', 'single', 'double', or 'shadow'
+  live_mode_toggle='off'       --# live mode toggle, see Usage - Running for more info   
+})
 EOF
+
+nnoremap <silent> <space>bb    :BufferLinePick<CR>
+nnoremap <silent> <space>!   :Telescope symbols<CR>
+noremap <leader>m :Glow<CR>
 " ============================================================================ "
 "
 "
@@ -111,6 +300,7 @@ EOF
 "
 "
 " =========================================================================== "
+"
 "
 let g:go_def_mapping_enabled = 0
 let g:go_def_split = 1
@@ -768,57 +958,60 @@ map <leader>tm :tabmove
 "
 " Rename tabs to show tab numbero.
 " (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
-if exists("+showtabline")
-    function! MyTabLine()
-        let s = ''
-        let wn = ''
-        let t = tabpagenr()
-        let i = 1
-        while i <= tabpagenr('$')
-            let buflist = tabpagebuflist(i)
-            let winnr = tabpagewinnr(i)
-            let s .= '%' . i . 'T'
-            let s .= (i == t ? '%1*' : '%2*')
-            let s .= ' '
-            let wn = tabpagewinnr(i,'$')
+"if exists("+showtabline")
+    "function! MyTabLine()
+        "let s = ''
+        "let wn = ''
+        "let t = tabpagenr()
+        "let i = 1
+        "while i <= tabpagenr('$')
+            "let buflist = tabpagebuflist(i)
+            "let winnr = tabpagewinnr(i)
+            "let s .= '%' . i . 'T'
+            "let s .= (i == t ? '%1*' : '%2*')
+            "let s .= ' '
+            "let wn = tabpagewinnr(i,'$')
 
-            let s .= '%#TabNum#'
-            let s .= i
-            " let s .= '%*'
-            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-            let bufnr = buflist[winnr - 1]
-            let file = bufname(bufnr)
-            let buftype = getbufvar(bufnr, 'buftype')
-            if buftype == 'nofile'
-                if file =~ '\/.'
-                    let file = substitute(file, '.*\/\ze.', '', '')
-                endif
-            else
-                let file = fnamemodify(file, ':p:t')
-            endif
-            if file == ''
-                let file = '[No Name]'
-            endif
-            let s .= ' ' . file . ' '
-            let i = i + 1
-        endwhile
-        let s .= '%T%#TabLineFill#%='
-        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-        return s
-    endfunction
-    set stal=2
-    set tabline=%!MyTabLine()
-    set showtabline=1
-    highlight link TabNum Special
-endif
+            "let s .= '%#TabNum#'
+            "let s .= i
+            "" let s .= '%*'
+            "let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+            "let bufnr = buflist[winnr - 1]
+            "let file = bufname(bufnr)
+            "let buftype = getbufvar(bufnr, 'buftype')
+            "if buftype == 'nofile'
+                "if file =~ '\/.'
+                    "let file = substitute(file, '.*\/\ze.', '', '')
+                "endif
+            "else
+                "let file = fnamemodify(file, ':p:t')
+            "endif
+            "if file == ''
+                "let file = '[No Name]'
+            "endif
+            "let s .= ' ' . file . ' '
+            "let i = i + 1
+        "endwhile
+        "let s .= '%T%#TabLineFill#%='
+        "let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+        "return s
+    "endfunction
+    "set stal=2
+    "set tabline=%!MyTabLine()
+    "set showtabline=1
+    "highlight link TabNum Special
+"endif
 
 " OS-specific settings ----------------------------------------------------- {{{
 
 if has("mac")
     " Mac options here
     " Terminal isn't sending the D key 
-    map <D-S-]> gt
-    map <D-S-[> gT
+    
+    map <Tab> :BufferNext <CR> 
+    map <S-Tab> :BufferPrevious <CR>
+    "map <D-S-]> gt
+    "map <D-S-[> gT
     map <D-1> 1gt
     map <D-2> 2gt
     map <D-3> 3gt
@@ -832,8 +1025,8 @@ if has("mac")
   else
     " windows/linux options here
     " map <C-[> gT https://vim.fandom.com/wiki/Avoid_the_escape_key
-    map <Tab> gt 
-    map <S-Tab> gT
+    map <Tab> :BufferNext <CR> 
+    map <S-Tab> :BufferPrevious <CR>
     map <C-1> 1gt
     map <C-2> 2gt
     map <C-3> 3gt
@@ -856,7 +1049,8 @@ elseif has("win32unix")
     "Cygwin
 elseif has("mac")
       " Mac options here
-      set shell=/usr/local/bin/bash
+      "set shell=/usr/local/bin/bash
+      set shell=/usr/local/bin/fish
       let g:python3_host_prog='/usr/local/bin/python3'
       let g:python_host_prog='/usr/local/bin/python2'
       let g:ruby_host_prog='/usr/bin/ruby'
