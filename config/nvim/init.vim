@@ -149,6 +149,7 @@ require'colorizer'.setup()
 require('bufferline').setup({
   options = {
     mode = "tabs",
+    sort_by = 'ordinal',
     numbers = function(opts)
         return string.format('%s', opts.ordinal)
     end,
