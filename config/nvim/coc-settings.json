@@ -49,7 +49,9 @@
       //}
     //}
   },
+ "go.goplsPath": "/bin/gopls",
   "go.goplsOptions": {
     "staticcheck": true
+
   }
 }
