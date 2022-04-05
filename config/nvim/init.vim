@@ -49,7 +49,7 @@ Plug 'ctrlpvim/ctrlp.vim' " file search
 Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim', { 'branch': 'main', 'do': 'make' }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 " completion   ---------------------------------------------------------------------------
 "Plug 'shougo/deoplete.nvim'
@@ -344,9 +344,8 @@ borders = 'single',               --# display borders around floating windows
                                  --# possible values are 'none', 'single', 'double', or 'shadow'
 live_mode_toggle='off'       --# live mode toggle, see Usage - Running for more info   
 })
---# require('telescope').load_extension('fzf')
 
-
+require('telescope').load_extension('fzf')
 
 EOF
 
