@@ -53,5 +53,6 @@
   "go.goplsOptions": {
     "staticcheck": true
 
-  }
+  },
+"rust-analyzer.server.path": "/usr/bin/rust-analyzer"
 }

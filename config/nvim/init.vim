@@ -16,6 +16,7 @@ endif
 " visit https://vimawesome.com to find plugins
 call plug#begin('~/.local/share/nvim/plugged')
 " theme  --------------------------------------------------------------------------------
+Plug 'neovim/nvim-lspconfig'
 Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 Plug 'ellisonleao/glow.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
