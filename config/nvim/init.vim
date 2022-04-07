@@ -50,7 +50,7 @@ Plug 'ctrlpvim/ctrlp.vim' " file search
 Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 " completion   ---------------------------------------------------------------------------
 "Plug 'shougo/deoplete.nvim'
@@ -102,6 +102,34 @@ call plug#end()
 
 set termguicolors
 lua << EOF
+
+  require("todo-comments").setup({
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+    colors = {
+      error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
+      warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
+      info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
+      hint = { "LspDiagnosticsDefaultHint", "#10B981" },
+      default = { "Identifier", "#7C3AED" },
+    },
+  })
+
+require('telescope').setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  }
+}
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
   ensure_installed = "maintained",
@@ -131,205 +159,195 @@ require'nvim-treesitter.configs'.setup {
 }
 
 
-  require("todo-comments").setup({
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-    colors = {
-      error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
-      warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
-      info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
-      hint = { "LspDiagnosticsDefaultHint", "#10B981" },
-      default = { "Identifier", "#7C3AED" },
-    },
-  })
-
 require('spellsitter').setup()
 require'colorizer'.setup()
 
 require('bufferline').setup({
   options = {
-    mode = "tabs",
-    sort_by = 'ordinal',
-    numbers = function(opts)
-        return string.format('%s', opts.ordinal)
-    end,
-  },
-  offsets = {
-    {
-      filetype = "NERDTree",
-      text = "File Explorer",
-      highlight = "Directory",
-      text_align = "left"
-    }
-  },
+  mode = "tabs",
+  sort_by = 'ordinal',
+  numbers = function(opts)
+      return string.format('%s', opts.ordinal)
+  end,
+},
+offsets = {
+  {
+    filetype = "NERDTree",
+    text = "File Explorer",
+    highlight = "Directory",
+    text_align = "left"
+  }
+},
 })
 
 local cb = require'diffview.config'.diffview_callback
 require'diffview'.setup({
-  diff_binaries = false,    -- Show diffs for binaries
-  enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
-  use_icons = true,         -- Requires nvim-web-devicons
-  icons = {                 -- Only applies when use_icons is true.
-    folder_closed = "",
-    folder_open = "",
+diff_binaries = false,    -- Show diffs for binaries
+enhanced_diff_hl = false, -- See ':h diffview-config-enhanced_diff_hl'
+use_icons = true,         -- Requires nvim-web-devicons
+icons = {                 -- Only applies when use_icons is true.
+  folder_closed = "",
+  folder_open = "",
+},
+signs = {
+  fold_closed = "",
+  fold_open = "",
+},
+file_panel = {
+  position = "left",                  -- One of 'left', 'right', 'top', 'bottom'
+  width = 35,                         -- Only applies when position is 'left' or 'right'
+  height = 10,                        -- Only applies when position is 'top' or 'bottom'
+  listing_style = "tree",             -- One of 'list' or 'tree'
+  tree_options = {                    -- Only applies when listing_style is 'tree'
+    flatten_dirs = true,              -- Flatten dirs that only contain one single dir
+    folder_statuses = "only_folded",  -- One of 'never', 'only_folded' or 'always'.
   },
-  signs = {
-    fold_closed = "",
-    fold_open = "",
+},
+file_history_panel = {
+  position = "bottom",
+  width = 35,
+  height = 16,
+  log_options = {
+    max_count = 256,      -- Limit the number of commits
+    follow = false,       -- Follow renames (only for single file)
+    all = false,          -- Include all refs under 'refs/' including HEAD
+    merges = false,       -- List only merge commits
+    no_merges = false,    -- List no merge commits
+    reverse = false,      -- List commits in reverse order
+  },
+},
+default_args = {    -- Default args prepended to the arg-list for the listed commands
+  DiffviewOpen = {},
+  DiffviewFileHistory = {},
+},
+hooks = {},         -- See ':h diffview-config-hooks'
+key_bindings = {
+  disable_defaults = false,                   -- Disable the default key bindings
+  -- The `view` bindings are active in the diff buffers, only when the current
+  -- tabpage is a Diffview.
+  view = {
+    ["<tab>"]      = cb("select_next_entry"),  -- Open the diff for the next file
+    ["<s-tab>"]    = cb("select_prev_entry"),  -- Open the diff for the previous file
+    ["gf"]         = cb("goto_file"),          -- Open the file in a new split in previous tabpage
+    ["<C-w><C-f>"] = cb("goto_file_split"),    -- Open the file in a new split
+    ["<C-w>gf"]    = cb("goto_file_tab"),      -- Open the file in a new tabpage
+    ["<leader>e"]  = cb("focus_files"),        -- Bring focus to the files panel
+    ["<leader>b"]  = cb("toggle_files"),       -- Toggle the files panel.
   },
   file_panel = {
-    position = "left",                  -- One of 'left', 'right', 'top', 'bottom'
-    width = 35,                         -- Only applies when position is 'left' or 'right'
-    height = 10,                        -- Only applies when position is 'top' or 'bottom'
-    listing_style = "tree",             -- One of 'list' or 'tree'
-    tree_options = {                    -- Only applies when listing_style is 'tree'
-      flatten_dirs = true,              -- Flatten dirs that only contain one single dir
-      folder_statuses = "only_folded",  -- One of 'never', 'only_folded' or 'always'.
-    },
+    ["j"]             = cb("next_entry"),           -- Bring the cursor to the next file entry
+    ["<down>"]        = cb("next_entry"),
+    ["k"]             = cb("prev_entry"),           -- Bring the cursor to the previous file entry.
+    ["<up>"]          = cb("prev_entry"),
+    ["<cr>"]          = cb("select_entry"),         -- Open the diff for the selected entry.
+    ["o"]             = cb("select_entry"),
+    ["<2-LeftMouse>"] = cb("select_entry"),
+    ["-"]             = cb("toggle_stage_entry"),   -- Stage / unstage the selected entry.
+    ["S"]             = cb("stage_all"),            -- Stage all entries.
+    ["U"]             = cb("unstage_all"),          -- Unstage all entries.
+    ["X"]             = cb("restore_entry"),        -- Restore entry to the state on the left side.
+    ["R"]             = cb("refresh_files"),        -- Update stats and entries in the file list.
+    ["<tab>"]         = cb("select_next_entry"),
+    ["<s-tab>"]       = cb("select_prev_entry"),
+    ["gf"]            = cb("goto_file"),
+    ["<C-w><C-f>"]    = cb("goto_file_split"),
+    ["<C-w>gf"]       = cb("goto_file_tab"),
+    ["i"]             = cb("listing_style"),        -- Toggle between 'list' and 'tree' views
+    ["f"]             = cb("toggle_flatten_dirs"),  -- Flatten empty subdirectories in tree listing style.
+    ["<leader>e"]     = cb("focus_files"),
+    ["<leader>b"]     = cb("toggle_files"),
   },
   file_history_panel = {
-    position = "bottom",
-    width = 35,
-    height = 16,
-    log_options = {
-      max_count = 256,      -- Limit the number of commits
-      follow = false,       -- Follow renames (only for single file)
-      all = false,          -- Include all refs under 'refs/' including HEAD
-      merges = false,       -- List only merge commits
-      no_merges = false,    -- List no merge commits
-      reverse = false,      -- List commits in reverse order
-    },
+    ["g!"]            = cb("options"),            -- Open the option panel
+    ["<C-A-d>"]       = cb("open_in_diffview"),   -- Open the entry under the cursor in a diffview
+    ["y"]             = cb("copy_hash"),          -- Copy the commit hash of the entry under the cursor
+    ["zR"]            = cb("open_all_folds"),
+    ["zM"]            = cb("close_all_folds"),
+    ["j"]             = cb("next_entry"),
+    ["<down>"]        = cb("next_entry"),
+    ["k"]             = cb("prev_entry"),
+    ["<up>"]          = cb("prev_entry"),
+    ["<cr>"]          = cb("select_entry"),
+    ["o"]             = cb("select_entry"),
+    ["<2-LeftMouse>"] = cb("select_entry"),
+    ["<tab>"]         = cb("select_next_entry"),
+    ["<s-tab>"]       = cb("select_prev_entry"),
+    ["gf"]            = cb("goto_file"),
+    ["<C-w><C-f>"]    = cb("goto_file_split"),
+    ["<C-w>gf"]       = cb("goto_file_tab"),
+    ["<leader>e"]     = cb("focus_files"),
+    ["<leader>b"]     = cb("toggle_files"),
   },
-  default_args = {    -- Default args prepended to the arg-list for the listed commands
-    DiffviewOpen = {},
-    DiffviewFileHistory = {},
+  option_panel = {
+    ["<tab>"] = cb("select"),
+    ["q"]     = cb("close"),
   },
-  hooks = {},         -- See ':h diffview-config-hooks'
-  key_bindings = {
-    disable_defaults = false,                   -- Disable the default key bindings
-    -- The `view` bindings are active in the diff buffers, only when the current
-    -- tabpage is a Diffview.
-    view = {
-      ["<tab>"]      = cb("select_next_entry"),  -- Open the diff for the next file
-      ["<s-tab>"]    = cb("select_prev_entry"),  -- Open the diff for the previous file
-      ["gf"]         = cb("goto_file"),          -- Open the file in a new split in previous tabpage
-      ["<C-w><C-f>"] = cb("goto_file_split"),    -- Open the file in a new split
-      ["<C-w>gf"]    = cb("goto_file_tab"),      -- Open the file in a new tabpage
-      ["<leader>e"]  = cb("focus_files"),        -- Bring focus to the files panel
-      ["<leader>b"]  = cb("toggle_files"),       -- Toggle the files panel.
-    },
-    file_panel = {
-      ["j"]             = cb("next_entry"),           -- Bring the cursor to the next file entry
-      ["<down>"]        = cb("next_entry"),
-      ["k"]             = cb("prev_entry"),           -- Bring the cursor to the previous file entry.
-      ["<up>"]          = cb("prev_entry"),
-      ["<cr>"]          = cb("select_entry"),         -- Open the diff for the selected entry.
-      ["o"]             = cb("select_entry"),
-      ["<2-LeftMouse>"] = cb("select_entry"),
-      ["-"]             = cb("toggle_stage_entry"),   -- Stage / unstage the selected entry.
-      ["S"]             = cb("stage_all"),            -- Stage all entries.
-      ["U"]             = cb("unstage_all"),          -- Unstage all entries.
-      ["X"]             = cb("restore_entry"),        -- Restore entry to the state on the left side.
-      ["R"]             = cb("refresh_files"),        -- Update stats and entries in the file list.
-      ["<tab>"]         = cb("select_next_entry"),
-      ["<s-tab>"]       = cb("select_prev_entry"),
-      ["gf"]            = cb("goto_file"),
-      ["<C-w><C-f>"]    = cb("goto_file_split"),
-      ["<C-w>gf"]       = cb("goto_file_tab"),
-      ["i"]             = cb("listing_style"),        -- Toggle between 'list' and 'tree' views
-      ["f"]             = cb("toggle_flatten_dirs"),  -- Flatten empty subdirectories in tree listing style.
-      ["<leader>e"]     = cb("focus_files"),
-      ["<leader>b"]     = cb("toggle_files"),
-    },
-    file_history_panel = {
-      ["g!"]            = cb("options"),            -- Open the option panel
-      ["<C-A-d>"]       = cb("open_in_diffview"),   -- Open the entry under the cursor in a diffview
-      ["y"]             = cb("copy_hash"),          -- Copy the commit hash of the entry under the cursor
-      ["zR"]            = cb("open_all_folds"),
-      ["zM"]            = cb("close_all_folds"),
-      ["j"]             = cb("next_entry"),
-      ["<down>"]        = cb("next_entry"),
-      ["k"]             = cb("prev_entry"),
-      ["<up>"]          = cb("prev_entry"),
-      ["<cr>"]          = cb("select_entry"),
-      ["o"]             = cb("select_entry"),
-      ["<2-LeftMouse>"] = cb("select_entry"),
-      ["<tab>"]         = cb("select_next_entry"),
-      ["<s-tab>"]       = cb("select_prev_entry"),
-      ["gf"]            = cb("goto_file"),
-      ["<C-w><C-f>"]    = cb("goto_file_split"),
-      ["<C-w>gf"]       = cb("goto_file_tab"),
-      ["<leader>e"]     = cb("focus_files"),
-      ["<leader>b"]     = cb("toggle_files"),
-    },
-    option_panel = {
-      ["<tab>"] = cb("select"),
-      ["q"]     = cb("close"),
-    },
-  },
+},
 })
 
 require'sniprun'.setup({
-  selected_interpreters = {},     --# use those instead of the default for the current filetype
-  repl_enable = {},               --# enable REPL-like behavior for the given interpreters
-  repl_disable = {},              --# disable REPL-like behavior for the given interpreters
+selected_interpreters = {},     --# use those instead of the default for the current filetype
+repl_enable = {},               --# enable REPL-like behavior for the given interpreters
+repl_disable = {},              --# disable REPL-like behavior for the given interpreters
 
-  interpreter_options = {         --# intepreter-specific options, see docs / :SnipInfo <name>
-    GFM_original = {
-      use_on_filetypes = {"markdown.pandoc"}    --# the 'use_on_filetypes' configuration key is
-                                                --# available for every interpreter
-    },
-    Go_origianl = {
-      compiler = "/usr/bin/go" 
-    }
-
-
-  },      
-
-  --# you can combo different display modes as desired
-  display = {
-    -- "Classic",                 --# display results in the command-line  area
-    -- "VirtualTextOk",           --# display ok results as virtual text (multiline is shortened)
-    -- "VirtualTextErr",          --# display error results as virtual text
-    -- "TempFloatingWindow",      --# display results in a floating window
-    -- "LongTempFloatingWindow",  --# same as above, but only long results. To use with VirtualText__
-    -- "Terminal",                --# display results in a vertical split
-    -- "TerminalWithCode",        --# display results and code history in a vertical split
-    "NvimNotify",              --# display with the nvim-notify plugin
-    -- "Api"                      --# return output to a programming interface
+interpreter_options = {         --# intepreter-specific options, see docs / :SnipInfo <name>
+  GFM_original = {
+    use_on_filetypes = {"markdown.pandoc"}    --# the 'use_on_filetypes' configuration key is
+                                              --# available for every interpreter
   },
+  Go_origianl = {
+    compiler = "/usr/bin/go" 
+  }
 
-  display_options = {
-    terminal_width = 45,       --# change the terminal display option width
-    notification_timeout = 5   --# timeout for nvim_notify output
-  },
 
-  --# You can use the same keys to customize whether a sniprun producing
-  --# no output should display nothing or '(no output)'
-  show_no_output = {
-    "VirtualTextOk",  
-    "VirtualTextErr", 
-    "NvimNotify",
-    "Classic",
-    "TempFloatingWindow",      --# implies LongTempFloatingWindow, which has no effect on its own
-  },
+},      
 
-  --# customize highlight groups (setting this overrides colorscheme)
-  snipruncolors = {
-    SniprunVirtualTextOk   =  {bg="#66eeff",fg="#000000",ctermbg="Cyan",cterfg="Black"},
-    SniprunFloatingWinOk   =  {fg="#66eeff",ctermfg="Cyan"},
-    SniprunVirtualTextErr  =  {bg="#881515",fg="#000000",ctermbg="DarkRed",cterfg="Black"},
-    SniprunFloatingWinErr  =  {fg="#881515",ctermfg="DarkRed"},
-  },
+--# you can combo different display modes as desired
+display = {
+  -- "Classic",                 --# display results in the command-line  area
+  -- "VirtualTextOk",           --# display ok results as virtual text (multiline is shortened)
+  -- "VirtualTextErr",          --# display error results as virtual text
+  -- "TempFloatingWindow",      --# display results in a floating window
+  -- "LongTempFloatingWindow",  --# same as above, but only long results. To use with VirtualText__
+  -- "Terminal",                --# display results in a vertical split
+  -- "TerminalWithCode",        --# display results and code history in a vertical split
+  "NvimNotify",              --# display with the nvim-notify plugin
+  -- "Api"                      --# return output to a programming interface
+},
 
-  --# miscellaneous compatibility/adjustement settings
-  inline_messages = 0,             --# inline_message (0/1) is a one-line way to display messages
-                   --# to workaround sniprun not being able to display anything
-  borders = 'single',               --# display borders around floating windows
-                                   --# possible values are 'none', 'single', 'double', or 'shadow'
-  live_mode_toggle='off'       --# live mode toggle, see Usage - Running for more info   
+display_options = {
+  terminal_width = 45,       --# change the terminal display option width
+  notification_timeout = 5   --# timeout for nvim_notify output
+},
+
+--# You can use the same keys to customize whether a sniprun producing
+--# no output should display nothing or '(no output)'
+show_no_output = {
+  "VirtualTextOk",  
+  "VirtualTextErr", 
+  "NvimNotify",
+  "Classic",
+  "TempFloatingWindow",      --# implies LongTempFloatingWindow, which has no effect on its own
+},
+
+--# customize highlight groups (setting this overrides colorscheme)
+snipruncolors = {
+  SniprunVirtualTextOk   =  {bg="#66eeff",fg="#000000",ctermbg="Cyan",cterfg="Black"},
+  SniprunFloatingWinOk   =  {fg="#66eeff",ctermfg="Cyan"},
+  SniprunVirtualTextErr  =  {bg="#881515",fg="#000000",ctermbg="DarkRed",cterfg="Black"},
+  SniprunFloatingWinErr  =  {fg="#881515",ctermfg="DarkRed"},
+},
+
+--# miscellaneous compatibility/adjustement settings
+inline_messages = 0,             --# inline_message (0/1) is a one-line way to display messages
+                 --# to workaround sniprun not being able to display anything
+borders = 'single',               --# display borders around floating windows
+                                 --# possible values are 'none', 'single', 'double', or 'shadow'
+live_mode_toggle='off'       --# live mode toggle, see Usage - Running for more info   
 })
+
+require('telescope').load_extension('fzf')
+
 EOF
 
 nnoremap <silent> <space>bb    :BufferLinePick<CR>
@@ -418,24 +436,24 @@ noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 
 fu! HlSearch()
-    let s:pos = match(getline('.'), @/, col('.') - 1) + 1
-    if s:pos != col('.')
-        call StopHL()
-    endif
+  let s:pos = match(getline('.'), @/, col('.') - 1) + 1
+  if s:pos != col('.')
+      call StopHL()
+  endif
 endfu
 
 fu! StopHL()
-    if !v:hlsearch || mode() isnot 'n'
-        return
-    else
-        sil call feedkeys("\<Plug>(StopHL)", 'm')
-    endif
+  if !v:hlsearch || mode() isnot 'n'
+      return
+  else
+      sil call feedkeys("\<Plug>(StopHL)", 'm')
+  endif
 endfu
 
 augroup SearchHighlight
 au!
-    au CursorMoved * call HlSearch()
-    au InsertEnter * call StopHL()
+  au CursorMoved * call HlSearch()
+  au InsertEnter * call StopHL()
 augroup end
 
 " Use a line cursor within insert mode and a block cursor everywhere else.
@@ -528,7 +546,7 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 nnoremap <F5> :UndotreeToggle<cr>
 if has("persistent_undo")
-    set undofile
+  set undofile
 endif
 
 " COC {{{  Language Server Protocal, completion,
@@ -553,40 +571,40 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap<silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
+if (index(['vim','help'], &filetype) >= 0)
+  execute 'h '.expand('<cword>')
+elseif (coc#rpc#ready())
+  call CocActionAsync('doHover')
+else
+  execute '!' . &keywordprg . " " . expand('<cword>')
+endif
 endfunction
 
 "}}}
 
 function s:ExpandTab()
-  if pumvisible()
-    return "\<C-n>"
-  endif
+if pumvisible()
+  return "\<C-n>"
+endif
 
-  let l:snippet = UltiSnips#ExpandSnippetOrJump()
-  if g:ulti_expand_or_jump_res > 0
+let l:snippet = UltiSnips#ExpandSnippetOrJump()
+if g:ulti_expand_or_jump_res > 0
+  return ""
+endif
+
+if s:IsEmmetInstalled()
+  if s:IsInsideEmmetExpansion()
+    call feedkeys("\<A-,>n")
     return ""
   endif
 
-  if s:IsEmmetInstalled()
-    if s:IsInsideEmmetExpansion()
-      call feedkeys("\<A-,>n")
-      return ""
-    endif
-
-    if emmet#isExpandable()
-      call feedkeys("\<A-,>,")
-      return ""
-    endif
+  if emmet#isExpandable()
+    call feedkeys("\<A-,>,")
+    return ""
   endif
+endif
 
-  return "\<Tab>"
+return "\<Tab>"
 endfunction
 
 function! SesW(...)
@@ -1050,7 +1068,7 @@ if has("mac")
     " Mac options here
     " Terminal isn't sending the D key 
     
-    map <Tab> :BufferNext <CR> 
+    "map <Tab> :BufferNext <CR> 
     map <S-Tab> :BufferPrevious <CR>
     "map <D-S-]> gt
     "map <D-S-[> gT
@@ -1067,7 +1085,7 @@ if has("mac")
   else
     " windows/linux options here
     " map <C-[> gT https://vim.fandom.com/wiki/Avoid_the_escape_key
-    map <Tab> :BufferNext <CR> 
+    "map <Tab> :BufferNext <CR> 
     map <S-Tab> :BufferPrevious <CR>
     map <C-1> 1gt
     map <C-2> 2gt
