@@ -9,6 +9,15 @@ switch (uname)
         echo Hi, stranger!
 end
 
+# alias ubuntu package names
+alias fd=fdfind
+alias bat=batcat
+
+alias bash-config='nvim -p ~/.bashrc'
+alias fish-config='nvim -p ~/.dotfiles/config/fish/config.fish'
+alias fish-source='source ~/.dotfiles/config/fish/config.fish'
+
+
 set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 set -x FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{.git,node_modules,dist}"'
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"

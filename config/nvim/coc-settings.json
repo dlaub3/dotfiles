@@ -1,5 +1,6 @@
 {
-  "coc.preferences.enableFloatHighlight": true,
+  "suggest.noselect": false,
+  "coc.preferences.rootPatterns": ["package.json", ".git"],
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.formatOnType": true,
   "coc.preferences.formatOnSaveFiletypes": [
@@ -15,7 +16,6 @@
     "go"
     //"graphql"
   ],
-  "suggest.echodocSupport": true,
   "suggest.maxCompleteItemCount": 20,
   "diagnostic.checkCurrentLine": true,
   "diagnostic.virtualTextCurrentLineOnly": false,
@@ -49,10 +49,8 @@
       //}
     //}
   },
- "go.goplsPath": "/bin/gopls",
+ "go.goplsPath": "/home/neo/dev/go/bin/gopls",
   "go.goplsOptions": {
     "staticcheck": true
-
-  },
-"rust-analyzer.server.path": "/usr/bin/rust-analyzer"
+  }
 }

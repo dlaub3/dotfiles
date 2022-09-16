@@ -99,7 +99,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
 call plug#end()
 
-
 set termguicolors
 lua << EOF
 
@@ -132,7 +131,7 @@ require('telescope').setup {
 
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = "maintained",
+  ensure_installed = { "lua", "rust", "go", "javascript", "css", "scss", "typescript", "html", "json", },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -164,20 +163,20 @@ require'colorizer'.setup()
 
 require('bufferline').setup({
   options = {
-  mode = "tabs",
-  sort_by = 'ordinal',
-  numbers = function(opts)
-      return string.format('%s', opts.ordinal)
-  end,
-},
-offsets = {
-  {
-    filetype = "NERDTree",
-    text = "File Explorer",
-    highlight = "Directory",
-    text_align = "left"
-  }
-},
+    mode = "tabs",
+    sort_by = 'ordinal',
+    numbers = function(opts)
+        return string.format('%s', opts.ordinal)
+    end,
+    offsets = {
+      {
+        filetype = "NERDTree",
+        text = "File Explorer",
+        highlight = "Directory",
+        text_align = "left"
+      }
+    },
+  },
 })
 
 local cb = require'diffview.config'.diffview_callback
@@ -194,9 +193,11 @@ signs = {
   fold_open = "",
 },
 file_panel = {
-  position = "left",                  -- One of 'left', 'right', 'top', 'bottom'
-  width = 35,                         -- Only applies when position is 'left' or 'right'
-  height = 10,                        -- Only applies when position is 'top' or 'bottom'
+  win_config = {
+    position = "left",                  -- One of 'left', 'right', 'top', 'bottom'
+    width = 35,                         -- Only applies when position is 'left' or 'right'
+    height = 10,                        -- Only applies when position is 'top' or 'bottom'
+  },
   listing_style = "tree",             -- One of 'list' or 'tree'
   tree_options = {                    -- Only applies when listing_style is 'tree'
     flatten_dirs = true,              -- Flatten dirs that only contain one single dir
@@ -204,16 +205,28 @@ file_panel = {
   },
 },
 file_history_panel = {
-  position = "bottom",
-  width = 35,
-  height = 16,
+  win_config = {
+    position = "bottom",
+    width = 35,
+    height = 16,
+  },
   log_options = {
-    max_count = 256,      -- Limit the number of commits
-    follow = false,       -- Follow renames (only for single file)
-    all = false,          -- Include all refs under 'refs/' including HEAD
-    merges = false,       -- List only merge commits
-    no_merges = false,    -- List no merge commits
-    reverse = false,      -- List commits in reverse order
+    single_file = {
+      max_count = 256,      -- Limit the number of commits
+      follow = false,       -- Follow renames (only for single file)
+      all = false,          -- Include all refs under 'refs/' including HEAD
+      merges = false,       -- List only merge commits
+      no_merges = false,    -- List no merge commits
+      reverse = false,      -- List commits in reverse order
+    },
+    multi_file = {
+      max_count = 256,      -- Limit the number of commits
+      follow = false,       -- Follow renames (only for single file)
+      all = false,          -- Include all refs under 'refs/' including HEAD
+      merges = false,       -- List only merge commits
+      no_merges = false,    -- List no merge commits
+      reverse = false,      -- List commits in reverse order
+    },
   },
 },
 default_args = {    -- Default args prepended to the arg-list for the listed commands
@@ -508,7 +521,7 @@ inoremap kj <ESC>
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<C-e>"
-let g:UltiSnipsListSnippets="<C-n>"
+let g:UltiSnipsListSnippets="<C-tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-l>"
 let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
@@ -586,6 +599,7 @@ function s:ExpandTab()
 if pumvisible()
   return "\<C-n>"
 endif
+
 
 let l:snippet = UltiSnips#ExpandSnippetOrJump()
 if g:ulti_expand_or_jump_res > 0
@@ -1110,13 +1124,13 @@ elseif has("win32unix")
 elseif has("mac")
       " Mac options here
       "set shell=/usr/local/bin/bash
-set shell=/usr/local/bin/fish
+      set shell=/usr/local/bin/fish
       let g:python3_host_prog='/usr/local/bin/python3'
       let g:python_host_prog='/usr/local/bin/python2'
       let g:ruby_host_prog='/usr/bin/ruby'
 elseif has("bsd")
     "BSD-based, ie freeBSD"
-elseif has("linux")
+elseif has("unix")
       " linux options here
       " configure python path
       set shell=/usr/bin/bash
