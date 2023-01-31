@@ -80,6 +80,7 @@ Plug 'godlygeek/tabular' " line up text
 Plug 'scrooloose/nerdcommenter' " easily apply/remove comments
 Plug 'mattn/emmet-vim' " code completion/generation
 "Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
+Plug 'cakebaker/scss-syntax.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -130,8 +131,8 @@ require('telescope').setup {
 -- load_extension, somewhere after setup function:
 
 require'nvim-treesitter.configs'.setup {
-  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = { "lua", "rust", "go", "javascript", "css", "scss", "typescript", "html", "json", },
+  -- One of "all", or a list of languages
+  ensure_installed = {"vim", "help", "json", "scss", "rust", "typescript", "go", "css", "html", "scss", "javascript", "python", "lua", "bash" },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -211,22 +212,16 @@ file_history_panel = {
     height = 16,
   },
   log_options = {
-    single_file = {
-      max_count = 256,      -- Limit the number of commits
-      follow = false,       -- Follow renames (only for single file)
-      all = false,          -- Include all refs under 'refs/' including HEAD
-      merges = false,       -- List only merge commits
-      no_merges = false,    -- List no merge commits
-      reverse = false,      -- List commits in reverse order
-    },
-    multi_file = {
-      max_count = 256,      -- Limit the number of commits
-      follow = false,       -- Follow renames (only for single file)
-      all = false,          -- Include all refs under 'refs/' including HEAD
-      merges = false,       -- List only merge commits
-      no_merges = false,    -- List no merge commits
-      reverse = false,      -- List commits in reverse order
-    },
+      git = { 
+        single_file = {
+          max_count = 512,
+          follow = true,
+          -- follow = false   -- `follow` only applies to single-file history
+        },
+        multi_file = {
+          max_count = 128,
+        },
+      },
   },
 },
 default_args = {    -- Default args prepended to the arg-list for the listed commands
