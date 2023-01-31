@@ -25,6 +25,7 @@ alias fzf_preview='fzf --preview "bat --style=numbers --color=always {} | less -
 
 alias toPlainText=pbpaste | pbcopy
 alias nvimdiff='nvim -p (git diff --name-only --relative && git diff --staged --name-only --relative && git ls-files -o --exclude-standard)'
+alias nvimshow='git show --pretty="format:" --name-only | xargs nvim -p'
 # alias
 alias dotfiles="cd ~/.dotfiles"
 alias els="exa --long --header"

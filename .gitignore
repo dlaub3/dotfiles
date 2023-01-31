@@ -3,5 +3,7 @@ config/nvim/.netrwhist
 tmux/plugins
 config/fish/conf.d/local.fish
 tmux/launch_scripts/local.sh
+tmux/launch_scripts/plugins/
+tmux/launch_scripts/resurrect/
 *.log
 /tmux/resurrect/

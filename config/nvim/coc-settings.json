@@ -1,39 +1,28 @@
 {
-  "suggest.noselect": false,
-  "coc.preferences.rootPatterns": ["package.json", ".git"],
   "coc.preferences.extensionUpdateCheck": "daily",
+  "coc.preferences.formatOnSave": true,
   "coc.preferences.formatOnType": true,
-  "coc.preferences.formatOnSaveFiletypes": [
-    "json",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "css",
-    "scss",
-    "html",
-    "prisma",
-    "go"
-    //"graphql"
-  ],
-  "suggest.maxCompleteItemCount": 20,
   "diagnostic.checkCurrentLine": true,
-  "diagnostic.virtualTextCurrentLineOnly": false,
-  "diagnostic.virtualTextLines": 4,
   "diagnostic.enableMessage": "always",
   "diagnostic.errorSign": "✖",
   "diagnostic.hintSign": "•",
   "diagnostic.infoSign": "•",
   "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualTextLines": 4,
   "diagnostic.warningSign": "⚠",
   "eslint.autoFixOnSave": true,
   "eslint.format.enable": true,
-  "prettier.requireConfig": true,
   "prettier.formatterPriority": 1,
+  "prettier.requireConfig": true,
+  "suggest.maxCompleteItemCount": 20,
+  "suggest.noselect": true,
   "tsserver.log": "normal",
   "tsserver.maxTsServerMemory": 4096,
   "tsserver.npm": "/usr/local/bin/npm",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.suggest.autoImports": true,
+  "workspace.rootPatterns": ["package.json", ".git"],
   "languageserver": {
     //"graphql": {
       //"command": "graphql-lsp",
@@ -50,7 +39,7 @@
     //}
   },
  "go.goplsPath": "/home/neo/dev/go/bin/gopls",
-  "go.goplsOptions": {
-    "staticcheck": true
-  }
+ "go.goplsOptions": {
+   "staticcheck": true
+ }
 }
