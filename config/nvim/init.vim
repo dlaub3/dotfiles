@@ -80,6 +80,7 @@ Plug 'godlygeek/tabular' " line up text
 Plug 'scrooloose/nerdcommenter' " easily apply/remove comments
 Plug 'mattn/emmet-vim' " code completion/generation
 "Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
+Plug 'cakebaker/scss-syntax.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -131,8 +132,8 @@ require('telescope').setup {
 -- load_extension, somewhere after setup function:
 
 require'nvim-treesitter.configs'.setup {
-  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  ensure_installed = "maintained",
+  -- One of "all", or a list of languages
+  ensure_installed = {"vim", "help", "typescript", "go", "css", "html", "scss", "javascript", "python", "lua", "bash" },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -194,9 +195,11 @@ signs = {
   fold_open = "",
 },
 file_panel = {
-  position = "left",                  -- One of 'left', 'right', 'top', 'bottom'
-  width = 35,                         -- Only applies when position is 'left' or 'right'
-  height = 10,                        -- Only applies when position is 'top' or 'bottom'
+  win_config = {
+    position = "left",                  -- One of 'left', 'right', 'top', 'bottom'
+    width = 35,                         -- Only applies when position is 'left' or 'right'
+    height = 10,                        -- Only applies when position is 'top' or 'bottom'
+  },
   listing_style = "tree",             -- One of 'list' or 'tree'
   tree_options = {                    -- Only applies when listing_style is 'tree'
     flatten_dirs = true,              -- Flatten dirs that only contain one single dir
@@ -204,16 +207,22 @@ file_panel = {
   },
 },
 file_history_panel = {
-  position = "bottom",
-  width = 35,
-  height = 16,
+  win_config = {
+    position = "bottom",
+    width = 35,
+    height = 16,
+  },
   log_options = {
-    max_count = 256,      -- Limit the number of commits
-    follow = false,       -- Follow renames (only for single file)
-    all = false,          -- Include all refs under 'refs/' including HEAD
-    merges = false,       -- List only merge commits
-    no_merges = false,    -- List no merge commits
-    reverse = false,      -- List commits in reverse order
+      git = { 
+        single_file = {
+          max_count = 512,
+          follow = true,
+          -- follow = false   -- `follow` only applies to single-file history
+        },
+        multi_file = {
+          max_count = 128,
+        },
+      },
   },
 },
 default_args = {    -- Default args prepended to the arg-list for the listed commands
