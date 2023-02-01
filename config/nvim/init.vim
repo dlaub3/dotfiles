@@ -66,6 +66,7 @@ Plug 'SidOfc/mkdx'
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
 Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 " must be before vim-markdown
 Plug 'tpope/vim-surround' " sounds words,groups with almost anything
 " JS/TS   --------------------------------------------------------------------------------
@@ -679,10 +680,37 @@ let g:goyo_width = "80%" " (default: 80)
 let g:goyo_height = "90%" " (default: 85%)
 let g:goyo_linenr = 1 " (default: 0)
 nnoremap <C-g> :Goyo<CR>
+
+function! s:goyo_enter()
+  NERDTreeClose
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  Limelight
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  set showmode
+  set showcmd
+  set scrolloff=5
+  Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
 if has("autocmd")
 	" Automatically open Goyo
-  autocmd BufNewFile,BufRead *.md set filetype=markdown
-	"autocmd FileType markdown Goyo
+  autocmd BufNewFile, BufRead *.md set filetype=markdown
+  "autocmd FileType markdown Goyo
 	" Markdown Configuration
   autocmd Filetype gitcommit,markdown,text setlocal spell
 	autocmd FileType markdown setlocal spell spelllang=en_us
