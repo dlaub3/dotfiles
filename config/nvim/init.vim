@@ -25,7 +25,7 @@ Plug 'akinsho/bufferline.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'rcarriga/nvim-notify'
 Plug 'nvim-telescope/telescope-symbols.nvim'
-Plug 'jparise/vim-graphql'
+"Plug 'jparise/vim-graphql'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'pantharshit00/vim-prisma'
 Plug 'dracula/vim', { 'name': 'dracula' } " colorscheme
@@ -101,7 +101,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
 call plug#end()
 
-
 set termguicolors
 lua << EOF
 
@@ -134,7 +133,7 @@ require('telescope').setup {
 
 require'nvim-treesitter.configs'.setup {
   -- One of "all", or a list of languages
-  ensure_installed = {"vim", "help", "typescript", "go", "css", "html", "scss", "javascript", "python", "lua", "bash" },
+  ensure_installed = {"vim", "help", "json", "scss", "rust", "typescript", "go", "css", "html", "scss", "javascript", "python", "lua", "bash" },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -166,20 +165,20 @@ require'colorizer'.setup()
 
 require('bufferline').setup({
   options = {
-  mode = "tabs",
-  sort_by = 'ordinal',
-  numbers = function(opts)
-      return string.format('%s', opts.ordinal)
-  end,
-},
-offsets = {
-  {
-    filetype = "NERDTree",
-    text = "File Explorer",
-    highlight = "Directory",
-    text_align = "left"
-  }
-},
+    mode = "tabs",
+    sort_by = 'ordinal',
+    numbers = function(opts)
+        return string.format('%s', opts.ordinal)
+    end,
+    offsets = {
+      {
+        filetype = "NERDTree",
+        text = "File Explorer",
+        highlight = "Directory",
+        text_align = "left"
+      }
+    },
+  },
 })
 
 local cb = require'diffview.config'.diffview_callback
@@ -517,8 +516,9 @@ inoremap kj <ESC>
 "vnoremap jk <Esc>
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+
 let g:UltiSnipsExpandTrigger="<C-e>"
-let g:UltiSnipsListSnippets="<tab>"
+let g:UltiSnipsListSnippets="<l-tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-l>"
 let g:UltiSnipsJumpBackwardTrigger="<C-h>"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
@@ -577,18 +577,45 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window.
-nnoremap<silent> K :call <SID>show_documentation()<CR>
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+    
 
-function! s:show_documentation()
-if (index(['vim','help'], &filetype) >= 0)
-  execute 'h '.expand('<cword>')
-elseif (coc#rpc#ready())
-  call CocActionAsync('doHover')
-else
-  execute '!' . &keywordprg . " " . expand('<cword>')
-endif
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
 endfunction
+
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Run the Code Lens action on the current line.
+nmap <leader>cl  <Plug>(coc-codelens-action)
+
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 "}}}
 
@@ -598,6 +625,7 @@ function s:ExpandTab()
 " no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
+
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
@@ -606,8 +634,15 @@ inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() && coc#pum#info()['index'] != -1 ? coc#pum#confirm() :
+      \ "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
 
 let l:snippet = UltiSnips#ExpandSnippetOrJump()
 if g:ulti_expand_or_jump_res > 0
@@ -718,7 +753,7 @@ if has("autocmd")
   autocmd Filetype markdown,text setlocal textwidth=80
   autocmd Filetype markdown,text setlocal formatoptions=anowcr2tq1j
 	" Hide plaintext formatting and use color instead
-  autocmd FileType markdown setlocal conceallevel=3
+  autocmd FileType markdown setlocal conceallevel=0
 	" Disable cursor line and column highlight
 	autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
@@ -1013,6 +1048,7 @@ set updatetime=300 " You will have bad experience for diagnostic messages when i
 set shortmess+=c " don't give |ins-completion-menu| messages.
 set signcolumn=yes " always show signcolumns
 set expandtab                     " Use spaces instead of tabs
+autocmd Filetype makefile setlocal ts=4 sw=4 noexpandtab
 set laststatus=2                  " Show the status line all the time
 set tabstop=2                     " Global tab width.
 set shiftwidth=2                  " And again, related.
@@ -1159,13 +1195,13 @@ elseif has("win32unix")
 elseif has("mac")
       " Mac options here
       "set shell=/usr/local/bin/bash
-set shell=/usr/local/bin/fish
+      set shell=/usr/local/bin/fish
       let g:python3_host_prog='/usr/local/bin/python3'
       let g:python_host_prog='/usr/local/bin/python2'
       let g:ruby_host_prog='/usr/bin/ruby'
 elseif has("bsd")
     "BSD-based, ie freeBSD"
-elseif has("linux")
+elseif has("unix")
       " linux options here
       " configure python path
       set shell=/usr/bin/bash
@@ -1363,8 +1399,9 @@ endfunction
 
 command! -nargs=0 LoadSession call LoadSession()
 
-au VimEnter * :call LoadSession()
-au VimLeave * :call SaveSession()
+let blacklist = ['gitcommit', 'diff']
+au VimEnter * if index(blacklist, &filetype) < 0 | :call LoadSession() | endif
+au VimLeave * if index(blacklist, &filetype) < 0 | :call SaveSession() | endif
 
 
 function! Redir(cmd, rng, start, end)

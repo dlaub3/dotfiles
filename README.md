@@ -19,6 +19,8 @@
 - remove omf (so the dracula theme will load)
 
 ### fonts
-- Fira Code Ligatures
-- FuraCode Glyphs
 - JetBrains Mono
+- https://github.com/ryanoasis/nerd-fonts // JetBrainsMono (for icon support in 
+  vim)
+
+## tmux - run plugin install command
