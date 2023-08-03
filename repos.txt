@@ -1,0 +1,3 @@
+neovim/neovim linux64.tar.gz\$
+kovidgoyal/kitty x86_64.txz\$
+Schniz/fnm linux.zip\$

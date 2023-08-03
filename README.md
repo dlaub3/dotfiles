@@ -1,4 +1,5 @@
 # dotfiles
+- feh (image viewer)
 - nvim
 - kitty
 - fish
@@ -24,3 +25,8 @@
   vim)
 
 ## tmux - run plugin install command
+
+## SSH
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+https://docs.github.com/en/authentication/connecting-to-github-with-ssh/working-with-ssh-key-passphrases#auto-launching-ssh-agent-on-git-for-windows

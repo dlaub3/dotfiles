@@ -690,7 +690,6 @@ filetype plugin on
 let g:instant_markdown_autostart = 0
 let g:instant_markdown_browser = "firefox --new-window"
 let g:instant_markdown_slow = 0
-let g:instant_markdown_autostart = 0
 let g:instant_markdown_open_to_the_world = 0
 let g:instant_markdown_allow_unsafe_content = 1
 let g:instant_markdown_allow_external_content = 1
@@ -757,6 +756,7 @@ if has("autocmd")
 	" Disable cursor line and column highlight
 	autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
+  autocmd FileType markdown setlocal nofoldenable
 endif
 
 let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
@@ -984,7 +984,7 @@ syntax enable
 set mouse=a " enable scroll with trackpad
 au BufEnter * :syntax sync minlines=100 fromstart
 set redrawtime=1000
-set clipboard=unnamedplus " use system clipboard
+set clipboard+=unnamedplus " use system clipboard
 set encoding=UTF-8
 set showcmd                       " Display incomplete commands.
 set showmode                      " Display the mode you're in.

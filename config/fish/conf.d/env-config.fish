@@ -3,6 +3,9 @@ set -xg EDITOR (which nvim)
 
 set -xg PATH $HOME/.local/bin /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin /bin /sbin
 
+# LOCAL STUFF
+source ~/.local-env.fish
+
 # nvim
 set -xg PATH "/usr/local/nvim/bin" $PATH
 
@@ -11,7 +14,7 @@ set -xg PATH "$HOME/.cargo/bin" $PATH
         
 ## go
 set -xg PATH /usr/local/go/bin $PATH
-set -xg GOROOT /usr/local/go
+#set -xg GOROOT /usr/local/go
 set -xg GOPATH $HOME/go
 set -xg PATH $PATH (go env GOPATH)/bin 
 
@@ -42,6 +45,3 @@ fnm env --shell=fish | source
 ## node
 set -xg PATH $PATH (yarn global bin)
 set -xg NPM_CONFIG_PREFIX ~/.npm-global
-
-# LOCAL STUFF
-source ~/.local-env.fish

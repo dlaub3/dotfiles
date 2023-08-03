@@ -13,10 +13,13 @@ end
 alias fd=fdfind
 alias bat=batcat
 
+alias k=kubectl
+set -x now --force --grace-period 0
+set -x dry -o yaml --dry-run=client
+
 alias bash-config='nvim -p ~/.bashrc'
 alias fish-config='nvim -p ~/.dotfiles/config/fish/config.fish'
 alias fish-source='source ~/.dotfiles/config/fish/config.fish'
-
 
 set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 set -x FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{.git,node_modules,dist}"'
@@ -81,7 +84,6 @@ function myPrettier --description "run prettier"
   end
 end
 
-
 function myStylelintJs --description "run stylelint"
   set npm_bin (npm bin)
   set -x STYLELINT_TYPE js
@@ -111,7 +113,6 @@ function myPrettierAge --description "beautify <interval>"
     echo "no files"
   end
 end
-
 
 function myStylelintAge --description "lint"
   set -x STYLELINT_TYPE js
