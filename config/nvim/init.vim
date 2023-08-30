@@ -62,7 +62,6 @@ Plug 'junegunn/gv.vim'
 " yaml   ---------------------------------------------------------------------------------
 Plug 'avakhov/vim-yaml'
 " markdown  ------------------------------------------------------------------------------
-Plug 'SidOfc/mkdx'
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
 Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/goyo.vim'
@@ -383,7 +382,8 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
-"
+
+autocmd BufWritePre * :%s/\s\+$//e
 " Source the vimrc file after saving it
 "if has("autocmd")
 "autocmd bufwritepost init.vim source $MYVIMRC
@@ -700,13 +700,13 @@ let g:instant_markdown_autoscroll = 1
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 0
 " Configuration for vim-markdown
-"let g:vim_markdown_conceal = 2
+let g:vim_markdown_conceal = 2
 let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_math = 1
 let g:vim_markdown_toml_frontmatter = 1
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_strikethrough = 1
-let g:vim_markdown_autowrite = 1
+let g:vim_markdown_autowrite = 0
 let g:vim_markdown_edit_url_in = 'tab'
 let g:vim_markdown_follow_anchor = 1
 
@@ -752,18 +752,13 @@ if has("autocmd")
   autocmd Filetype markdown,text setlocal textwidth=80
   autocmd Filetype markdown,text setlocal formatoptions=anowcr2tq1j
 	" Hide plaintext formatting and use color instead
-  autocmd FileType markdown setlocal conceallevel=0
+  autocmd FileType markdown setlocal conceallevel=2
 	" Disable cursor line and column highlight
 	autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
   autocmd FileType markdown setlocal nofoldenable
 endif
 
-let g:mkdx#settings     = { 'highlight': { 'enable': 1 },
-                        \ 'enter': { 'shift': 1 },
-                        \ 'links': { 'external': { 'enable': 1 } },
-                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
-                        \ 'fold': { 'enable': 1 } }
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_new_list_item_indent = 0
 let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown

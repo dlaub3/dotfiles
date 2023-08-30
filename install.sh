@@ -11,6 +11,7 @@ ln -nfs ~/.dotfiles/ripgreprc  ~/.ripgreprc
 ln -nfs ~/.dotfiles/profile  ~/.profile
 ln -nfs ~/.dotfiles/bashrc  ~/.bashrc
 ln -nfs ~/.dotfiles/bash_aliases  ~/.bash_aliases
+ln -nfs ~/.dotfiles/Xresources ~/.Xresources
 mkdir ~/.vimsessions
 ln -nfs ~/.dotfiles/gitconfig  ~/.gitconfig # This might overwrite important info for [user]
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
