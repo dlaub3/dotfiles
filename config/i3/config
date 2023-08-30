@@ -239,8 +239,8 @@ mode "$mode_system" {
 bindsym $mod+BackSpace mode "$mode_system"
 
 #exec --no-startup-id feh --no-fehbg --bg-fill /home/jones/Pictures/jones.png
-#i3-msg -t get_workspaces | jq -c ".[] | select(.focused) | .num" 
-exec --no-startup-id feh --randomize --no-fehbg --bg-fill $HOME/Pictures/wallpapers/*   
+#i3-msg -t get_workspaces | jq -c ".[] | select(.focused) | .num"
+exec --no-startup-id feh --randomize --no-fehbg --bg-fill $HOME/Pictures/wallpapers/*
 
 exec --no-startup-id xsetroot -solid "#333333"
 
@@ -263,3 +263,7 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
 
 # move the whole workspace to the next output
 bindsym $mod+x move workspace to output right
+
+exec --no-startup-id xrdb -merge ~/.Xresources
+exec --no-startup-id xrandr --dpi 100
+exec --no-startup-id vmware-user-suid-wrapper
