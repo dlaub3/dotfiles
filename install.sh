@@ -4,6 +4,8 @@ ln -nfs ~/.dotfiles/config/fish ~/.config/
 ln -nfs ~/.dotfiles/config/nvim ~/.config/
 ln -nfs ~/.dotfiles/config/kitty ~/.config/
 ln -nfs ~/.dotfiles/config/bat ~/.config/
+ln -nfs ~/.dotfiles/config/i3 ~/.config/
+ln -nfs ~/.dotfiles/config/rofi ~/.config/
 ln -nfs ~/.dotfiles/tmux/* ~/.tmux
 ln -nfs ~/.dotfiles/tmux.conf  ~/.tmux.conf
 ln -nfs ~/.dotfiles/gitignore_global  ~/.gitignore_global

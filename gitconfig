@@ -37,3 +37,7 @@
 
 [pull]
 	rebase = false
+[safe]
+	directory = /storage/dev/talks
+	directory = /storage/dev/laubacheracres
+	directory = /storage/dev/hippo

@@ -60,6 +60,10 @@ bindsym Mod1+Shift+q kill
 # installed.
 # bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
 
+#bindsym $mod+d exec  --no-starup-id i3-dmenu-desktop --dmenu="rofi -show drun -i"
+#bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
+bindsym $mod+d exec --no-startup-id rofi -show drun -run-command "i3-msg exec '{cmd}'" -show-icons
+
 # change focus
 bindsym Mod1+$left focus left
 bindsym Mod1+$down focus down
@@ -215,9 +219,6 @@ bar {
     binding_mode       #FF5555 #FF5555 #F8F8F2
   }
 }
-
-#bindsym $mod+d exec "dmenu_run -nf '#F8F8F2' -nb '#282A36' -sb '#6272A4' -sf '#F8F8F2' -fn 'monospace-10' -p 'dmenu%'"
-bindsym $mod+d exec --no-startup-id rofi -show combi -run-command "i3-msg exec '{cmd}'" -show-icons
 
 workspace_auto_back_and_forth yes
 
