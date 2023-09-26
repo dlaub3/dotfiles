@@ -48,7 +48,7 @@ alias tmux-default="~/.tmux/launch_scripts/default.sh"
 alias jsonPretty="pbpaste | jq | pbcopy && pbpaste | jq"
 
 function freePort --description "kill the process on a specified port"
-  if test -n $argv[1] 
+  if test -n $argv[1]
 
     set PID (lsof -t -i:$argv[1])
 
@@ -58,7 +58,7 @@ function freePort --description "kill the process on a specified port"
     end
 
     kill -9 $PID # this isn't nice
-  
+
     if test $status -ne 0
       echo "Failed to kill PID: $PID"
     else
@@ -105,10 +105,10 @@ function myEslint --description "run eslint"
   end
 end
 
-function myPrettierAge --description "beautify <interval>" 
+function myPrettierAge --description "beautify <interval>"
   set files_list (git diff --name-only --relative "@{$argv[1]}" | grep '\.[t|j]sx\?$')
   if test "$files_list"
-    npx prettier@1.19.1 --write $files_list 
+    npx prettier@1.19.1 --write $files_list
   else
     echo "no files"
   end
@@ -136,7 +136,7 @@ function myEslintAge --description "lintAge <interval>"
 end
 
 function showFiles --description "search files and list filenames"
-  egrep -C 3 -rl $argv[1] . | fzf --preview 'bat --style=numbers --color=always {} | less -R' 
+  egrep -C 3 -rl $argv[1] . | fzf --preview 'bat --style=numbers --color=always {} | less -R'
 end
 
 function showContents --description "search files and list contents"
@@ -149,12 +149,12 @@ function copyImport --description "copy the import path to the clipboard"
    echo (pbpaste)
 end
 
-function lorem --description "get lorem text" 
+function lorem --description "get lorem text"
   ~/.dotfiles/lorem.pl $argv[1] | pbcopy
   pbpaste
 end
 
-function go_test --description "add colors to go test" 
+function go_test --description "add colors to go test"
   set GREP_COLOR "01;33"
   go test $argv | sed ''/PASS/s//(printf "\033[32mPASS\033[0m")/'' | sed ''/SKIP/s//(printf "\033[34mSKIP\033[0m")/'' | sed ''/FAIL/s//(printf "\033[31mFAIL\033[0m")/'' | sed ''/FAIL/s//(printf "\033[31mFAIL\033[0m")/'' |  egrep --color=always '\s*[a-zA-Z0-9\-_.]+[:][0-9]+[:]|^'
 end
@@ -162,14 +162,14 @@ end
 function j_test --description "run jest tests for the current directory, or provide a path"
   set dir (pwd | sed -E 's/^.+src/src/')
   if not set -q argv[1]
-    npx jest $dir 
+    npx jest $dir
   else if test $argv[1] = '--coverage'
     npx jest $dir \
     --coverage \
     --collectCoverageFrom=\"$dir/\*\*/\*.{ts,tsx}\" \
     --coveragePathIgnorePatterns=\"__tests__/\"
   else if not set -q argv[2]
-    npx jest $argv[1] 
+    npx jest $argv[1]
   else if test $argv[2] = '--coverage'
     npx jest $argv[1] \
     --coverage \

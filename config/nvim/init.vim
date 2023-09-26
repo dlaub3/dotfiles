@@ -39,15 +39,14 @@ Plug 'drewtempelmeyer/palenight.vim' " colorscheme
 Plug 'cocopon/iceberg.vim' " colorscheme
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons' " icons for nerdtree
 " navigation  ----------------------------------------------------------------------------
 Plug 'easymotion/vim-easymotion' " move to characters in a window
 Plug 'scrooloose/nerdtree' " file navigation Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " advanced fuzzy finder
 Plug 'junegunn/fzf.vim' " https://github.com/junegunn/fzf.vim#installation
 Plug 'mileszs/ack.vim' " grep like word search
-Plug 'ctrlpvim/ctrlp.vim' " file search 
-Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic. 
+Plug 'ctrlpvim/ctrlp.vim' " file search
+Plug 'shougo/denite.nvim' " It is like a fuzzy finder, but is more generic.
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -88,7 +87,7 @@ Plug 'sjl/gundo.vim'
 Plug 'terryma/vim-smooth-scroll'
 "Plug 'w0rp/ale' " linting, Language Server Protocal, completion, fixing {{{
 Plug 'mbbill/undotree' " visualizes undo history and makes it easier to browse
-Plug 'neoclide/coc.nvim', {'branch': 'release'} 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/jsonc.vim'
 " Golang
 " https://github.com/fatih/vim-go-tutorial#quick-setup
@@ -96,8 +95,9 @@ Plug 'neoclide/jsonc.vim'
 Plug 'fatih/vim-go' "{ 'do': ':GoUpdateBinaries' }
 Plug 'junegunn/vim-emoji'
 Plug 'folke/todo-comments.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
+"Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons' " icons for nerdtree
 call plug#end()
 
 set termguicolors
@@ -161,7 +161,6 @@ require'nvim-treesitter.configs'.setup {
 
 require('spellsitter').setup()
 require'colorizer'.setup()
-
 require('bufferline').setup({
   options = {
     mode = "tabs",
@@ -212,7 +211,7 @@ file_history_panel = {
     height = 16,
   },
   log_options = {
-      git = { 
+      git = {
         single_file = {
           max_count = 512,
           follow = true,
@@ -304,11 +303,11 @@ interpreter_options = {         --# intepreter-specific options, see docs / :Sni
                                               --# available for every interpreter
   },
   Go_origianl = {
-    compiler = "/usr/bin/go" 
+    compiler = "/usr/bin/go"
   }
 
 
-},      
+},
 
 --# you can combo different display modes as desired
 display = {
@@ -331,8 +330,8 @@ display_options = {
 --# You can use the same keys to customize whether a sniprun producing
 --# no output should display nothing or '(no output)'
 show_no_output = {
-  "VirtualTextOk",  
-  "VirtualTextErr", 
+  "VirtualTextOk",
+  "VirtualTextErr",
   "NvimNotify",
   "Classic",
   "TempFloatingWindow",      --# implies LongTempFloatingWindow, which has no effect on its own
@@ -351,7 +350,7 @@ inline_messages = 0,             --# inline_message (0/1) is a one-line way to d
                  --# to workaround sniprun not being able to display anything
 borders = 'single',               --# display borders around floating windows
                                  --# possible values are 'none', 'single', 'double', or 'shadow'
-live_mode_toggle='off'       --# live mode toggle, see Usage - Running for more info   
+live_mode_toggle='off'       --# live mode toggle, see Usage - Running for more info
 })
 
 require('telescope').load_extension('fzf')
@@ -416,10 +415,10 @@ map <leader>em :%!emojify<CR>
 
 noremap <silent><leader>t :silent !tmux neww bash ~/.dotfiles/tmux/launch_scripts/sessions.sh<CR>
 
-" 
+"
 set listchars=tab:▸\ ,eol:¬
 
-" better list formatting 
+" better list formatting
 " support for more than numbered lists
 " https://vimways.org/2018/formatting-lists-with-vim
 set formatlistpat=^\\s*                     " Optional leading whitespace
@@ -440,7 +439,7 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" Improved highlighting / unhighliting 
+" Improved highlighting / unhighliting
 noremap <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 noremap! <expr> <Plug>(StopHL) execute('nohlsearch')[-1]
 
@@ -484,7 +483,6 @@ set guicursor+=i:blinkwait10
 set guicursor+=a:-blinkwait175-blinkoff150-blinkon175
 highlight Cursor guifg=white guibg=black
 highlight iCursor guifg=white guibg=steelblue
-let g:Guifont='FuraCode Nerd Font'
 
 
 "colorscheme solarized
@@ -505,8 +503,15 @@ let g:Guifont='FuraCode Nerd Font'
 
 colorscheme dracula
 let g:airline_theme='dracula'
+"let g:airline_extensions = ['branch', 'tabline']
 let g:dracula_terminal_italics=1
-let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#bufferline#enabled = 0
+"let g:airline#extensions#bufferline#overwrite_variables = 1
+let g:airline#extensions#tabline#buffer_nr_show = 0
+"let g:airline_section_z_term = '%p%% ☰  %l/%L, %v'
+let g:airline_symbols = get(g:, 'airline_symbols', {})
+let g:airline_symbols.space = "\ua0"
 
 noremap  <A-p> <C-^>
 inoremap  <A-p> <C-^>
@@ -579,7 +584,7 @@ nmap <silent> gr <Plug>(coc-references)
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
-    
+
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call ShowDocumentation()<CR>
@@ -742,19 +747,19 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 if has("autocmd")
-	" Automatically open Goyo
+  " Automatically open Goyo
   autocmd BufNewFile, BufRead *.md set filetype=markdown
   "autocmd FileType markdown Goyo
-	" Markdown Configuration
+  " Markdown Configuration
   autocmd Filetype gitcommit,markdown,text setlocal spell
-	autocmd FileType markdown setlocal spell spelllang=en_us
-  autocmd Filetype markdown,text setlocal wrap 
+  autocmd FileType markdown setlocal spell spelllang=en_us
+  autocmd Filetype markdown,text setlocal wrap
   autocmd Filetype markdown,text setlocal textwidth=80
   autocmd Filetype markdown,text setlocal formatoptions=anowcr2tq1j
-	" Hide plaintext formatting and use color instead
+  " Hide plaintext formatting and use color instead
   autocmd FileType markdown setlocal conceallevel=2
-	" Disable cursor line and column highlight
-	autocmd FileType markdown setlocal nocursorcolumn
+  " Disable cursor line and column highlight
+  autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
   autocmd FileType markdown setlocal nofoldenable
 endif
@@ -1062,7 +1067,7 @@ if !isdirectory(expand(&directory))
 endif
 
 
-" File Type Setting  {{{ 
+" File Type Setting  {{{
 au BufNewFile,BufRead *.ts setlocal filetype=typescript
 au BufNewFile,BufRead *.tsx setlocal filetype=typescriptreact
 au BufNewFile,BufRead .tsx UltiSnipsAddFiletypes *.ignore.tsx
@@ -1146,9 +1151,9 @@ map <leader>tm :tabmove
 
 if has("mac")
     " Mac options here
-    " Terminal isn't sending the D key 
-    
-    "map <Tab> :BufferNext <CR> 
+    " Terminal isn't sending the D key
+
+    "map <Tab> :BufferNext <CR>
     map <S-Tab> :BufferPrevious <CR>
     "map <D-S-]> gt
     "map <D-S-[> gT
@@ -1165,7 +1170,7 @@ if has("mac")
   else
     " windows/linux options here
     " map <C-[> gT https://vim.fandom.com/wiki/Avoid_the_escape_key
-    "map <Tab> :BufferNext <CR> 
+    "map <Tab> :BufferNext <CR>
     map <S-Tab> :BufferPrevious <CR>
     map <C-1> 1gt
     map <C-2> 2gt
@@ -1183,6 +1188,7 @@ endif
 "vnoremap <ESC> <ESC>
 "noremap <ESC> <ESC>
 
+let g:Guifont='FiraCode Nerd Font'
 if has("win32")
   "Windows options here
 elseif has("win32unix")
@@ -1278,7 +1284,7 @@ function! s:fzf_changelist()
   silent! changes
   redir END
 
-  return map(split(result, "\n")[1:], 'tr(v:val, "	", " ")')
+  return map(split(result, "\n")[1:], 'tr(v:val, "  ", " ")')
 endf
 
 function! s:fzf_changeaccept(line)
@@ -1318,7 +1324,7 @@ function SesWG()
     if v:shell_error == 0
       let branch = substitute(substitute(result, '\n', '', 'g'), '/', '_', 'g')
       execute "mks! ~/.vimsessions/" . branch . ".vim"
-    else 
+    else
       echo result
     endif
 endfunction
@@ -1330,7 +1336,7 @@ function SesRG()
     if v:shell_error == 0
       let branch = substitute(substitute(result, '\n', '', 'g'), '/', '_', 'g')
       execute "so ~/.vimsessions/" . branch . ".vim"
-    else 
+    else
       echo result
     endif
 endfunction
@@ -1343,7 +1349,7 @@ function SaveSession()
     let session_file = "dir" . substitute(getcwd(), '/', '_', 'g')
 
     if v:this_session
-      execute "mks! " . v:this_session 
+      execute "mks! " . v:this_session
       echo "saved " . v:this_session
       return 0
     endif
@@ -1351,8 +1357,8 @@ function SaveSession()
     let branch_name = "_git_" . substitute(substitute(system("git branch --show-current"), '\n', '', 'g'), '/', '_', 'g')
 
     if v:shell_error == 0
-      let session_name = session_file . branch_name . ".vim" 
-      execute "mks! " . session_dir . session_name 
+      let session_name = session_file . branch_name . ".vim"
+      execute "mks! " . session_dir . session_name
       echo "saved " . session_name
       return 0
     endif
@@ -1370,7 +1376,7 @@ function LoadSession()
     let branch_name = "_git_" . substitute(substitute(system("git branch --show-current"), '\n', '', 'g'), '/', '_', 'g')
 
     if v:shell_error == 0
-      let session_name = session_file . branch_name . ".vim" 
+      let session_name = session_file . branch_name . ".vim"
       let session_path = session_dir . session_name
       if filereadable(session_path)
         execute "so " . session_path
@@ -1400,32 +1406,32 @@ au VimLeave * if index(blacklist, &filetype) < 0 | :call SaveSession() | endif
 
 
 function! Redir(cmd, rng, start, end)
-	for win in range(1, winnr('$'))
-		if getwinvar(win, 'scratch')
-			execute win . 'windo close'
-		endif
-	endfor
-	if a:cmd =~ '^!'
-		let cmd = a:cmd =~' %'
-			\ ? matchstr(substitute(a:cmd, ' %', ' ' . expand('%:p'), ''), '^!\zs.*')
-			\ : matchstr(a:cmd, '^!\zs.*')
-		if a:rng == 0
-			let output = systemlist(cmd)
-		else
-			let joined_lines = join(getline(a:start, a:end), '\n')
-			let cleaned_lines = substitute(shellescape(joined_lines), "'\\\\''", "\\\\'", 'g')
-			let output = systemlist(cmd . " <<< $" . cleaned_lines)
-		endif
-	else
-		redir => output
-		execute a:cmd
-		redir END
-		let output = split(output, "\n")
-	endif
-	vnew
-	let w:scratch = 1
-	setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
-	call setline(1, output)
+  for win in range(1, winnr('$'))
+    if getwinvar(win, 'scratch')
+      execute win . 'windo close'
+    endif
+  endfor
+  if a:cmd =~ '^!'
+    let cmd = a:cmd =~' %'
+      \ ? matchstr(substitute(a:cmd, ' %', ' ' . expand('%:p'), ''), '^!\zs.*')
+      \ : matchstr(a:cmd, '^!\zs.*')
+    if a:rng == 0
+      let output = systemlist(cmd)
+    else
+      let joined_lines = join(getline(a:start, a:end), '\n')
+      let cleaned_lines = substitute(shellescape(joined_lines), "'\\\\''", "\\\\'", 'g')
+      let output = systemlist(cmd . " <<< $" . cleaned_lines)
+    endif
+  else
+    redir => output
+    execute a:cmd
+    redir END
+    let output = split(output, "\n")
+  endif
+  vnew
+  let w:scratch = 1
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
+  call setline(1, output)
 endfunction
 
 command! -nargs=1 -complete=command -bar -range Redir silent call Redir(<q-args>, <range>, <line1>, <line2>)

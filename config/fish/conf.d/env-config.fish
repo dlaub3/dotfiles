@@ -23,8 +23,6 @@ set -xg PATH $DENO_INSTALL/bin $PATH
 
 switch (uname)
     case Linux
-        alias dev 'cd ~/storage/dev'
-        set -xg GOPATH ~/storage/dev/go
         set -xg PATH $GOPATH/bin $PATH
         set -xg PATH $HOME/.local/bin $PATH
         set -xg PATH $HOME/.gem/ruby/2.7.0/bin $PATH

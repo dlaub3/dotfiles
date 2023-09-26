@@ -12,7 +12,7 @@
 - ack
 - conky
 - git
- 
+
 ### nvim
 - check env with :checkhealth
 
@@ -21,8 +21,7 @@
 
 ### fonts
 - JetBrains Mono
-- https://github.com/ryanoasis/nerd-fonts // JetBrainsMono (for icon support in 
-  vim)
+- https://github.com/ryanoasis/nerd-fonts // JetBrainsMono (for icon support in vim)
 
 ## tmux - run plugin install command
 
