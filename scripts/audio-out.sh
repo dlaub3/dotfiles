@@ -2,9 +2,14 @@
 
 list_devices() {
     pacmd list-sinks | grep -e "index:" -e "device.description"  | \
-    awk -F"= |: " ' /index:/{idx=$2}
-                    /device.description/{description=$2}
-                    { if (NR % 2 == 0) {print idx " " description} }' | \
+    awk -F"= |: " '
+        /index:/{idx=$2}
+        /device.description/{description=$2}
+        {
+          if (length(description) && description != seen) {print idx " " description}
+          seen=description
+        }
+       ' | \
     sed 's/"//g'
 }
 
@@ -17,7 +22,7 @@ set_default_device() {
     do
         pacmd move-sink-input "$stream" "$device_index"
     done
-    echo "Default audio device set to $device_desc."
+    echo "Default audio device set to \"$device_desc\"."
 }
 
 # Main script logic

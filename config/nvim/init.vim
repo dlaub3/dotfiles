@@ -754,7 +754,7 @@ if has("autocmd")
   autocmd Filetype gitcommit,markdown,text setlocal spell
   autocmd FileType markdown setlocal spell spelllang=en_us
   autocmd Filetype markdown,text setlocal wrap
-  autocmd Filetype markdown,text setlocal textwidth=80
+  autocmd Filetype markdown,text setlocal textwidth=120
   autocmd Filetype markdown,text setlocal formatoptions=anowcr2tq1j
   " Hide plaintext formatting and use color instead
   autocmd FileType markdown setlocal conceallevel=2

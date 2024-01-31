@@ -265,6 +265,8 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
 # move the whole workspace to the next output
 bindsym $mod+x move workspace to output right
 
+exec_always --no-startup-id xrandr --output "eDP-1-1" --mode 1920x1080 --auto
+exec --no-startup-id ~/.dotfiles/i3-monitors.sh
 exec --no-startup-id xrdb -merge ~/.Xresources
 exec --no-startup-id xrandr --dpi 100
 exec --no-startup-id vmware-user-suid-wrapper

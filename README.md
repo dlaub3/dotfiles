@@ -12,6 +12,7 @@
 - ack
 - conky
 - git
+- tldr
 
 ### nvim
 - check env with :checkhealth

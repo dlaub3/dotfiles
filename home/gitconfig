@@ -41,3 +41,7 @@
 	directory = /storage/dev/talks
 	directory = /storage/dev/laubacheracres
 	directory = /storage/dev/hippo
+	directory = /storage/dev/
+	directory = /storage/dev/fe/hugo/blog
+	directory = /storage/dev/fe/hugo/blog/themes/awayhugo
+	directory = /storage/dev/fe/hugo/blog/content
