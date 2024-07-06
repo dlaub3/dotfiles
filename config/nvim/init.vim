@@ -20,7 +20,6 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'michaelb/sniprun', {'do': 'bash install.sh'}
 Plug 'ellisonleao/glow.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
-Plug 'lewis6991/spellsitter.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'rcarriga/nvim-notify'
@@ -132,7 +131,7 @@ require('telescope').setup {
 
 require'nvim-treesitter.configs'.setup {
   -- One of "all", or a list of languages
-  ensure_installed = {"vim", "help", "json", "scss", "rust", "typescript", "go", "css", "html", "scss", "javascript", "python", "lua", "bash" },
+  ensure_installed = {"vim", "json", "scss", "rust", "typescript", "go", "css", "html", "scss", "javascript", "python", "lua", "bash" },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -159,7 +158,6 @@ require'nvim-treesitter.configs'.setup {
 }
 
 
-require('spellsitter').setup()
 require'colorizer'.setup()
 require('bufferline').setup({
   options = {
@@ -339,9 +337,9 @@ show_no_output = {
 
 --# customize highlight groups (setting this overrides colorscheme)
 snipruncolors = {
-  SniprunVirtualTextOk   =  {bg="#66eeff",fg="#000000",ctermbg="Cyan",cterfg="Black"},
+  SniprunVirtualTextOk   =  {bg="#66eeff",fg="#000000",ctermbg="Cyan",ctermfg="Black"},
   SniprunFloatingWinOk   =  {fg="#66eeff",ctermfg="Cyan"},
-  SniprunVirtualTextErr  =  {bg="#881515",fg="#000000",ctermbg="DarkRed",cterfg="Black"},
+  SniprunVirtualTextErr  =  {bg="#881515",fg="#000000",ctermbg="DarkRed",ctermfg="Black"},
   SniprunFloatingWinErr  =  {fg="#881515",ctermfg="DarkRed"},
 },
 
