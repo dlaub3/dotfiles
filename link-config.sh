@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
+set -x
 
 for dir in $HOME/.dotfiles/config/*; do
   if [[ $dir ]]; then
     dir_name=$(basename $dir)
-    echo "ln -nfs ${dir}" "${HOME}/.config/${dir_name}"
     ln -nfs "${dir}" "${HOME}/.config/${dir_name}"
   fi
 done

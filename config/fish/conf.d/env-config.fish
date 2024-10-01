@@ -36,8 +36,9 @@ switch (uname)
 end
 
 # fnm set this last
-set -xg PATH $HOME/.fnm $PATH
-fnm env --shell=fish | source
+#set -xg PATH $HOME/.fnm $PATH
+#fnm env --shell=fish | source
+source $HOME/.config/fish/conf.d/fnm.fish
 
 ## node
 set -xg PATH $PATH (yarn global bin)

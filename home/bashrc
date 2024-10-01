@@ -127,3 +127,4 @@ export SHELL=$(which bash)
 export EDITOR=$(which nvim)
 
 
+alias brctr='/var/lib/rancher/rke2/bin/ctr -a /run/k3s/containerd/containerd.sock -n k8s.io'

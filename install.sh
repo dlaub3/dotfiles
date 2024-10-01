@@ -2,10 +2,20 @@
 ./link-home.sh
 ./link-config.sh
 ln -nfs ~/.dotfiles/tmux/* ~/.tmux
+ln -nfs ~/.dotfiles/fonts ~/.fonts
 mkdir ~/.vimsessions
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-touch ~/.local-env.fish
-touch ~/.local-env.sh
+
+file="~/.local-env.fish"
+if ! [ -e "$file" ] ; then
+    touch "$file"
+fi
+
+file="~/.local-env.sh"
+if ! [ -e "$file" ] ; then
+    touch "$file"
+fi
+
 #npm install -g instant-markdown-d
 
 #curl https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > ~/.config/nvim/autoload/plug.vim
