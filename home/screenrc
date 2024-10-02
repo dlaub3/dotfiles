@@ -1,0 +1,36 @@
+# Disable the startup message
+startup_message off
+
+# Hardstatus line configuration at the bottom of the screen
+hardstatus alwayslastline
+hardstatus string '%{= bw}%-Lw%{= bw}%50>%n%f* %t%{= bw}%+Lw%< %{= kw}%=%H %{g}%Y-%m-%d %c:%s'
+
+# Set the scrollback buffer size to 10,000 lines
+defscrollback 10000
+
+# Custom key bindings
+bind c screen 1     # Ctrl-a c to create a new window
+bind d detach       # Ctrl-a d to detach the session
+bind k eval "hardcopy_append off" "hardcopy ~/screen_hardcopy.%n"  # Ctrl-a k to capture the current window
+
+# Automatic window naming based on the command running
+shelltitle "$ |bash"
+
+# Visual bell configuration
+vbell on
+vbell_msg 'Bell in window %n'
+
+# Enable logging for each screen window
+logfile "$HOME/screenlog.%n"
+deflog on
+
+# Default UTF-8 encoding
+defutf8 on
+
+# Enable multiuser mode and add a user
+multiuser on
+acladd user1
+
+# Startup windows running specific commands
+screen -t "Editor" 0 vim
+screen -t "Shell" 1 bash
