@@ -760,6 +760,7 @@ if has("autocmd")
   autocmd FileType markdown setlocal nocursorcolumn
   autocmd FileType markdown setlocal autoindent
   autocmd FileType markdown setlocal nofoldenable
+  autocmd FileType go setlocal makeprg:golangci-lint
 endif
 
 let g:vim_markdown_auto_insert_bullets = 0
