@@ -155,7 +155,7 @@ function lorem --description "get lorem text"
 end
 
 function go_test --description "add colors to go test"
-  set GREP_COLOR "01;33"
+  set GREP_COLORS="mt=01;33"
   go test $argv | sed ''/PASS/s//(printf "\033[32mPASS\033[0m")/'' | sed ''/SKIP/s//(printf "\033[34mSKIP\033[0m")/'' | sed ''/FAIL/s//(printf "\033[31mFAIL\033[0m")/'' | sed ''/FAIL/s//(printf "\033[31mFAIL\033[0m")/'' |  egrep --color=always '\s*[a-zA-Z0-9\-_.]+[:][0-9]+[:]|^'
 end
 

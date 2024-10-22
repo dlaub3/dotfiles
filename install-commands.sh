@@ -62,11 +62,12 @@ apt install dnsmasq
 
 # i3
 mkdir ~/Pictures/wallpapers
-apt install i3 i3status i3lock rofi scrot gnome-screenshot imagemagick
+apt install i3 i3status i3lock rofi scrot gnome-screenshot imagemagick xbacklight vmware-user-suid-wrapper xrandr
 
 apt instal rust-all rust-coreutils lua5.4
 
-
+# other
+# python3-pyneovim, mkecert
 
 
 
