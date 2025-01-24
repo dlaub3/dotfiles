@@ -35,10 +35,6 @@ sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.loca
 # Make xdg-terminal-exec (and hence desktop environments that support it use kitty)
 echo 'kitty.desktop' > ~/.config/xdg-terminals.list
 
-# Misc Ubuntu
-sudo apt install fd-find ripgrep jq httpie xclip fzf git tmux screen rust lua feh bat ack tldr fish
-# sudo apt install jetbrains-mono
-
 # FNM
 curl -fsSL https://fnm.vercel.app/install | bash
 fnm use v20.17.0
@@ -68,6 +64,10 @@ apt instal rust-all rust-coreutils lua5.4
 
 # other
 # python3-pyneovim, mkecert
+
+# Misc Ubuntu
+sudo apt install fd-find ripgrep jq httpie xclip fzf git tmux screen rust lua feh bat ack tldr fish
+# sudo apt install jetbrains-mono
 
 
 
