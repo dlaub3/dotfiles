@@ -49,3 +49,5 @@ if [ -f "${SSH_ENV}" ]; then
 else
     start_agent;
 fi
+
+TZ='America/New_York'; export TZ
