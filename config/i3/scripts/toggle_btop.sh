@@ -17,6 +17,7 @@ if [ -n "$WINDOW_ID" ]; then
         i3-msg "[instance=\"monitor\"] move container to workspace current;"
         i3-msg "[instance=\"monitor\"] resize set $WIDTH $HEIGHT"
         i3-msg "[instance=\"monitor\"] move position center"
+        i3-msg "[instance=\"monitor\"] focus"
     else
         i3-msg "[instance=\"monitor\"] move to workspace monitor"
     fi
@@ -27,4 +28,5 @@ else
     i3-msg "[instance=\"monitor\"] floating enable;"
     i3-msg "[instance=\"monitor\"] resize set $WIDTH $HEIGHT"
     i3-msg "[instance=\"monitor\"] move position center"
+    i3-msg "[instance=\"monitor\"] focus"
 fi

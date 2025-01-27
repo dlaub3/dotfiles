@@ -1,17 +1,24 @@
 #!/bin/bash
 
-# Get the ID of the currently focused window
-FOCUSED_WINDOW=$(xdotool getwindowfocus)
+ACTIVE_MONITOR=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true) | .output')
+SCREEN=$(xrandr --listmonitors | grep $ACTIVE_MONITOR | awk '{ print $3 }' | awk -F "x" '{ print $1 " "  $2 }' | awk -F "[/, ]" '{ print $1 "x" $3}')
 
-# Get the geometry of the focused window
-FOCUSED_WINDOW_GEOMETRY=$(xdotool getwindowgeometry --shell $FOCUSED_WINDOW)
-eval "$FOCUSED_WINDOW_GEOMETRY"
+SCREEN_WIDTH=$(echo $SCREEN | cut -d'x' -f1)
+SCREEN_HEIGHT=$(echo $SCREEN | cut -d'x' -f2)
 
-# Calculate alert position (e.g., top-right of the focused window)
-ALERT_X=$((X + WIDTH)) # Offset for alert width
-ALERT_Y=$((Y + HEIGHT))          # Offset from the top of the window
+ALERT_Y=50 #$(bc $SCREEN_HEIGHT - 100)
+ALERT_X=50 #$(bc $SCREEN_WIDTH - 200)
 
-# Move the currently active alert (assumes alert is focused when created)
-i3-msg [window_role="alert"] move position $ALERT_X $ALERT_Y
-i3-msg [window_role="pop-up"] move position $ALERT_X $ALERT_Y
-i3-msg [window_role="task_dialog"] move position $ALERT_X $ALERT_Y
+i3-msg [window_role="alert"] move position $ALERT_X $ALERT_Y;
+i3-msg [window_role="popup"] move position $ALERT_X $ALERT_Y;
+i3-msg [window_role="task_dialog"] move position $ALERT_X $ALERT_Y;
+i3-msg [window_type="notification"] move position $ALERT_X $ALERT_Y;
+i3-msg [window_type="tooltip"] move position $ALERT_X $ALERT_Y;
+i3-msg [window_type="MENU|SPLASH|DIALOG|POPUP|NOTIFICATION"] move position $ALERT_X $ALERT_Y;
+
+i3-msg [window_role="alert"] move container to workspace current;
+i3-msg [window_role="popup"] move container to workspace current;
+i3-msg [window_role="task_dialog"] move container to workspace current;
+i3-msg [window_type="notification"] move container to workspace current;
+i3-msg [window_type="tooltip"] move container to workspace current;
+i3-msg [window_type="MENU|SPLASH|DIALOG|POPUP|NOTIFICATION"] move container to workspace current;
