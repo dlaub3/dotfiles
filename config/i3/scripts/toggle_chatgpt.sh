@@ -18,7 +18,7 @@ if [ -n "$WINDOW_ID" ]; then
 else
     # If the window doesn't exist, launch it
     brave -name chatgpt --app="https://chatgpt.com/?temporary-chat=true" &
-    sleep 0.1  # Allow the window to initialize
+    sleep 0.5  # Allow the window to initialize
     i3-msg "[instance=\"chatgpt\"] focus"
     i3-msg "[instance=\"chatgpt\"] floating enable;"
     i3-msg "[instance=\"chatgpt\"] resize set $WIDTH $HEIGHT"
