@@ -6,8 +6,8 @@ SCREEN=$(xrandr --listmonitors | grep $ACTIVE_MONITOR | awk '{ print $3 }' | awk
 SCREEN_WIDTH=$(echo $SCREEN | cut -d'x' -f1)
 SCREEN_HEIGHT=$(echo $SCREEN | cut -d'x' -f2)
 
-ALERT_Y=50 #$(bc $SCREEN_HEIGHT - 100)
-ALERT_X=50 #$(bc $SCREEN_WIDTH - 200)
+ALERT_Y=50 #$(echo "$SCREEN_HEIGHT - 50" | bc )
+ALERT_X=$(echo "$SCREEN_WIDTH - 10"  | bc)
 
 i3-msg [window_role="alert"] move position $ALERT_X $ALERT_Y;
 i3-msg [window_role="popup"] move position $ALERT_X $ALERT_Y;

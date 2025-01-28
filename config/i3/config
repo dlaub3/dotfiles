@@ -117,8 +117,9 @@ bindsym $mod+Shift+minus move scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+h scratchpad show; exec --no-startup-id $HOME/.config/i3/scripts/scratchpad_resize.sh
 
-# btop monitor
+# apps
 bindsym $mod+m exec --no-startup-id ~/.config/i3/scripts/toggle_btop.sh
+bindsym $mod+q exec --no-startup-id ~/.config/i3/scripts/toggle_chatgpt.sh
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
