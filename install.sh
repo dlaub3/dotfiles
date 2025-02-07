@@ -1,4 +1,8 @@
 #!/bin/bash
+
+git config --local user.name "Daniel Laubacher"
+git config --local user.email "dlaubacher3@gmail.com"
+
 ./link-home.sh
 ./link-config.sh
 ln -nfs ~/.dotfiles/tmux/* ~/.tmux
