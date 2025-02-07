@@ -17,6 +17,4 @@ function create_cd_aliases
             alias "cd$folder_name" "cd $dir"
         end
     end
-
-    echo "Aliases created for all folders in $target_dir"
 end

@@ -1084,6 +1084,12 @@ autocmd Filetype php setlocal ts=4 sw=4 sts=0 expandtab
 " Automatic fold settings for specific files. Uncomment to use.
 autocmd FileType ruby setlocal foldmethod=syntax
 autocmd FileType css  setlocal foldmethod=indent shiftwidth=2 tabstop=2
+" formatting
+augroup AutoFormatOnSave
+  autocmd!
+  autocmd BufWritePre json :silent! %!jq % 2>/dev/null
+  autocmd BufWritePre css :silent! %!npx prettier % 2>/dev/null
+augroup END
 " }}}
 
 " Tab mappings.
