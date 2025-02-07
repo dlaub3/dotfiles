@@ -3,11 +3,11 @@
 source $HOME/.config/i3/scripts/floating_resize.sh
 
 WINDOW_ID=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.name=="btop").window')
-IS_HIDDEN=$(i3-msg -t get_workspaces | jq '.[] | select(.name == "btop")')
+IS_FOCUSED=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.name=="btop").focused')
 ACTIVE_WORKSPACE=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused).name')
 
 if [ -n "$WINDOW_ID" ]; then
-    if [ -n "$IS_HIDDEN" ]; then
+    if  [[ "${IS_FOCUSED,,}" != "true" ]]; then
         i3-msg "[instance=\"btop\"] move container to workspace current;"
         i3-msg "[instance=\"btop\"] resize set $WIDTH $HEIGHT"
         i3-msg "[instance=\"btop\"] move position center"
