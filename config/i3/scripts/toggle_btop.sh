@@ -13,7 +13,8 @@ if [ -n "$WINDOW_ID" ]; then
         i3-msg "[instance=\"btop\"] move position center"
         i3-msg "[instance=\"btop\"] focus"
     else
-        i3-msg "[instance=\"btop\"] move to workspace btop"
+        i3-msg "[instance=\"btop\"] resize set 10 10"
+        i3-msg "[instance=\"btop\"] move to workspace _"
     fi
 else
     # If the window doesn't exist, launch it

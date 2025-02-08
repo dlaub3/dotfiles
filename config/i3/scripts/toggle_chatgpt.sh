@@ -13,7 +13,8 @@ if [ -n "$WINDOW_ID" ]; then
         i3-msg "[instance=\"chatgpt\"] move position center"
         i3-msg "[instance=\"chatgpt\"] focus"
     else
-        i3-msg "[instance=\"chatgpt\"] move to workspace chatgpt"
+        i3-msg "[instance=\"chatgpt\"] resize set 10 10"
+        i3-msg "[instance=\"chatgpt\"] move to workspace _"
     fi
 else
     # If the window doesn't exist, launch it
