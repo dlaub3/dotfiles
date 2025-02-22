@@ -2,8 +2,9 @@
 
 source $HOME/.config/i3/scripts/floating_resize.sh
 
-WINDOW_ID=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.name=="ChatGPT").window')
-IS_FOCUSED=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.name=="ChatGPT").focused')
+WINDOW=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.window_properties?.instance =="chatgpt.com")')
+WINDOW_ID=$(jq '.window' <<<"$WINDOW")
+IS_FOCUSED=$(jq '.focused' <<<"$WINDOW")
 
 if [ -n "$WINDOW_ID" ]; then
     if  [[ "${IS_FOCUSED,,}" != "true" ]]; then
