@@ -22,7 +22,9 @@ if [[ -z "$OUTPUT_FILE" ]]; then
   usage
 fi
 
-AUDIO_OPTIONS='-f alsa -i hw:1,0 -af "afftdn=nr=20:nf=-30,anlmdn=s=7:p=0.05"'
+# use `arecord -l | grep card` and set hw:<card>,<device>
+AUDIO_OPTIONS='-f alsa -i plughw:1,0'
+# noise filters -af "afftdn=nr=20:nf=-30,anlmdn=s=7:p=0.5" may be adjusted
 if [[ -v SILENT ]]; then
   # disable for gifs
   AUDIO_OPTIONS=""
@@ -39,15 +41,14 @@ if [[ -v "$RECORD_SCREEN" ]]; then
     ${AUDIO_OPTIONS} \
     "${OUTPUT_FILE}"
 else
-  WINFO=$(xwininfo | awk '/Absolute|Width|Height/')
+  XWININFO=$(xwininfo)
+  WINDOW_ID=$("$XWININFO" | grep -i "window id" | awk '{ print $4 }')
+  WINFO=$(echo "$XWININFO" | awk '/Absolute|Width|Height/')
   ABS_X=$(echo "$WINFO" | awk '/X/ { print $4 }')
   ABS_Y=$(echo "$WINFO" | awk '/Y/ { print $4 }')
   WIDTH=$(echo "$WINFO" | awk '/Width/ { print $2 }')
   HEIGHT=$(echo "$WINFO" | awk '/Height/ { print $2 }')
-  WINDOW_ID=$(xwininfo | grep -i "window id" | awk '{ print $4 }')
 
-  # use `arecord -l | grep card` and set hw:<card>,<device>
-  # noise filters -af "afftdn=nr=20:nf=-30,anlmdn=s=7:p=0.5" may be adjusted
   ffmpeg \
     -video_size ${WIDTH}x${HEIGHT} \
     -framerate 30 \
