@@ -9,10 +9,6 @@ switch (uname)
         echo Hi, stranger!
 end
 
-# alias ubuntu package names
-alias fd=fdfind
-alias bat=batcat
-
 alias k=kubectl
 set -x now --force --grace-period 0
 set -x dry -o yaml --dry-run=client

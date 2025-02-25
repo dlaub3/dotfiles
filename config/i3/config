@@ -118,6 +118,7 @@ bindsym $mod+minus exec --no-startup-id $HOME/.config/i3/scripts/scratchpad_resi
 bindsym $mod+m exec --no-startup-id ~/.config/i3/scripts/toggle_btop.sh
 bindsym $mod+g exec --no-startup-id ~/.config/i3/scripts/toggle_chatgpt.sh
 bindsym $mod+c exec --no-startup-id ~/.config/i3/scripts/toggle_claude.sh
+bindsym $mod+z exec --no-startup-id ~/.config/i3/scripts/toggle_hide.sh
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
@@ -254,6 +255,7 @@ for_window [window_type="notification"]  move container to workspace current;
 for_window [window_type="tooltip"]  move container to workspace current;
 for_window [window_type="notification"] move position 10 10;
 for_window [window_type="tooltip"] move position 10 10;
+for_window [window_role=".*Dialog"] floating enable, focus;
 
 # do not focus on alerts
 no_focus [all]
