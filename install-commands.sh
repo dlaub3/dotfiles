@@ -7,9 +7,10 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 #
 # # Neovim
 #
-curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+#
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
 sudo rm -rf /opt/nvim
-sudo tar -C /opt -xzf nvim-linux64.tar.gz
+sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
 echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> ~/.local-env.sh
 echo 'export PATH="$PATH:/opt/nvim-linux64/bin"' >> ~/.local-env.fish
