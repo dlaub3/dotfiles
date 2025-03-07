@@ -3,8 +3,8 @@
 source $HOME/.config/i3/scripts/floating_resize.sh
 
 WINDOW=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.window_properties?.instance =="kitty")')
-WINDOW_ID=$(jq '.window' <<<"$WINDOW")
-IS_FOCUSED=$(jq '.focused' <<<"$WINDOW")
+WINDOW_ID=$(jq '.window' <<<"$WINDOW" | tail -n1)
+IS_FOCUSED=$(jq '.focused' <<<"$WINDOW" | tail -n1)
 
 if [ -n "$WINDOW_ID" ]; then
     if  [[ "${IS_FOCUSED,,}" != "true" ]]; then
