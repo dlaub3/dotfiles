@@ -28,7 +28,12 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+if [ -x /usr/bin/lesspipe ]; then
+    # Set LESSOPEN directly rather than using eval
+    export LESSOPEN="| /usr/bin/lesspipe %s"
+    # Optionally, ensure proper exit codes are maintained
+    export LESSCLOSE="/usr/bin/lesspipe %s %s"
+fi
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
