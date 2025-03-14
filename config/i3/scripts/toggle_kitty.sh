@@ -2,7 +2,7 @@
 
 source $HOME/.config/i3/scripts/floating_resize.sh
 
-WINDOW=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.window_properties?.instance =="kitty")')
+WINDOW=$(i3-msg -t get_tree | jq -r '.. | objects | select(.window) | select(.name =="toggle-kitty")')
 WINDOW_ID=$(jq '.window' <<<"$WINDOW" | tail -n1)
 IS_FOCUSED=$(jq '.focused' <<<"$WINDOW" | tail -n1)
 
@@ -20,7 +20,7 @@ if [ -n "$WINDOW_ID" ]; then
     fi
 else
     # If the window doesn't exist, launch it
-    kitty &
+    kitty --title="toggle-kitty" &
     sleep 0.5  # Allow the window to initialize
     i3-msg "[instance=\"kitty\"] focus"
     i3-msg "[instance=\"kitty\"] floating enable;"
