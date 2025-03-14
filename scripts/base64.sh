@@ -5,17 +5,17 @@ print_usage() {
     echo "Usage: $0 [-e|-d] [-p] <string>"
     echo "  -e: Encode the string (default if not specified)"
     echo "  -d: Decode the string"
-    echo "  -p: Add padding if required (for decoding)"
+    echo "  -n: Do not fix the base64 string before decoding"
     echo "Example: $0 -e 'Hello World'"
-    echo "Example: $0 -d -p 'SGVsbG8gV29ybGQ'"
+    echo "Example: $0 -d 'SGVsbG8gV29ybGQ'"
 }
 
 # Default options
 OPERATION="encode"
-FIX_PADDING=false
+FIX=true
 
 # Parse command line options
-while getopts ":edph" opt; do
+while getopts ":ednh" opt; do
     case ${opt} in
         e)
             OPERATION="encode"
@@ -23,8 +23,8 @@ while getopts ":edph" opt; do
         d)
             OPERATION="decode"
             ;;
-        p)
-            FIX_PADDING=true
+        n)
+            FIX=false
             ;;
         h)
             print_usage
@@ -67,18 +67,21 @@ add_padding() {
     fi
 }
 
+convert_url_safe() {
+    echo -n "$1" | tr '-' '+' | tr '_' '/'
+}
+
 # Perform the operation
 if [ "$OPERATION" = "encode" ]; then
     # Encode
     RESULT=$(echo -n "$INPUT" | base64)
     echo "$RESULT"
 elif [ "$OPERATION" = "decode" ]; then
-    # Fix padding if requested
-    if [ "$FIX_PADDING" = true ]; then
+    if [ "$FIX" = true ]; then
+        INPUT=$(convert_url_safe "$INPUT")
         INPUT=$(add_padding "$INPUT")
     fi
 
-    # Decode
     RESULT=$(echo -n "$INPUT" | base64 --decode)
     echo "$RESULT"
 fi
