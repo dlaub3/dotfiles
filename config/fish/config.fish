@@ -20,6 +20,15 @@ alias fish-source='source ~/.dotfiles/config/fish/config.fish'
 set -x RIPGREP_CONFIG_PATH ~/.ripgreprc
 set -x FZF_DEFAULT_COMMAND 'rg --files --hidden --follow --glob "!{.git,node_modules,dist}"'
 set -x FZF_CTRL_T_COMMAND "$FZF_DEFAULT_COMMAND"
+
+set -e LESSOPEN
+set -e LESSCLOSE
+
+function lessplus
+    set -lx LESSOPEN "| /usr/bin/lesspipe %s"
+    command less $argv
+end
+
 alias fzf_preview='fzf --preview "bat --style=numbers --color=always {} | less -R"'
 
 alias toPlainText=pbpaste | pbcopy
