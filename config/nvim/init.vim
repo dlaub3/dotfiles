@@ -61,7 +61,8 @@ Plug 'junegunn/gv.vim'
 Plug 'avakhov/vim-yaml'
 " markdown  ------------------------------------------------------------------------------
 Plug 'instant-markdown/vim-instant-markdown', {'for': 'markdown'}
-Plug 'plasticboy/vim-markdown'
+Plug 'godlygeek/tabular' " before vim-markdown line up text
+Plug 'preservim/vim-markdown'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 " must be before vim-markdown
@@ -74,7 +75,6 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'maxmellon/vim-jsx-pretty'
 " editing --------------------------------------------------------------------------------
 Plug 'raimondi/delimitmate' "automatic closing of quotes, parenthesis, brackets, etc.
-Plug 'godlygeek/tabular' " line up text
 Plug 'scrooloose/nerdcommenter' " easily apply/remove comments
 Plug 'mattn/emmet-vim' " code completion/generation
 "Plug 'gorodinskiy/vim-coloresque' " css/sass/html color preview
@@ -703,7 +703,11 @@ let g:instant_markdown_autoscroll = 1
 let g:instant_markdown_port = 8888
 let g:instant_markdown_python = 0
 " Configuration for vim-markdown
-let g:vim_markdown_conceal = 2
+"
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_wrap = 0
 let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_math = 1
 let g:vim_markdown_toml_frontmatter = 1
@@ -751,8 +755,8 @@ if has("autocmd")
   " Markdown Configuration
   autocmd Filetype gitcommit,markdown,text setlocal spell
   autocmd FileType markdown setlocal spell spelllang=en_us
-  autocmd Filetype markdown,text setlocal wrap
-  autocmd Filetype markdown,text setlocal textwidth=80
+  autocmd Filetype markdown,text setlocal nowrap
+  autocmd Filetype markdown,text setlocal textwidth=0
   autocmd Filetype markdown,text setlocal formatoptions=anowcr2tq1j
   " Hide plaintext formatting and use color instead, conceallevel=2
   autocmd FileType markdown setlocal conceallevel=0
@@ -763,8 +767,6 @@ if has("autocmd")
   autocmd FileType go setlocal makeprg:golangci-lint
 endif
 
-let g:vim_markdown_auto_insert_bullets = 0
-let g:vim_markdown_new_list_item_indent = 0
 let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
                                        " plugin which unfortunately interferes with mkdx list indentation.
 
